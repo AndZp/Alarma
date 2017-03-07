@@ -7,13 +7,27 @@ import com.crashlytics.android.Crashlytics;
 import com.crashlytics.android.core.CrashlyticsCore;
 import com.squareup.leakcanary.LeakCanary;
 import io.fabric.sdk.android.Fabric;
+import mobi.mateam.alarma.di.component.AppComponent;
+import mobi.mateam.alarma.di.component.DaggerAppComponent;
+import mobi.mateam.alarma.di.module.AppModule;
 import timber.log.Timber;
 
 public class App extends Application {
+  private AppComponent appComponent;
+
   @Override public void onCreate() {
     super.onCreate();
     initFabric();
     initLeakCanary();
+    this.initializeInjector();
+  }
+
+  private void initializeInjector() {
+    this.appComponent = DaggerAppComponent.builder().appModule(new AppModule(this)).build();
+  }
+
+  public AppComponent getAppComponent() {
+    return this.appComponent;
   }
 
   private void initFabric() {
