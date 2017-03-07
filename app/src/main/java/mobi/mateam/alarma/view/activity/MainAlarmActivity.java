@@ -8,8 +8,6 @@ import butterknife.ButterKnife;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import mobi.mateam.alarma.R;
-import mobi.mateam.alarma.di.component.DaggerPresenterComponent;
-import mobi.mateam.alarma.di.component.PresenterComponent;
 import mobi.mateam.alarma.presenter.MainAlarmPresenter;
 import mobi.mateam.alarma.presenter.SetAlarmPresenter;
 import mobi.mateam.alarma.view.fragment.AlarmListFragment;
@@ -31,14 +29,14 @@ public class MainAlarmActivity extends BaseActivity implements MainAlarmView {
 
   private void setPresenter() {
     if (presenter == null) {
-      presenter = getComponent().getMainAlarmPresenter();
+      presenter = getAppComponent().getMainAlarmPresenter();
     }
     presenter.attachView(this);
   }
 
-  public PresenterComponent getComponent() {
+  /*public PresenterComponent getComponent() {
     return DaggerPresenterComponent.builder().appComponent(getAppComponent()).build();
-  }
+  }*/
 
   @Override protected void onDestroy() {
     super.onDestroy();

@@ -1,14 +1,22 @@
 package mobi.mateam.alarma.model.repository;
 
 import java.util.ArrayList;
+import mobi.mateam.alarma.db.AlarmDbHelper;
 import mobi.mateam.alarma.model.pojo.alarm.Alarm;
 import mobi.mateam.alarma.model.pojo.alarm.Weekdays;
 import rx.Observable;
 
 public class AlarmRepository {
 
+  private final AlarmDbHelper alarmDb;
+
+  public AlarmRepository(AlarmDbHelper alarmDb) {
+    this.alarmDb = alarmDb;
+    alarmDb.persistAlarmsList(getTestAlarms());
+  }
+
   public Observable<ArrayList<Alarm>> getAlarmList() {
-    return Observable.just(getTestAlarms());
+    return alarmDb.getAllAlarms();
   }
 
   private ArrayList<Alarm> getTestAlarms() {

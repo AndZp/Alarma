@@ -5,7 +5,7 @@ import java.util.Calendar;
 public class Alarm {
   public boolean enabled;
   public boolean vibrate;
-  public long longID;
+  public int longID;
   public String id;
   public String lable;
   public Weekdays daysOfWeek;

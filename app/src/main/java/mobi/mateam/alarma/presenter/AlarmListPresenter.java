@@ -8,10 +8,10 @@ import rx.Subscriber;
 
 public class AlarmListPresenter extends BasePresenter<AlarmListView> {
 
-  private AlarmRepository alarmRepository;
+  AlarmRepository alarmRepository;
 
-  public AlarmListPresenter() {
-    this.alarmRepository = new AlarmRepository();
+  public AlarmListPresenter(AlarmRepository alarmRepository) {
+    this.alarmRepository = alarmRepository;
   }
 
   @Override public void attachView(AlarmListView alarmListView) {

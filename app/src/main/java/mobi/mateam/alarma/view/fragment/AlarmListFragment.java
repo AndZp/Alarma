@@ -12,8 +12,10 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import java.util.List;
 import mobi.mateam.alarma.R;
+import mobi.mateam.alarma.di.component.AppComponent;
 import mobi.mateam.alarma.model.pojo.alarm.Alarm;
 import mobi.mateam.alarma.presenter.AlarmListPresenter;
+import mobi.mateam.alarma.view.activity.BaseActivity;
 import mobi.mateam.alarma.view.adapter.AlarmListAdapter;
 import mobi.mateam.alarma.view.interfaces.AlarmListView;
 import mobi.mateam.alarma.view.interfaces.MainAlarmView;
@@ -35,10 +37,14 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
     View view = inflater.inflate(R.layout.fragment_alarm_list, container, false);
     unbinder = ButterKnife.bind(this, view);
     if (presenter == null) {
-      presenter = new AlarmListPresenter();
+      presenter = getAppComponent().getAlarmListPresenter();
     }
     presenter.attachView(this);
     return view;
+  }
+
+  private AppComponent getAppComponent() {
+    return ((BaseActivity) getActivity()).getAppComponent();
   }
 
   public void showAlarmList(List<Alarm> alarms) {
@@ -65,4 +71,9 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
     presenter.detachView();
     if (isRemoving()) presenter = null;
   }
+
+  /*public PresenterComponent getComponent() {
+    BaseActivity activity = (BaseActivity) getActivity();
+    return DaggerPresenterComponent.builder().appComponent(activity.getAppComponent()).build();
+  }*/
 }

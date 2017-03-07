@@ -9,7 +9,7 @@ import mobi.mateam.alarma.view.interfaces.MvpView;
 
 public class BaseActivity extends AppCompatActivity implements MvpView {
 
-  protected AppComponent getAppComponent() {
+  public AppComponent getAppComponent() {
     return ((App) getApplication()).getAppComponent();
   }
 
