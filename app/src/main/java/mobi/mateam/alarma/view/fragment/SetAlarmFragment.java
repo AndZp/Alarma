@@ -29,7 +29,7 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView {
   @BindView(R.id.view_weekdays) View weekdays;
   @BindView(R.id.rv_weather_params) RecyclerView rvParams;
 
-  SetAlarmPresenter presenter;
+  public static SetAlarmPresenter presenter;
 
   private Unbinder unbinder;
 

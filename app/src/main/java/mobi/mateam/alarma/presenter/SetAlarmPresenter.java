@@ -1,5 +1,10 @@
 package mobi.mateam.alarma.presenter;
 
+import android.app.Activity;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 import java.util.ArrayList;
 import java.util.List;
 import mobi.mateam.alarma.model.pojo.alarm.Alarm;
@@ -8,7 +13,7 @@ import mobi.mateam.alarma.model.pojo.weather.WeatherParameter;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
 
 public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
-
+  public static int PLACE_PICKER_REQUEST = 111;
   private Alarm alarm;
 
   @Override public void attachView(SetAlarmView setAlarmView) {
@@ -39,6 +44,13 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
 
   public void setLocation() {
 
+    PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+    try {
+      Activity activity = (Activity) getView().getActivityContext();
+      activity.startActivityForResult(builder.build(activity), PLACE_PICKER_REQUEST);
+    } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+      e.printStackTrace();
+    }
   }
 
   public List<WeatherParameter> getParamList() {
@@ -62,5 +74,10 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
     alarm2.stringLocation = "Ukraine, Drag";
 
     return alarm2;
+  }
+
+  public void onPlacePickerResult(Place place) {
+    String toastMsg = String.format("Place: %s", place.getName());
+    getView().showLocation(toastMsg);
   }
 }

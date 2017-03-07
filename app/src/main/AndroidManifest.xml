@@ -23,6 +23,9 @@
     <meta-data
         android:name="io.fabric.ApiKey"
         android:value="92337d74fb0c453453e5a748478637d5aa9ca207"/>
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="AIzaSyCh718zcOUSsb96vlhay_goY2Gtly60dRE"/>
   </application>
 
   <uses-permission android:name="android.permission.INTERNET"/>
