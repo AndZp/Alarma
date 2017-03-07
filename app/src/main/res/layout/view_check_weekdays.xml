@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:layout_marginBottom="10dp"
+    android:layout_marginTop="10dp"
+    tools:showIn="@layout/fragment_set_alarm"
+    >
+  <Button
+      android:layout_width="52dp"
+      android:layout_height="wrap_content"
+      android:text="S"
+      />
+
+  <Button
+      android:layout_width="52dp"
+      android:layout_height="wrap_content"
+      android:text="M"
+      />
+  <Button
+      android:layout_width="52dp"
+      android:layout_height="wrap_content"
+      android:text="T"
+      />
+  <Button
+      android:layout_width="52dp"
+      android:layout_height="wrap_content"
+      android:text="W"
+      />
+  <Button
+      android:layout_width="52dp"
+      android:layout_height="wrap_content"
+      android:text="T"
+      />
+  <Button
+      android:layout_width="52dp"
+      android:layout_height="wrap_content"
+      android:text="F"
+      />
+  <Button
+      android:layout_width="52dp"
+      android:layout_height="wrap_content"
+      android:text="S"
+      />
+</LinearLayout>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    >
+  <ScrollView
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        >
+      <TextView
+          android:id="@+id/tv_set_time"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_marginTop="10dp"
+          android:gravity="center"
+          android:text="06:00"
+          android:textSize="40sp"
+          />
+
+      <EditText
+          android:id="@+id/et_set_lable"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="10dp"
+          android:hint="Lable"
+          android:textSize="30sp"
+          />
+
+
+      <include
+          layout="@layout/view_check_weekdays"
+          android:id="@+id/view_weekdays"
+
+          />
+
+      <TextView
+          android:id="@+id/tv_set_ringtone"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="10dp"
+          android:layout_marginTop="10dp"
+          android:drawableLeft="@android:drawable/ic_lock_silent_mode"
+          android:gravity="center"
+          android:text="Set ringtone"
+          android:textSize="20sp"
+          />
+
+
+      <TextView
+          android:id="@+id/tv_set_location"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="10dp"
+          android:layout_marginTop="10dp"
+          android:drawableLeft="@android:drawable/ic_dialog_map"
+          android:gravity="center"
+          android:text="Set location"
+          android:textSize="20sp"
+          />
+
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/rv_weather_params"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          />
+
+      <Button
+          android:id="@+id/btn_save_alarm"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="bottom|center_horizontal"
+          android:layout_margin="10dp"
+          android:text="Add alarm"
+          />
+    </LinearLayout>
+  </ScrollView>
+</LinearLayout>
