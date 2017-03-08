@@ -2,7 +2,12 @@ package mobi.mateam.alarma.alarm;
 
 import android.app.Service;
 import android.content.Intent;
+import android.os.Handler;
 import android.os.IBinder;
+import javax.inject.Inject;
+import mobi.mateam.alarma.App;
+import mobi.mateam.alarma.alarm.model.Alarm;
+import mobi.mateam.alarma.di.component.AppComponent;
 import timber.log.Timber;
 
 public class AlarmService extends Service {
@@ -28,7 +33,11 @@ public class AlarmService extends Service {
   /** Private action used to stop an alarm with this service. */
   public static final String STOP_ALARM_ACTION = "STOP_ALARM";
 
-  public AlarmService() {
+  @Inject AlarmManager alarmManager;
+
+  @Override public void onCreate() {
+    super.onCreate();
+    getAppComponent().inject(AlarmService.this);
   }
 
   @Override public IBinder onBind(Intent intent) {
@@ -39,6 +48,19 @@ public class AlarmService extends Service {
   @Override public int onStartCommand(Intent intent, int flags, int startId) {
     Timber.v("AlarmService.onStartCommand() with %s", intent);
     int id = intent.getExtras().getInt(AlarmManager.KEY_ALARM_ID);
+    alarmManager.getAlarmById(id).subscribe(this::startAlarm);
     return Service.START_NOT_STICKY;
+  }
+
+  private void startAlarm(Alarm alarm) {
+    Timber.d(alarm.longID + ", " + alarm.lable + ", " + alarm.getStringLocation());
+    AlarmKlaxon.start(getApplicationContext(), alarm);
+    alarmManager.setNextAlarm(alarm);
+    final Handler handler = new Handler();
+    handler.postDelayed(() -> AlarmKlaxon.stop(getApplicationContext()), 6000);
+  }
+
+  public AppComponent getAppComponent() {
+    return ((App) getApplication()).getAppComponent();
   }
 }

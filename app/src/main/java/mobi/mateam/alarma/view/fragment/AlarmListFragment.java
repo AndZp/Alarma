@@ -12,8 +12,8 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import java.util.List;
 import mobi.mateam.alarma.R;
+import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.di.component.AppComponent;
-import mobi.mateam.alarma.model.pojo.alarm.Alarm;
 import mobi.mateam.alarma.presenter.AlarmListPresenter;
 import mobi.mateam.alarma.view.activity.BaseActivity;
 import mobi.mateam.alarma.view.adapter.AlarmListAdapter;
@@ -28,6 +28,7 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
   @BindView(R.id.rv_alarm_list) RecyclerView rvAlarmsList;
 
   AlarmListPresenter presenter;
+
   private Unbinder unbinder;
 
   public AlarmListFragment() {

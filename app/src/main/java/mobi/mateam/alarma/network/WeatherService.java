@@ -1,7 +1,7 @@
 package mobi.mateam.alarma.network;
 
 import mobi.mateam.alarma.db.DatabaseHelper;
-import mobi.mateam.alarma.model.pojo.weather.WeatherData;
+import mobi.mateam.alarma.weather.model.WeatherData;
 import retrofit2.Retrofit;
 import rx.Observable;
 import rx.Observer;
@@ -17,8 +17,9 @@ public class WeatherService {
     weatherAPI = retrofit.create(WeatherAPI.class);
   }
 
+
   public void getWeatherByCity(String city, final WeatherCallback callback) {
-    Observable<WeatherData> weatherByCity = weatherAPI.getWeatherByCity(city, WeatherAPI.WEATHER_API_ID);
+    Observable<WeatherData> weatherByCity = weatherAPI.getWeatherByCity(city);
 
     weatherByCity.subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())

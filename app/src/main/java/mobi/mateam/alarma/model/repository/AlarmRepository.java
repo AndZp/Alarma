@@ -1,9 +1,9 @@
 package mobi.mateam.alarma.model.repository;
 
 import java.util.ArrayList;
+import mobi.mateam.alarma.alarm.model.Alarm;
+import mobi.mateam.alarma.alarm.model.Weekdays;
 import mobi.mateam.alarma.db.AlarmDbHelper;
-import mobi.mateam.alarma.model.pojo.alarm.Alarm;
-import mobi.mateam.alarma.model.pojo.alarm.Weekdays;
 import rx.Observable;
 
 public class AlarmRepository {
@@ -36,7 +36,7 @@ public class AlarmRepository {
     alarm2.daysOfWeek = Weekdays.ALL;
     alarm2.enabled = false;
     alarm2.lable = "Test2";
-    alarm2.longID = 02;
+    alarm2.longID = 545;
     alarm2.vibrate = false;
     alarm2.stringLocation = "Ukraine, Drag";
     ArrayList<Alarm> alarms = new ArrayList<>();
@@ -44,5 +44,9 @@ public class AlarmRepository {
     alarms.add(alarm2);
 
     return alarms;
+  }
+
+  public Observable<Alarm> getAlarmById(int id) {
+    return alarmDb.getAlarmById(id);
   }
 }

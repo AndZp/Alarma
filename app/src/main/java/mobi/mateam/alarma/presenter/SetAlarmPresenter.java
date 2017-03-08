@@ -7,10 +7,10 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import java.util.ArrayList;
 import java.util.List;
-import mobi.mateam.alarma.model.pojo.alarm.Alarm;
-import mobi.mateam.alarma.model.pojo.alarm.Weekdays;
-import mobi.mateam.alarma.model.pojo.weather.WeatherParameter;
+import mobi.mateam.alarma.alarm.model.Alarm;
+import mobi.mateam.alarma.alarm.model.Weekdays;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
+import mobi.mateam.alarma.weather.model.WeatherParameter;
 
 public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   public static int PLACE_PICKER_REQUEST = 111;

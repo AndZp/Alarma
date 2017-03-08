@@ -1,13 +1,16 @@
 package mobi.mateam.alarma.alarm;
 
-import mobi.mateam.alarma.model.pojo.alarm.Alarm;
+import mobi.mateam.alarma.alarm.model.Alarm;
+import rx.Observable;
 
 public interface IAlarmManager {
-  void setNewAlarm(Alarm alarm);
+  void setNextAlarm(Alarm alarm);
 
   void cancelAlarm(Alarm alarm);
 
   void editAlarm(Alarm alarm);
 
   Alarm getNextSetAlarm();
+
+  Observable<Alarm> getAlarmById(int id);
 }

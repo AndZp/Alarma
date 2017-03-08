@@ -1,4 +1,4 @@
-package mobi.mateam.alarma.model.pojo.weather;
+package mobi.mateam.alarma.weather.model;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

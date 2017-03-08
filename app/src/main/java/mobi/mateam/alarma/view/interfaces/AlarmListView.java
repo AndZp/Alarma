@@ -1,7 +1,7 @@
 package mobi.mateam.alarma.view.interfaces;
 
 import java.util.List;
-import mobi.mateam.alarma.model.pojo.alarm.Alarm;
+import mobi.mateam.alarma.alarm.model.Alarm;
 
 public interface AlarmListView extends MvpView {
 

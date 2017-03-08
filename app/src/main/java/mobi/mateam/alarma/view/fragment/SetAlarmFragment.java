@@ -15,11 +15,11 @@ import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import java.util.List;
 import mobi.mateam.alarma.R;
-import mobi.mateam.alarma.model.pojo.alarm.Alarm;
-import mobi.mateam.alarma.model.pojo.weather.WeatherParameter;
+import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.presenter.SetAlarmPresenter;
 import mobi.mateam.alarma.view.adapter.ParamListAdapter;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
+import mobi.mateam.alarma.weather.model.WeatherParameter;
 
 public class SetAlarmFragment extends BaseFragment implements SetAlarmView {
   @BindView(R.id.tv_set_time) TextView tvTime;

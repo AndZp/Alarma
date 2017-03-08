@@ -11,7 +11,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import java.util.List;
 import mobi.mateam.alarma.R;
-import mobi.mateam.alarma.model.pojo.weather.WeatherParameter;
+import mobi.mateam.alarma.weather.model.WeatherParameter;
 
 public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.ViewHolder> {
   public static final int NORMAL = 1;

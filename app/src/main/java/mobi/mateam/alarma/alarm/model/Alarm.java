@@ -1,5 +1,6 @@
-package mobi.mateam.alarma.model.pojo.alarm;
+package mobi.mateam.alarma.alarm.model;
 
+import android.net.Uri;
 import java.util.Calendar;
 
 public class Alarm {
@@ -12,6 +13,8 @@ public class Alarm {
   public int hour;
   public int minutes;
   public String stringLocation;
+  public Uri mRingtone = Uri.EMPTY;
+  public boolean mVibrate = true;
 
   public Calendar getNextAlarmTime(Calendar now) {
     return Calendar.getInstance();

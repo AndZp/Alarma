@@ -1,4 +1,4 @@
-package mobi.mateam.alarma.model.pojo.alarm;
+package mobi.mateam.alarma.alarm.model;
 
 public class Weekdays {
   public static final Weekdays ALL = new Weekdays();

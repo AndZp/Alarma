@@ -12,7 +12,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import java.util.List;
 import mobi.mateam.alarma.R;
-import mobi.mateam.alarma.model.pojo.alarm.Alarm;
+import mobi.mateam.alarma.alarm.model.Alarm;
 
 public class AlarmListAdapter extends RecyclerView.Adapter<AlarmListAdapter.ViewHolder> {
   private final int NOTIFY_DELAY = 500;

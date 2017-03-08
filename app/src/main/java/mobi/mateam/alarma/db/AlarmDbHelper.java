@@ -1,7 +1,7 @@
 package mobi.mateam.alarma.db;
 
 import java.util.ArrayList;
-import mobi.mateam.alarma.model.pojo.alarm.Alarm;
+import mobi.mateam.alarma.alarm.model.Alarm;
 import rx.Observable;
 
 public interface AlarmDbHelper {

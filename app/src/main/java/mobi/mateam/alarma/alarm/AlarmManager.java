@@ -3,21 +3,25 @@ package mobi.mateam.alarma.alarm;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import mobi.mateam.alarma.model.pojo.alarm.Alarm;
+import mobi.mateam.alarma.alarm.model.Alarm;
+import mobi.mateam.alarma.model.repository.AlarmRepository;
 import mobi.mateam.alarma.utils.AlarmManagerCompat;
+import rx.Observable;
 
 public class AlarmManager implements IAlarmManager {
   public static final String KEY_ALARM_ID = "alarma.key.alarm.id";
 
   private final AlarmManagerCompat alarmManagerCompat;
+  private final AlarmRepository alarmRepository;
   private Context context;
 
-  public AlarmManager(Context context) {
+  public AlarmManager(Context context, AlarmRepository alarmRepository) {
     this.context = context;
     alarmManagerCompat = AlarmManagerCompat.from(context);
+    this.alarmRepository = alarmRepository;
   }
 
-  @Override public void setNewAlarm(Alarm alarm) {
+  @Override public void setNextAlarm(Alarm alarm) {
     PendingIntent pendingIntent = getStartAlarmIntent(alarm.longID);
     alarmManagerCompat.setExactAndAllowWhileIdle(android.app.AlarmManager.RTC_WAKEUP, AlarmUtils.getNextAlarmFire(alarm), pendingIntent);
   }
@@ -36,11 +40,15 @@ public class AlarmManager implements IAlarmManager {
 
   @Override public void editAlarm(Alarm alarm) {
     cancelAlarm(alarm);
-    setNewAlarm(alarm);
+    setNextAlarm(alarm);
   }
 
   @Override public Alarm getNextSetAlarm() {
     return null;
+  }
+
+  @Override public Observable<Alarm> getAlarmById(int id) {
+    return alarmRepository.getAlarmById(id);
   }
 
   private PendingIntent getStartAlarmIntent(int alarmId) {

@@ -1,7 +1,7 @@
 package mobi.mateam.alarma.presenter;
 
 import java.util.ArrayList;
-import mobi.mateam.alarma.model.pojo.alarm.Alarm;
+import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.model.repository.AlarmRepository;
 import mobi.mateam.alarma.view.interfaces.AlarmListView;
 import rx.Subscriber;
