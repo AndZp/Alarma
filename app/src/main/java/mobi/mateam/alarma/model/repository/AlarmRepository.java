@@ -19,14 +19,14 @@ public class AlarmRepository {
     return alarmDb.getAllAlarms();
   }
 
-  private ArrayList<Alarm> getTestAlarms() {
+  public static ArrayList<Alarm> getTestAlarms() {
     Alarm alarm1 = new Alarm();
     alarm1.minutes = 05;
     alarm1.hour = 12;
     alarm1.daysOfWeek = Weekdays.ALL;
     alarm1.enabled = true;
     alarm1.lable = "Test1";
-    alarm1.longID = 01;
+    alarm1.longID = 777;
     alarm1.vibrate = true;
     alarm1.stringLocation = "Israel, dead sea";
 
