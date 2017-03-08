@@ -7,7 +7,6 @@ import com.google.gson.GsonBuilder;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
-import mobi.mateam.alarma.db.DatabaseHelper;
 import mobi.mateam.alarma.network.WeatherAPI;
 import mobi.mateam.alarma.network.WeatherService;
 import okhttp3.Cache;
@@ -57,7 +56,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
         .build();
   }
 
-  @Provides @Singleton WeatherService provideWeatherService(Retrofit retrofit, DatabaseHelper databaseHelper) {
-    return new WeatherService(retrofit, databaseHelper);
+  @Provides @Singleton WeatherService provideWeatherService(Retrofit retrofit) {
+    return new WeatherService(retrofit);
   }
 }
