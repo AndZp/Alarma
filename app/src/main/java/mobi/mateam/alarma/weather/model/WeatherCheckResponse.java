@@ -6,8 +6,14 @@ package mobi.mateam.alarma.weather.model;
 
 public class WeatherCheckResponse{
 
+    /**
+     * true if weather state is sutable
+     */
     private boolean isSutableWeather;
 
+    /**
+     * current weather state in terms of weather params
+     */
     private CurrentWeatherState state;
 
     public boolean isSutableWeather() {
