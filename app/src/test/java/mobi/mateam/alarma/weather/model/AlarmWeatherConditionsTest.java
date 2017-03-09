@@ -4,9 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import mobi.mateam.alarma.weather.model.params.implementation.TemperatureParam;
-import mobi.mateam.alarma.weather.model.params.implementation.TemperatureRange;
+import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
 import mobi.mateam.alarma.weather.model.params.implementation.WindPowerParam;
-import mobi.mateam.alarma.weather.model.params.implementation.WindPowerRange;
+import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindPowerRange;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;

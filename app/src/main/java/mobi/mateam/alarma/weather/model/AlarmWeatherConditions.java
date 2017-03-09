@@ -4,8 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
-import mobi.mateam.alarma.weather.model.params.implementation.TemperatureRange;
-import mobi.mateam.alarma.weather.model.params.implementation.WindPowerRange;
+import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
+import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindPowerRange;
 
 /**
  * Created by Des63rus on 3/9/2017.
