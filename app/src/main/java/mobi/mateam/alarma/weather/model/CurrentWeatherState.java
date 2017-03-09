@@ -18,9 +18,12 @@ public class CurrentWeatherState {
 
     private Map<ParameterType, WeatherParamValue> weatherParameterMap;
 
+    public CurrentWeatherState(){
+        this.weatherParameterMap = new HashMap<>();
+    }
     public CurrentWeatherState(WeatherData data){
         weatherParameterMap = new HashMap<>();
-        weatherParameterMap.put(ParameterType.TEMPERATURE, new TemperatureParam(data.getMain().getTemp()));
+        weatherParameterMap.put(ParameterType.TEMPERATURE, new TemperatureParam(data.getMain().getTemp().intValue()));
         weatherParameterMap.put(ParameterType.WIND_POWER, new WindPowerParam(data.getWind().getSpeed()));
     }
 
@@ -30,5 +33,12 @@ public class CurrentWeatherState {
 
     public WeatherParamValue getWeatherParam(ParameterType type){
        return weatherParameterMap.get(type);
+    }
+
+    public void addParam(WeatherParamValue value){
+        if(weatherParameterMap == null){
+            weatherParameterMap = new HashMap<>();
+        }
+        weatherParameterMap.put(value.getParametrType(), value);
     }
 }

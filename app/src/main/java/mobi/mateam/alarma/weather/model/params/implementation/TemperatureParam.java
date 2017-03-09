@@ -9,10 +9,10 @@ import mobi.mateam.alarma.weather.model.params.WeatherParamValue;
  * Class for temperature param implementation
  */
 
-public class TemperatureParam extends WeatherParamValue<Double> {
+public class TemperatureParam extends WeatherParamValue<Integer> {
 
 
-    public TemperatureParam(Double value) {
+    public TemperatureParam(Integer value) {
         super(value);
     }
 
