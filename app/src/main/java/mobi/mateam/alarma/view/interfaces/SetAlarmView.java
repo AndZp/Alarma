@@ -2,7 +2,6 @@ package mobi.mateam.alarma.view.interfaces;
 
 import java.util.List;
 import mobi.mateam.alarma.alarm.model.Alarm;
-import mobi.mateam.alarma.alarm.model.Weekdays;
 import mobi.mateam.alarma.weather.model.WeatherParameter;
 
 public interface SetAlarmView extends MvpView {
@@ -18,7 +17,7 @@ public interface SetAlarmView extends MvpView {
 
   void showWeatherParameters(List<WeatherParameter> parameters);
 
-  void showWeekDays(Weekdays weekdays);
+  void showWeekDays(int[] weekdays);
 
   void returnResultAlarm(Alarm alarm);
 }

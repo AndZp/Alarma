@@ -7,15 +7,15 @@ import rx.Observable;
 public interface AlarmDbHelper {
   Observable<ArrayList<Alarm>> getAllAlarms();
 
-  Observable<Alarm> getAlarmById(int id);
+  Observable<Alarm> getAlarmById(String id);
 
   boolean persistNewAlarm(Alarm alarm);
 
-  boolean persistAlarmsList(ArrayList<Alarm> alarms);
+  Observable<Boolean> persistAlarmsList(ArrayList<Alarm> alarms);
 
   boolean removeAlarm(Alarm alarm);
 
-  boolean removeAlarmById(long id);
+  boolean removeAlarmById(String id);
 
   boolean removeAllAlarms();
 }

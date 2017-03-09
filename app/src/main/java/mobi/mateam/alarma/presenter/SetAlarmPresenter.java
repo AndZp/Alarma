@@ -5,19 +5,21 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import mobi.mateam.alarma.alarm.AlarmProvider;
 import mobi.mateam.alarma.alarm.model.Alarm;
-import mobi.mateam.alarma.alarm.model.Weekdays;
 import mobi.mateam.alarma.model.repository.AlarmRepository;
 import mobi.mateam.alarma.view.fragment.TimePickerFragment;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
 import mobi.mateam.alarma.weather.model.WeatherParameter;
+import mobi.mateam.alarma.weekdays.WeekdaysDataItem;
 
 public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   public static final int TONE_PICKER_REQUEST = 222;
@@ -29,6 +31,21 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   public SetAlarmPresenter(AlarmProvider alarmProvider, AlarmRepository alarmRepository) {
     this.alarmProvider = alarmProvider;
     this.alarmRepository = alarmRepository;
+  }
+
+  private static int[] getRepeatDaysIndexArray(Alarm alarm) {
+    ArrayList<Integer> result = new ArrayList<>();
+    for (int i = 0; i < alarm.weekdays.length; i++) {
+      if (alarm.weekdays[i] == 1) {
+        result.add(i);
+      }
+    }
+
+    int[] res = new int[result.size()];
+    for (int i = 0; i < result.size(); i++) {
+      res[i] = result.get(i);
+    }
+    return res;
   }
 
   @Override public void attachView(SetAlarmView setAlarmView) {
@@ -97,14 +114,21 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
 
   public void setAlarm(Bundle arguments) {
     if (arguments != null) {
-      int alarmId = arguments.getInt(SetAlarmView.ALRAM_ID_KEY);
-      if (alarmId > 0) {
+      String alarmId = arguments.getString(SetAlarmView.ALRAM_ID_KEY);
+      if (!TextUtils.isEmpty(alarmId)) {
         alarmRepository.getAlarmById(alarmId).subscribe(alarm -> this.alarm = alarm);
       }
     } else {
       alarm = new Alarm();
     }
+    updateView();
+  }
 
+  private void updateView() {
+    if (alarm.weekdays != null) {
+      int[] res = getRepeatDaysIndexArray(alarm);
+      getView().showWeekDays(res);
+    }
     getView().showTime(alarm.hour + ":" + alarm.minutes);
     getView().showLabel(alarm.lable);
     getView().showLocation(alarm.stringLocation);
@@ -113,14 +137,21 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   }
 
   public void onSaveAlarm() {
-    alarm.longID = alarmProvider.getNewAlarmId();
+    alarm.id = UUID.randomUUID().toString();
     alarmRepository.saveAlarm(alarm);
     alarmProvider.setNextAlarm(alarm);
     getView().returnResultAlarm(alarm);
   }
 
-  public void setWeekDay(int day) {
-    alarm.daysOfWeek = new Weekdays();
+  public void onWeekDayClick(WeekdaysDataItem weekdaysDataItem) {
+    if (alarm.weekdays == null) {
+      alarm.weekdays = new int[] { 0, 0, 0, 0, 0, 0, 0 };
+    }
+    alarm.weekdays[weekdaysDataItem.getCalendarDayId() - 1] = weekdaysDataItem.isSelected() ? 1 : 0;
+  }
+
+  public void onRepeatUncheck() {
+    alarm.weekdays = null;
   }
 }
 

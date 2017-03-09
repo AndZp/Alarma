@@ -49,13 +49,13 @@ public class AlarmService extends Service {
 
   @Override public int onStartCommand(Intent intent, int flags, int startId) {
     Timber.v("AlarmService.onStartCommand() with %s", intent);
-    int id = intent.getExtras().getInt(AlarmProvider.KEY_ALARM_ID);
+    String id = intent.getExtras().getString(AlarmProvider.KEY_ALARM_ID);
     alarmRepository.getAlarmById(id).subscribe(this::startAlarm);
     return Service.START_NOT_STICKY;
   }
 
   private void startAlarm(Alarm alarm) {
-    Timber.d(alarm.longID + ", " + alarm.lable + ", " + alarm.getStringLocation());
+    Timber.d(alarm.id + ", " + alarm.lable + ", " + alarm.getStringLocation());
     AlarmKlaxon.start(getApplicationContext(), alarm);
     alarmProvider.setNextAlarm(alarm);
     final Handler handler = new Handler();
