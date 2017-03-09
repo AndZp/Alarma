@@ -20,7 +20,8 @@ public class AlarmProvider implements IAlarmManager {
 
   @Override public void setNextAlarm(Alarm alarm) {
     PendingIntent pendingIntent = getStartAlarmIntent(alarm.id);
-    alarmManagerCompat.setExactAndAllowWhileIdle(android.app.AlarmManager.RTC_WAKEUP, AlarmUtils.getNextAlarmFire(alarm), pendingIntent);
+    long nextAlarmFire = AlarmUtils.getNextAlarmFire(alarm);
+    alarmManagerCompat.setExactAndAllowWhileIdle(android.app.AlarmManager.RTC_WAKEUP, nextAlarmFire, pendingIntent);
   }
 
   @Override public void cancelAlarm(Alarm alarm) {

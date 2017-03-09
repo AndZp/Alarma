@@ -46,7 +46,7 @@ public class AlarmListAdapter extends RecyclerView.Adapter<AlarmListAdapter.View
   @Override public void onBindViewHolder(ViewHolder viewHolder, int position) {
     Alarm alarm = alarms.get(position);
     viewHolder.tvAlarmTime.setText(alarm.hour + ":" + alarm.minutes);
-    viewHolder.tvAlarmLable.setText(alarm.lable);
+    viewHolder.tvAlarmLable.setText(alarm.label);
     viewHolder.tvAlarmLocation.setText(alarm.getStringLocation());
     viewHolder.tvAlarmDays.setText(alarm.getStringDays());
     viewHolder.switchActivate.setChecked(alarm.enabled);

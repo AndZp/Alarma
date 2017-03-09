@@ -55,7 +55,7 @@ public class AlarmService extends Service {
   }
 
   private void startAlarm(Alarm alarm) {
-    Timber.d(alarm.id + ", " + alarm.lable + ", " + alarm.getStringLocation());
+    Timber.d(alarm.id + ", " + alarm.label + ", " + alarm.getStringLocation());
     AlarmKlaxon.start(getApplicationContext(), alarm);
     alarmProvider.setNextAlarm(alarm);
     final Handler handler = new Handler();

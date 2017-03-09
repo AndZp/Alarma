@@ -64,7 +64,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   }
 
   public void setLabel(String s) {
-    alarm.lable = s;
+    alarm.label = s;
   }
 
   public void setRingtone() {
@@ -130,8 +130,8 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
       getView().showWeekDays(res);
     }
     getView().showTime(alarm.hour + ":" + alarm.minutes);
-    getView().showLabel(alarm.lable);
-    getView().showLocation(alarm.stringLocation);
+    getView().showLabel(alarm.label);
+    getView().showLocation(alarm.getStringLocation());
     getView().showRingtone("Set Ringtone");
     getView().showWeatherParameters(getParamList());
   }
