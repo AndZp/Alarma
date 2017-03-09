@@ -1,7 +1,6 @@
 package mobi.mateam.alarma.alarm;
 
 import mobi.mateam.alarma.alarm.model.Alarm;
-import rx.Observable;
 
 public interface IAlarmManager {
   void setNextAlarm(Alarm alarm);
@@ -12,5 +11,5 @@ public interface IAlarmManager {
 
   Alarm getNextSetAlarm();
 
-  Observable<Alarm> getAlarmById(int id);
+  int getNewAlarmId();
 }

@@ -56,5 +56,5 @@ public class AlarmManagerCompat {
         calendar.add(Calendar.MILLISECOND, timer);
 
         AlarmManagerCompat alarmManager = new AlarmManagerCompat(context);
-        alarmManager.setAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        alarmManager.setAndAllowWhileIdle(AlarmProvider.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
     }*/

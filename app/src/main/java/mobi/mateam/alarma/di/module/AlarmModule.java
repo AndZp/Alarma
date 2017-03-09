@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
-import mobi.mateam.alarma.alarm.AlarmManager;
+import mobi.mateam.alarma.alarm.AlarmProvider;
 import mobi.mateam.alarma.db.AlarmDbHelper;
 import mobi.mateam.alarma.db.AlarmPrefDb;
 import mobi.mateam.alarma.model.repository.AlarmRepository;
@@ -20,7 +20,7 @@ import mobi.mateam.alarma.model.repository.AlarmRepository;
     return new AlarmRepository(alarmDbHelper);
   }
 
-  @Provides @Singleton AlarmManager provideAlarmManager(Context context, AlarmRepository alarmRepository) {
-    return new AlarmManager(context, alarmRepository);
+  @Provides @Singleton AlarmProvider provideAlarmManager(Context context) {
+    return new AlarmProvider(context);
   }
 }

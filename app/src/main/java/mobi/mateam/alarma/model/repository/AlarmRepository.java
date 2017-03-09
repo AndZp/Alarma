@@ -12,11 +12,7 @@ public class AlarmRepository {
 
   public AlarmRepository(AlarmDbHelper alarmDb) {
     this.alarmDb = alarmDb;
-    alarmDb.persistAlarmsList(getTestAlarms());
-  }
-
-  public Observable<ArrayList<Alarm>> getAlarmList() {
-    return alarmDb.getAllAlarms();
+    //alarmDb.persistAlarmsList(getTestAlarms());
   }
 
   public static ArrayList<Alarm> getTestAlarms() {
@@ -44,6 +40,14 @@ public class AlarmRepository {
     alarms.add(alarm2);
 
     return alarms;
+  }
+
+  public void saveAlarm(Alarm alarm) {
+    alarmDb.persistNewAlarm(alarm);
+  }
+
+  public Observable<ArrayList<Alarm>> getAlarmList() {
+    return alarmDb.getAllAlarms();
   }
 
   public Observable<Alarm> getAlarmById(int id) {

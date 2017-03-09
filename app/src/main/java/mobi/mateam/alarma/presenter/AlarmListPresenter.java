@@ -36,11 +36,11 @@ public class AlarmListPresenter extends BasePresenter<AlarmListView> {
   }
 
   public void addNewAlarm() {
-    Alarm alarm = new Alarm();
-    getView().showSetAlarmView(alarm);
+    getView().showSetAlarmView(null);
   }
 
   void editAlarm(Alarm alarm) {
+    getView().showSetAlarmView(alarm);
   }
 
   void removeAlarm(Alarm alarm) {

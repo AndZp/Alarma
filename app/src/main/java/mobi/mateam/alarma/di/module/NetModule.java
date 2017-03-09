@@ -1,11 +1,20 @@
 package mobi.mateam.alarma.di.module;
 
 import android.content.Context;
+import android.net.Uri;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import dagger.Module;
 import dagger.Provides;
+import java.lang.reflect.Type;
 import javax.inject.Singleton;
 import mobi.mateam.alarma.network.WeatherAPI;
 import mobi.mateam.alarma.network.WeatherService;
@@ -27,6 +36,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
   @Provides @Singleton Gson provideGson() {
     GsonBuilder gsonBuilder = new GsonBuilder();
     gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
+    gsonBuilder.registerTypeAdapter(Uri.class, new UriAdapter());
     return gsonBuilder.create();
   }
 
@@ -58,5 +68,16 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
   @Provides @Singleton WeatherService provideWeatherService(Retrofit retrofit) {
     return new WeatherService(retrofit);
+  }
+
+  public final class UriAdapter implements JsonSerializer<Uri>, JsonDeserializer<Uri> {
+
+    @Override public Uri deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+      return Uri.parse(json.getAsString());
+    }
+
+    @Override public JsonElement serialize(Uri src, Type typeOfSrc, JsonSerializationContext context) {
+      return new JsonPrimitive(src.toString());
+    }
   }
 }

@@ -51,7 +51,6 @@ public class AlarmPrefDb implements AlarmDbHelper {
 
   @Override public boolean persistAlarmsList(ArrayList<Alarm> newAlarms) {
     getAllAlarms().subscribe(alarms -> {
-      alarms.addAll(newAlarms);
       alarmsCash = alarms;
       PrefUtils.setStringPreference(context, Keys.ALL_ALARMS, gson.toJson(alarms));
     });

@@ -1,6 +1,8 @@
 package mobi.mateam.alarma.view.activity;
 
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import butterknife.BindView;
@@ -8,11 +10,13 @@ import butterknife.ButterKnife;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import mobi.mateam.alarma.R;
+import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.presenter.MainAlarmPresenter;
 import mobi.mateam.alarma.presenter.SetAlarmPresenter;
 import mobi.mateam.alarma.view.fragment.AlarmListFragment;
 import mobi.mateam.alarma.view.fragment.SetAlarmFragment;
 import mobi.mateam.alarma.view.interfaces.MainAlarmView;
+import mobi.mateam.alarma.view.interfaces.SetAlarmView;
 
 public class MainAlarmActivity extends BaseActivity implements MainAlarmView {
   private static MainAlarmPresenter presenter;
@@ -34,6 +38,8 @@ public class MainAlarmActivity extends BaseActivity implements MainAlarmView {
     presenter.attachView(this);
   }
 
+
+
   /*public PresenterComponent getComponent() {
     return DaggerPresenterComponent.builder().appComponent(getAppComponent()).build();
   }*/
@@ -44,8 +50,14 @@ public class MainAlarmActivity extends BaseActivity implements MainAlarmView {
     if (isFinishing()) presenter = null;
   }
 
-  @Override public void showSetAlarmView() {
-    getFragmentManager().beginTransaction().replace(R.id.container, new SetAlarmFragment()).addToBackStack(null).commit();
+  @Override public void showSetAlarmView(Alarm alarm) {
+    SetAlarmFragment fragment = new SetAlarmFragment();
+    if (alarm != null) {
+      Bundle bundle = new Bundle();
+      bundle.putInt(SetAlarmView.ALRAM_ID_KEY, alarm.longID);
+      fragment.setArguments(bundle);
+    }
+    getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
   }
 
   @Override public void showAlarmsListView() {
@@ -58,6 +70,13 @@ public class MainAlarmActivity extends BaseActivity implements MainAlarmView {
         Place place = PlacePicker.getPlace(data, this);
         if (SetAlarmFragment.presenter != null) {
           SetAlarmFragment.presenter.onPlacePickerResult(place);
+        }
+      }
+    } else if (requestCode == SetAlarmPresenter.TONE_PICKER_REQUEST) {
+      if (resultCode == RESULT_OK) {
+        Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+        if (SetAlarmFragment.presenter != null) {
+          SetAlarmFragment.presenter.onRingtonePickerResult(uri);
         }
       }
     }

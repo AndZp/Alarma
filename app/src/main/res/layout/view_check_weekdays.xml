@@ -10,38 +10,45 @@
     android:layout_marginTop="10dp"
     tools:showIn="@layout/fragment_set_alarm"
     >
-  <Button
+  <CheckBox
+      android:id="@+id/cb_day_san"
       android:layout_width="52dp"
       android:layout_height="wrap_content"
       android:text="S"
       />
 
-  <Button
+  <CheckBox
+      android:id="@+id/cb_day_mon"
       android:layout_width="52dp"
       android:layout_height="wrap_content"
       android:text="M"
       />
-  <Button
+  <CheckBox
+      android:id="@+id/cb_day_tue"
       android:layout_width="52dp"
       android:layout_height="wrap_content"
       android:text="T"
       />
-  <Button
+  <CheckBox
+      android:id="@+id/cb_day_wed"
       android:layout_width="52dp"
       android:layout_height="wrap_content"
       android:text="W"
       />
-  <Button
+  <CheckBox
+      android:id="@+id/cb_day_thu"
       android:layout_width="52dp"
       android:layout_height="wrap_content"
       android:text="T"
       />
-  <Button
+  <CheckBox
+      android:id="@+id/cb_day_fri"
       android:layout_width="52dp"
       android:layout_height="wrap_content"
       android:text="F"
       />
-  <Button
+  <CheckBox
+      android:id="@+id/cb_day_sut"
       android:layout_width="52dp"
       android:layout_height="wrap_content"
       android:text="S"

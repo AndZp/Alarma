@@ -32,6 +32,7 @@ import timber.log.Timber;
 final class AlarmKlaxon {
 
   private static final long[] VIBRATE_PATTERN = { 500, 500 };
+  public static final int DURATION = 60 * 1000;
 
   private static boolean sStarted = false;
   private static AsyncRingtonePlayer sAsyncRingtonePlayer;
@@ -53,8 +54,8 @@ final class AlarmKlaxon {
     stop(context);
     Timber.v("AlarmKlaxon.start()");
 
-    if (Uri.EMPTY.equals(alarm.mRingtone)) {
-      final long crescendoDuration = 5000;
+    if (!Uri.EMPTY.equals(alarm.mRingtone)) {
+      final long crescendoDuration = DURATION;
       getAsyncRingtonePlayer(context).play(alarm.mRingtone, crescendoDuration);
     }
 

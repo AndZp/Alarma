@@ -1,6 +1,7 @@
 package mobi.mateam.alarma.alarm.model;
 
 import android.net.Uri;
+import com.google.android.gms.location.places.Place;
 import java.util.Calendar;
 
 public class Alarm {
@@ -15,13 +16,14 @@ public class Alarm {
   public String stringLocation;
   public Uri mRingtone = Uri.EMPTY;
   public boolean mVibrate = true;
+  public Place place;
 
   public Calendar getNextAlarmTime(Calendar now) {
     return Calendar.getInstance();
   }
 
   public String getStringLocation() {
-    return stringLocation;
+    return place.getName().toString();
   }
 
   public String getStringDays() {
