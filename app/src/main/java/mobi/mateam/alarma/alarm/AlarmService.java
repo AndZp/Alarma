@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import mobi.mateam.alarma.App;
 import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.di.component.AppComponent;
+import mobi.mateam.alarma.model.repository.AlarmRepository;
 import timber.log.Timber;
 
 public class AlarmService extends Service {
@@ -33,7 +34,8 @@ public class AlarmService extends Service {
   /** Private action used to stop an alarm with this service. */
   public static final String STOP_ALARM_ACTION = "STOP_ALARM";
 
-  @Inject AlarmManager alarmManager;
+  @Inject AlarmProvider alarmProvider;
+  @Inject AlarmRepository alarmRepository;
 
   @Override public void onCreate() {
     super.onCreate();
@@ -47,15 +49,15 @@ public class AlarmService extends Service {
 
   @Override public int onStartCommand(Intent intent, int flags, int startId) {
     Timber.v("AlarmService.onStartCommand() with %s", intent);
-    int id = intent.getExtras().getInt(AlarmManager.KEY_ALARM_ID);
-    alarmManager.getAlarmById(id).subscribe(this::startAlarm);
+    int id = intent.getExtras().getInt(AlarmProvider.KEY_ALARM_ID);
+    alarmRepository.getAlarmById(id).subscribe(this::startAlarm);
     return Service.START_NOT_STICKY;
   }
 
   private void startAlarm(Alarm alarm) {
     Timber.d(alarm.longID + ", " + alarm.lable + ", " + alarm.getStringLocation());
     AlarmKlaxon.start(getApplicationContext(), alarm);
-    alarmManager.setNextAlarm(alarm);
+    alarmProvider.setNextAlarm(alarm);
     final Handler handler = new Handler();
     handler.postDelayed(() -> AlarmKlaxon.stop(getApplicationContext()), 6000);
   }

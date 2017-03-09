@@ -11,9 +11,10 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import java.util.ArrayList;
 import java.util.List;
-import mobi.mateam.alarma.alarm.AlarmManager;
+import mobi.mateam.alarma.alarm.AlarmProvider;
 import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.alarm.model.Weekdays;
+import mobi.mateam.alarma.model.repository.AlarmRepository;
 import mobi.mateam.alarma.view.fragment.TimePickerFragment;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
 import mobi.mateam.alarma.weather.model.WeatherParameter;
@@ -22,10 +23,12 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   public static final int TONE_PICKER_REQUEST = 222;
   public static int PLACE_PICKER_REQUEST = 111;
   private Alarm alarm;
-  private AlarmManager alarmManager;
+  private AlarmProvider alarmProvider;
+  private AlarmRepository alarmRepository;
 
-  public SetAlarmPresenter(AlarmManager alarmManager) {
-    this.alarmManager = alarmManager;
+  public SetAlarmPresenter(AlarmProvider alarmProvider, AlarmRepository alarmRepository) {
+    this.alarmProvider = alarmProvider;
+    this.alarmRepository = alarmRepository;
   }
 
   @Override public void attachView(SetAlarmView setAlarmView) {
@@ -96,7 +99,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
     if (arguments != null) {
       int alarmId = arguments.getInt(SetAlarmView.ALRAM_ID_KEY);
       if (alarmId > 0) {
-        alarmManager.getAlarmById(alarmId).subscribe(alarm -> this.alarm = alarm);
+        alarmRepository.getAlarmById(alarmId).subscribe(alarm -> this.alarm = alarm);
       }
     } else {
       alarm = new Alarm();
@@ -110,7 +113,9 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   }
 
   public void onSaveAlarm() {
-    alarmManager.setNextAlarm(alarm);
+    alarm.longID = alarmProvider.getNewAlarmId();
+    alarmRepository.saveAlarm(alarm);
+    alarmProvider.setNextAlarm(alarm);
     getView().returnResultAlarm(alarm);
   }
 

@@ -4,21 +4,17 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import mobi.mateam.alarma.alarm.model.Alarm;
-import mobi.mateam.alarma.model.repository.AlarmRepository;
 import mobi.mateam.alarma.utils.AlarmManagerCompat;
-import rx.Observable;
 
-public class AlarmManager implements IAlarmManager {
+public class AlarmProvider implements IAlarmManager {
   public static final String KEY_ALARM_ID = "alarma.key.alarm.id";
 
   private final AlarmManagerCompat alarmManagerCompat;
-  private final AlarmRepository alarmRepository;
   private Context context;
 
-  public AlarmManager(Context context, AlarmRepository alarmRepository) {
+  public AlarmProvider(Context context) {
     this.context = context;
     alarmManagerCompat = AlarmManagerCompat.from(context);
-    this.alarmRepository = alarmRepository;
   }
 
   @Override public void setNextAlarm(Alarm alarm) {
@@ -47,8 +43,8 @@ public class AlarmManager implements IAlarmManager {
     return null;
   }
 
-  @Override public Observable<Alarm> getAlarmById(int id) {
-    return alarmRepository.getAlarmById(id);
+  @Override public int getNewAlarmId() {
+    return 333;
   }
 
   private PendingIntent getStartAlarmIntent(int alarmId) {
