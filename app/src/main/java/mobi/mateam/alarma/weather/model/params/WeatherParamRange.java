@@ -1,13 +1,11 @@
 package mobi.mateam.alarma.weather.model.params;
 
-import mobi.mateam.alarma.weather.model.ParameterType;
-
 /**
  * Created by Des63rus on 3/9/2017.
  * General class for weather params
  */
 
-public abstract class WeatherParamRange<T> extends WeatherParamGeneral<T>{
+public abstract class WeatherParamRange<T extends Comparable<T>> extends WeatherParamGeneral<T>{
 
     /**
      *  minimum limit value for weather param
@@ -38,5 +36,12 @@ public abstract class WeatherParamRange<T> extends WeatherParamGeneral<T>{
         this.maxValue = maxValue;
     }
 
+    public boolean checkIfInRange(T currentValue){
+        return currentValue.compareTo(getMinValue()) > 0 && currentValue.compareTo(getMaxValue())< 0;
+    }
 
+    public WeatherParamRange(T minValue, T maxValue){
+        this.setMaxValue(maxValue);
+        this.setMinValue(minValue);
+    }
 }
