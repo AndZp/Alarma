@@ -3,12 +3,14 @@ package mobi.mateam.alarma.weather.model;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Map;
+
+import mobi.mateam.alarma.weather.model.params.ProblemParam;
 import mobi.mateam.alarma.weather.model.params.implementation.TemperatureParam;
-import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
 import mobi.mateam.alarma.weather.model.params.implementation.WindPowerParam;
+import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindPowerRange;
 
-import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 /**
@@ -32,8 +34,9 @@ public class AlarmWeatherConditionsTest {
         CurrentWeatherState notSutable = new CurrentWeatherState();
         notSutable.addParam(new TemperatureParam(25));
         notSutable.addParam(new WindPowerParam(15.0));
-        assertTrue(conditions.checkWeather(sutableState));
-        assertFalse(conditions.checkWeather(notSutable));
+        assertTrue(conditions.checkWeather(sutableState) == null);
+        Map<ParameterType, ProblemParam> parameterTypeProblemParamMap = conditions.checkWeather(notSutable);
+        assertTrue(parameterTypeProblemParamMap != null && parameterTypeProblemParamMap.size()==1);
     }
 
 }

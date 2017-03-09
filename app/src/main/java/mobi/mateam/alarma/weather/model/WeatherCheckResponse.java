@@ -1,5 +1,9 @@
 package mobi.mateam.alarma.weather.model;
 
+import java.util.Map;
+
+import mobi.mateam.alarma.weather.model.params.ProblemParam;
+
 /**
  * Created by Des63rus on 3/9/2017.
  */
@@ -11,10 +15,18 @@ public class WeatherCheckResponse{
      */
     private boolean isSutableWeather;
 
-    /**
-     * current weather state in terms of weather params
-     */
-    private CurrentWeatherState state;
+
+    private Map<ParameterType, ProblemParam> problemParamMap;
+
+    public WeatherCheckResponse(Map<ParameterType, ProblemParam> problemParamMap) {
+        if(problemParamMap !=null){
+            this.isSutableWeather = false;
+            this.problemParamMap = problemParamMap;
+        }
+        else{
+            this.isSutableWeather = true;
+        }
+    }
 
     public boolean isSutableWeather() {
         return isSutableWeather;
@@ -24,11 +36,7 @@ public class WeatherCheckResponse{
         isSutableWeather = sutableWeather;
     }
 
-    public CurrentWeatherState getState() {
-        return state;
-    }
-
-    public void setState(CurrentWeatherState state) {
-        this.state = state;
+    public Map<ParameterType, ProblemParam> getProblemParamMap() {
+        return problemParamMap;
     }
 }

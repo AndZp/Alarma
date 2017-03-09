@@ -3,6 +3,7 @@ package mobi.mateam.alarma.weather.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import mobi.mateam.alarma.weather.model.params.ProblemParam;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindPowerRange;
@@ -24,12 +25,27 @@ public class AlarmWeatherConditions {
         weatherConditionsMap.put(range.getParametrType(), range);
     }
 
-    public boolean checkWeather(CurrentWeatherState weatherState) {
-        return weatherConditionsMap
+    /**
+     * @param weatherState
+     *      current weather state
+     * @return
+     *      map -> ParametrType(Temperature, pressure, etc.), ProblemParam
+     */
+    public Map<ParameterType, ProblemParam> checkWeather(CurrentWeatherState weatherState) {
+        Map<ParameterType, ProblemParam> result = new HashMap<>();
+        weatherConditionsMap
                 .keySet()
                 .stream()
-                //getting all elemnts from weather conditions and check if current value in range
-                .allMatch(parametrType -> weatherConditionsMap.get(parametrType).checkIfInRange(weatherState.getWeatherParam(parametrType).getValue()));
+                //getting all elements from weather conditions and filter problematic ones
+                .filter(parametrType -> !weatherConditionsMap.get(parametrType).checkIfInRange(weatherState.getWeatherParam(parametrType).getValue()))
+                .forEach(parametrType -> {
+                    result.put(parametrType, new ProblemParam());
+                });
+        if (result.size() == 0) {
+            //no problems found
+            return null;
+        }
+        return result;
     }
 
 
