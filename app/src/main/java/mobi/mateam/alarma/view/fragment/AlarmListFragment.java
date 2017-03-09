@@ -13,9 +13,7 @@ import butterknife.Unbinder;
 import java.util.List;
 import mobi.mateam.alarma.R;
 import mobi.mateam.alarma.alarm.model.Alarm;
-import mobi.mateam.alarma.di.component.AppComponent;
 import mobi.mateam.alarma.presenter.AlarmListPresenter;
-import mobi.mateam.alarma.view.activity.BaseActivity;
 import mobi.mateam.alarma.view.adapter.AlarmListAdapter;
 import mobi.mateam.alarma.view.interfaces.AlarmListView;
 import mobi.mateam.alarma.view.interfaces.MainAlarmView;
@@ -44,10 +42,6 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
     return view;
   }
 
-  private AppComponent getAppComponent() {
-    return ((BaseActivity) getActivity()).getAppComponent();
-  }
-
   public void showAlarmList(List<Alarm> alarms) {
     AlarmListAdapter alarmListAdapter = new AlarmListAdapter(alarms);
     rvAlarmsList.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -59,7 +53,7 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
   }
 
   public void showSetAlarmView(Alarm alarm) {
-    ((MainAlarmView) getActivity()).showSetAlarmView();
+    ((MainAlarmView) getActivity()).showSetAlarmView(alarm);
   }
 
   @OnClick(R.id.fab) public void addNewAlarm() {

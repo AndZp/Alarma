@@ -1,5 +1,8 @@
 package mobi.mateam.alarma.di.component;
 
-/*@Singleton @Component(dependencies = AppComponent.class, modules = {}) */public interface PresenterComponent {
+import mobi.mateam.alarma.presenter.SetAlarmPresenter;
 
+/*@Component(dependencies = AppComponent.class, modules = { TestModule.class })*/ public interface PresenterComponent {
+
+  SetAlarmPresenter getSetAlarmPresenter();
 }

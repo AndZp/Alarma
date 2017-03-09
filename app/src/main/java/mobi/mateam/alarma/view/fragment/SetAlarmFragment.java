@@ -6,30 +6,33 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 import java.util.List;
 import mobi.mateam.alarma.R;
 import mobi.mateam.alarma.alarm.model.Alarm;
+import mobi.mateam.alarma.alarm.model.Weekdays;
 import mobi.mateam.alarma.presenter.SetAlarmPresenter;
+import mobi.mateam.alarma.view.activity.MainAlarmActivity;
 import mobi.mateam.alarma.view.adapter.ParamListAdapter;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
 import mobi.mateam.alarma.weather.model.WeatherParameter;
 
 public class SetAlarmFragment extends BaseFragment implements SetAlarmView {
+  public static SetAlarmPresenter presenter;
   @BindView(R.id.tv_set_time) TextView tvTime;
   @BindView(R.id.tv_set_location) TextView tvLocation;
   @BindView(R.id.tv_set_ringtone) TextView tvRingtone;
   @BindView(R.id.et_set_lable) EditText etLable;
   @BindView(R.id.view_weekdays) View weekdays;
   @BindView(R.id.rv_weather_params) RecyclerView rvParams;
-
-  public static SetAlarmPresenter presenter;
 
   private Unbinder unbinder;
 
@@ -40,9 +43,10 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView {
     View view = inflater.inflate(R.layout.fragment_set_alarm, container, false);
     unbinder = ButterKnife.bind(this, view);
     if (presenter == null) {
-      presenter = new SetAlarmPresenter();
+      presenter = getAppComponent().getSetAlarmPresenter();
     }
     presenter.attachView(this);
+    presenter.setAlarm(getArguments());
     return view;
   }
 
@@ -68,8 +72,20 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView {
     rvParams.setAdapter(paramListAdapter);
   }
 
-  @Override public Alarm getAlarm() {
-    return null;
+  @Override public void showWeekDays(Weekdays weekdays) {
+
+  }
+
+  @Override public void returnResultAlarm(Alarm alarm) {
+    ((MainAlarmActivity) getActivity()).showAlarmsListView();
+  }
+
+  @OnClick(R.id.btn_save_alarm) public void onSaveClick() {
+    presenter.onSaveAlarm();
+  }
+
+  @OnCheckedChanged(R.id.cb_day_san) public void onWeekDay(CheckBox cbDay, boolean isCheked) {
+    presenter.setWeekDay(1);
   }
 
   @OnClick(R.id.tv_set_time) public void onTimeClick() {
