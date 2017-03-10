@@ -98,6 +98,10 @@ public class AlarmService extends Service {
 
   private void checkAlarm(Alarm alarm) {
     this.alarm = alarm;
+    if(alarm.place == null){
+      //TODO: check this place
+      return;
+    }
     String lat = String.valueOf(alarm.place.getLatLng().latitude);
     String lon = String.valueOf(alarm.place.getLatLng().longitude);
 
