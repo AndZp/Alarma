@@ -43,7 +43,7 @@ public class AlarmListPresenter extends BasePresenter<AlarmListView> {
   }
 
   void editAlarm(Alarm alarm) {
-    getView().showSetAlarmView(alarm, false);
+    getView().showSetAlarmView(alarm, false, alarm.sportType.getId());
   }
 
   void removeAlarm(Alarm alarm) {

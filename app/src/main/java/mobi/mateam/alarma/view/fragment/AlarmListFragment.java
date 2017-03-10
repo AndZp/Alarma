@@ -44,7 +44,7 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
     AlarmListAdapter alarmListAdapter = new AlarmListAdapter(alarms);
     alarmListAdapter.setOnItemClickListener(new AlarmListAdapter.OnItemClickListener() {
       @Override public void onItemClick(Alarm alarm) {
-        showSetAlarmView(alarm, false);
+        showSetAlarmView(alarm, false, alarm.sportType.getId());
       }
 
       @Override public void onSwitchChange(Alarm alarm, boolean isActivated) {
@@ -59,8 +59,8 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
 
   }
 
-  public void showSetAlarmView(Alarm alarm, boolean isNew) {
-    ((MainAlarmView) getActivity()).showSetAlarmView(alarm, isNew);
+  public void showSetAlarmView(Alarm alarm, boolean isNew, int sportTypeId) {
+    ((MainAlarmView) getActivity()).showSetAlarmView(alarm, isNew, sportTypeId);
   }
 
   @Override public void showSportPicker() {
