@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.UUID;
 import mobi.mateam.alarma.alarm.AlarmProvider;
 import mobi.mateam.alarma.alarm.model.Alarm;
+import mobi.mateam.alarma.alarm.model.PlaceData;
 import mobi.mateam.alarma.model.repository.AlarmRepository;
 import mobi.mateam.alarma.view.fragment.TimePickerFragment;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
@@ -112,7 +113,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
 
   public void onPlacePickerResult(Place place) {
     String toastMsg = String.format("Place: %s", place.getName());
-    alarm.place = place;
+    alarm.place = new PlaceData(place);
     getView().showLocation(toastMsg);
   }
 
@@ -124,7 +125,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
       if (isNewAlarm) {
         alarm = new Alarm(sportTypes);
       } else if (!TextUtils.isEmpty(alarmId)) {
-        alarmRepository.getAlarmById(alarmId).subscribe(alarm -> this.alarm = alarm);
+          alarmRepository.getAlarmById(alarmId).subscribe(alarm -> this.alarm = alarm);
       }
     } else {
       isNewAlarm = true;

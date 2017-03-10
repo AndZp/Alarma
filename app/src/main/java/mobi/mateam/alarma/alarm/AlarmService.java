@@ -99,11 +99,11 @@ public class AlarmService extends Service {
   private void checkAlarm(Alarm alarm) {
     this.alarm = alarm;
     if(alarm.place == null){
-      //TODO: check this place
+      //TODO: check and fix this place - ze le tov
       return;
     }
-    String lat = String.valueOf(alarm.place.getLatLng().latitude);
-    String lon = String.valueOf(alarm.place.getLatLng().longitude);
+    String lat = alarm.place.getLat();
+    String lon = alarm.place.getLat();
 
     weatherService.getCurrentWeatherByLocation(lat, lon)
         .map(weatherData -> WeatherManager.checkTheWeather(weatherData, alarm.conditions))

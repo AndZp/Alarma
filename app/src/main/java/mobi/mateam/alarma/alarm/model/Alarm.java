@@ -2,7 +2,6 @@ package mobi.mateam.alarma.alarm.model;
 
 import android.net.Uri;
 import android.text.TextUtils;
-import com.google.android.gms.location.places.Place;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ public class Alarm {
   public int minutes;
   public Uri mRingtone = Uri.EMPTY;
   public boolean mVibrate = true;
-  public Place place;
+  public PlaceData place;
   public int[] weekdays;
 
   public AlarmWeatherConditions conditions;

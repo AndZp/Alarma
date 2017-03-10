@@ -52,7 +52,7 @@ public class AlarmPrefDb implements AlarmDbHelper {
   }
 
   @Override public Observable<Boolean> persistAlarmsList(ArrayList<Alarm> newAlarms) {
-    String value = gson.toJson(newAlarms);
+      String value = gson.toJson(newAlarms);
     PrefUtils.setStringPreference(context, Keys.ALL_ALARMS, value);
     return Observable.just(true);
   }
