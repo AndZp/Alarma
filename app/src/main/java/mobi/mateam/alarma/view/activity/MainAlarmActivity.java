@@ -33,7 +33,7 @@ public class MainAlarmActivity extends BaseActivity implements MainAlarmView, Pi
     setPresenter();
     setSupportActionBar(toolbar);
     presenter.onCreate();
-    startActivity(new Intent(this, AlarmActivity.class));
+    // startActivity(new Intent(this, AlarmActivity.class));
   }
 
   private void setPresenter() {

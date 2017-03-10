@@ -122,7 +122,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
       isNewAlarm = arguments.getBoolean(SetAlarmView.ALARM_IS_NEW);
       SportTypes sportTypes = SportTypes.getById(arguments.getInt(SetAlarmView.ALARM_SPORT_TYPE_ID));
       if (isNewAlarm) {
-        alarm = new Alarm();
+        alarm = new Alarm(sportTypes);
       } else if (!TextUtils.isEmpty(alarmId)) {
         alarmRepository.getAlarmById(alarmId).subscribe(alarm -> this.alarm = alarm);
       }
@@ -130,19 +130,19 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
       isNewAlarm = true;
       alarm = new Alarm();
     }
-    updateView();
+    updateView(alarm);
   }
 
-  private void updateView() {
-    if (alarm.weekdays != null) {
-      int[] res = getRepeatDaysIndexArray(alarm);
+  private void updateView(Alarm alarm) {
+    if (this.alarm.weekdays != null) {
+      int[] res = getRepeatDaysIndexArray(this.alarm);
       getView().showWeekDays(res);
     }
-    getView().showTime(alarm.hour + ":" + alarm.minutes);
-    getView().showLabel(alarm.label);
-    getView().showLocation(alarm.getStringLocation());
+    getView().showTime(this.alarm.hour + ":" + this.alarm.minutes);
+    getView().showLabel(TextUtils.isEmpty(this.alarm.label) ? this.alarm.sportType.getText() : this.alarm.label);
+    getView().showLocation(this.alarm.getStringLocation());
     getView().showRingtone("Set Ringtone");
-    getView().showWeatherParameters(getParamList());
+    getView().showWeatherParameters(alarm.conditions.getParamsList());
   }
 
   public void onSaveAlarm() {

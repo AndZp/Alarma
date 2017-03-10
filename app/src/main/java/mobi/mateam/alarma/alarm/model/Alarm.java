@@ -33,7 +33,7 @@ public class Alarm {
 
   public Alarm(SportTypes sportTypes) {
     List<ParameterType> defaultParams = sportTypes.getDefaultParams();
-    this.sportType = sportTypes;  
+    this.sportType = sportTypes;
     conditions = new AlarmWeatherConditions();
     for (ParameterType paramType : defaultParams) {
       conditions.addParam(WeatherManager.getDefaultValueForParam(paramType));
