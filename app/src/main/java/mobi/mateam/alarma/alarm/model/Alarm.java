@@ -22,6 +22,10 @@ public class Alarm {
   public AlarmWeatherConditions conditions;
   public SportTypes sportType;
 
+  public Alarm(SportTypes sportTypes) {
+    
+  }
+
   public String getStringLocation() {
     return place == null ? null : place.getName().toString();
   }

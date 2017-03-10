@@ -10,5 +10,5 @@ public interface AlarmView extends MvpView {
 
   void showAlarmLabel(String label);
 
-  void runAnumation();
+  void runAnimation();
 }

@@ -33,6 +33,7 @@ public class MainAlarmActivity extends BaseActivity implements MainAlarmView, Pi
     setPresenter();
     setSupportActionBar(toolbar);
     presenter.onCreate();
+    startActivity(new Intent(this, AlarmActivity.class));
   }
 
   private void setPresenter() {
@@ -103,6 +104,6 @@ public class MainAlarmActivity extends BaseActivity implements MainAlarmView, Pi
   }
 
   @Override public void onSportPick(SportTypes sportTypes) {
-    showSetAlarmView(new Alarm(), true);
+    showSetAlarmView(new Alarm(sportTypes), true);
   }
 }

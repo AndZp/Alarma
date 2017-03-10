@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="mobi.mateam.alarma.view.activity.AlarmActivity"
     >
 
-  <android.support.design.widget.AppBarLayout
+  <!--<android.support.design.widget.AppBarLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:theme="@style/AppTheme.AppBarOverlay"
@@ -25,5 +25,67 @@
   </android.support.design.widget.AppBarLayout>
 
   <include layout="@layout/content_alarm"/>
+-->
+  <TextClock
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_marginTop="50dp"
+      android:gravity="center"
+      android:textSize="50sp"
+      />
+  <TextView
+      android:id="@+id/tv_alarm_name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      />
 
-</android.support.design.widget.CoordinatorLayout>
+  <ImageView
+      android:id="@+id/iv_alarm_anim"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:layout_margin="20dp"
+
+      android:src="@android:drawable/ic_lock_idle_alarm"
+      />
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_gravity="center"
+      android:layout_weight="31"
+      android:gravity="center"
+      >
+
+
+    <ImageButton
+        android:id="@+id/btn_alarm_snooze"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:src="@android:drawable/ic_lock_silent_mode"
+
+        />
+    <ImageButton
+        android:id="@+id/btn_alarm_controler"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:src="@android:drawable/ic_lock_silent_mode"
+        />
+
+
+    <ImageButton
+        android:id="@+id/btn_alarm_dismiss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:src="@android:drawable/ic_lock_silent_mode"
+
+        />
+
+
+  </LinearLayout>
+
+
+</LinearLayout>
