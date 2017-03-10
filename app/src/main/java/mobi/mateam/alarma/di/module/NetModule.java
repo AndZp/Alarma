@@ -3,6 +3,7 @@ package mobi.mateam.alarma.di.module;
 import android.content.Context;
 import android.net.Uri;
 
+import com.google.android.gms.location.places.Place;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -43,6 +44,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
     GsonBuilder gsonBuilder = new GsonBuilder();
     gsonBuilder.setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES);
     gsonBuilder.registerTypeAdapter(Uri.class, new UriAdapter());
+    gsonBuilder.registerTypeAdapter(Place.class, new InterfaceAdapter());
     gsonBuilder.registerTypeAdapter(WeatherParamRange.class, new InterfaceAdapter());
     return gsonBuilder.create();
   }

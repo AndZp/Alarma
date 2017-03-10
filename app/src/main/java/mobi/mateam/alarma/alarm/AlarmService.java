@@ -105,11 +105,11 @@ public class AlarmService extends Service {
         .map(weatherData -> WeatherManager.checkTheWeather(weatherData, alarm.conditions))
         .subscribe(new Subscriber<WeatherCheckResponse>() {
           @Override public void onCompleted() {
-
+            System.out.println("1111");
           }
 
           @Override public void onError(Throwable e) {
-
+            System.out.println("test");
           }
 
           @Override public void onNext(WeatherCheckResponse weatherCheckResponse) {
