@@ -19,6 +19,7 @@ public class WeatherData {
   @SerializedName("name") @Expose private String name;
   @SerializedName("cod") @Expose private Integer cod;
   @SerializedName("rain") @Expose private Rain rain;
+  @SerializedName("snow") @Expose private Snow snow;
 
   public Coord getCoord() {
     return coord;
@@ -126,5 +127,13 @@ public class WeatherData {
 
   @Override public String toString() {
     return name + ", TempMax - " + main.getTempMax() + ", Humidity - " + main.getHumidity();
+  }
+
+  public Snow getSnow() {
+    return snow;
+  }
+
+  public void setSnow(Snow snow) {
+    this.snow = snow;
   }
 }

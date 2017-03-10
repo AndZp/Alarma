@@ -11,7 +11,7 @@ public enum ParameterType {
     //TODO: Globalize or move to strings names
 
     TEMPERATURE("Temperature"), WIND_POWER("Wind power"), WIND_DIRECTION("Wind Direction"), PRESSURE("Pressure"), CLOUDS("Clouds"),
-    RAIN("Rain");
+    RAIN("Rain"), SNOW("Snow");
 
     private String name;
 

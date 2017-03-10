@@ -28,6 +28,8 @@ public class CurrentWeatherState {
         weatherParameterMap.put(ParameterType.TEMPERATURE, new TemperatureParam(data.getMain().getTemp().intValue()));
         weatherParameterMap.put(ParameterType.WIND_POWER, new WindPowerParam(data.getWind().getSpeed()));
         weatherParameterMap.put(ParameterType.RAIN, new RainParam(data.getRain() == null ? null : data.getRain().get3h()));
+        weatherParameterMap.put(ParameterType.SNOW, new RainParam(data.getSnow() == null ? null : data.getSnow().get3h()));
+
     }
 
     public Map<ParameterType, WeatherParamValue> getWeatherParameterMap() {
