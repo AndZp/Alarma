@@ -10,8 +10,10 @@ import mobi.mateam.alarma.weather.model.WeatherCheckResponse;
 import mobi.mateam.alarma.weather.model.WeatherData;
 import mobi.mateam.alarma.weather.model.params.ProblemParam;
 import mobi.mateam.alarma.weather.model.params.RainType;
+import mobi.mateam.alarma.weather.model.params.SnowType;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.RainRange;
+import mobi.mateam.alarma.weather.model.params.implementation.ranges.SnowRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindPowerRange;
 
@@ -49,6 +51,9 @@ public class WeatherManager {
             }
             case WIND_POWER: {
                 return new WindPowerRange(18.0, 30.0);
+            }
+            case SNOW:{
+                return new SnowRange(SnowType.NO_SNOW, SnowType.LIGHT_SNOW);
             }
             default:return null;
         }

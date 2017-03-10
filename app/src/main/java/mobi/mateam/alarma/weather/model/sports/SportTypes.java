@@ -15,7 +15,7 @@ public enum SportTypes {
     //TODO: move to strings all text values
     RUNNING("Jogging", 0, 0,ParameterType.TEMPERATURE, ParameterType.RAIN, ParameterType.WIND_POWER),
     CYCLING("Cycling", 1,1, ParameterType.TEMPERATURE, ParameterType.RAIN, ParameterType.WIND_POWER),
-    SNOWBOARDING("Snowboarding", 2, 2,ParameterType.TEMPERATURE, ParameterType.RAIN, ParameterType.WIND_POWER),
+    SNOWBOARDING("Snowboarding", 2, 2,ParameterType.TEMPERATURE, ParameterType.SNOW, ParameterType.WIND_POWER),
     OTHERS("Others", 3, 3, ParameterType.TEMPERATURE, ParameterType.RAIN, ParameterType.WIND_POWER);
 
     private int id;
