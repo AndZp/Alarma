@@ -1,6 +1,8 @@
 package mobi.mateam.alarma.alarm;
 
 import android.app.Service;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
@@ -12,6 +14,8 @@ import mobi.mateam.alarma.model.repository.AlarmRepository;
 import timber.log.Timber;
 
 public class AlarmService extends Service {
+
+  public static final String ACTION_KEY = "action_key";
   /**
    * AlarmActivity and AlarmService (when unbound) listen for this broadcast intent
    * so that other applications can snooze the alarm (after ALARM_ALERT_ACTION and before
@@ -59,10 +63,36 @@ public class AlarmService extends Service {
     AlarmKlaxon.start(getApplicationContext(), alarm);
     alarmProvider.setNextAlarm(alarm);
     final Handler handler = new Handler();
-    handler.postDelayed(() -> AlarmKlaxon.stop(getApplicationContext()), 6000);
+    handler.postDelayed(() -> AlarmKlaxon.stop(getApplicationContext()), 1000 * 60);
   }
 
   public AppComponent getAppComponent() {
     return ((App) getApplication()).getAppComponent();
+  }
+
+  private class NewGroupReceiver extends BroadcastReceiver {
+
+    @Override public void onReceive(Context context, Intent intent) {
+      Timber.d("GOT IN THE RECIVING");
+      String action = intent.getExtras().getString(ACTION_KEY);
+
+      if (action.equals(ALARM_DISMISS_ACTION)) {
+        dismissAlarm();
+      } else if (action.equals(ALARM_DONE_ACTION)) {
+        doneAction();
+      } else if (action.equals(ALARM_SNOOZE_ACTION)) {
+        snoozeAction();
+      }
+    }
+  }
+
+  private void snoozeAction() {
+  }
+
+  private void doneAction() {
+  }
+
+  private void dismissAlarm() {
+
   }
 }
