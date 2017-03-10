@@ -22,8 +22,8 @@ public class Alarm {
   public AlarmWeatherConditions conditions;
   public SportTypes sportType;
 
-  public Alarm(SportTypes sportTypes) {
-    
+  public Alarm() {
+
   }
 
   public String getStringLocation() {

@@ -4,8 +4,7 @@ import mobi.mateam.alarma.alarm.model.Alarm;
 
 public interface MainAlarmView extends MvpView {
 
-  void showSetAlarmView(Alarm alarm, boolean b);
+  void showSetAlarmView(Alarm alarm, boolean b, int sportID);
 
   void showAlarmsListView();
-
 }
