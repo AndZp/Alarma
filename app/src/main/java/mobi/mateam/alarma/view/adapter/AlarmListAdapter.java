@@ -5,7 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -36,13 +36,11 @@ public class AlarmListAdapter extends RecyclerView.Adapter<AlarmListAdapter.View
     Alarm alarm = alarms.get(position);
     viewHolder.tvAlarmTime.setText(alarm.hour + ":" + alarm.minutes);
     viewHolder.tvAlarmLable.setText(alarm.label);
-    viewHolder.tvAlarmLocation.setText(alarm.getStringLocation());
     viewHolder.tvAlarmDays.setText(alarm.getStringDays());
     viewHolder.switchActivate.setChecked(alarm.activated);
 
     viewHolder.tvAlarmTime.setOnClickListener(v -> onItemClickListener.onItemClick(alarm));
     viewHolder.tvAlarmLable.setOnClickListener(v -> onItemClickListener.onItemClick(alarm));
-    viewHolder.tvAlarmLocation.setOnClickListener(v -> onItemClickListener.onItemClick(alarm));
     viewHolder.tvAlarmDays.setOnClickListener(v -> onItemClickListener.onItemClick(alarm));
     viewHolder.switchActivate.setOnCheckedChangeListener((buttonView, isChecked) -> onItemClickListener.onSwitchChange(alarm, isChecked));
 
@@ -86,8 +84,7 @@ public class AlarmListAdapter extends RecyclerView.Adapter<AlarmListAdapter.View
     @BindView(R.id.tv_alarm_time) TextView tvAlarmTime;
     @BindView(R.id.tv_alarm_lable) TextView tvAlarmLable;
     @BindView(R.id.tv_alarm_days) TextView tvAlarmDays;
-    @BindView(R.id.tv_alarm_location) TextView tvAlarmLocation;
-    @BindView(R.id.btn_info) Button btnInfo;
+    @BindView(R.id.btn_info) ImageView btnInfo;
     @BindView(R.id.switch_alarm) Switch switchActivate;
 
     public ViewHolder(View view) {

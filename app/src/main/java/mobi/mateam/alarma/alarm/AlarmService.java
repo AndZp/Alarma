@@ -25,6 +25,7 @@ import mobi.mateam.alarma.view.activity.MainAlarmActivity;
 import mobi.mateam.alarma.weather.WeatherManager;
 import mobi.mateam.alarma.weather.model.ParameterType;
 import mobi.mateam.alarma.weather.model.WeatherCheckResponse;
+import mobi.mateam.alarma.weather.model.WeatherData;
 import mobi.mateam.alarma.weather.model.params.ProblemParam;
 import rx.Subscriber;
 import timber.log.Timber;
@@ -104,6 +105,22 @@ public class AlarmService extends Service {
     }
     String lat = alarm.place.getLat();
     String lon = alarm.place.getLat();
+
+    weatherService.getCurrentWeatherByLocation(lat, lon).subscribe(new Subscriber<WeatherData>() {
+      @Override public void onCompleted() {
+
+      }
+
+      @Override public void onError(Throwable e) {
+
+      }
+
+      @Override public void onNext(WeatherData weatherData) {
+
+      }
+    });
+
+
 
     weatherService.getCurrentWeatherByLocation(lat, lon)
         .map(weatherData -> WeatherManager.checkTheWeather(weatherData, alarm.conditions))

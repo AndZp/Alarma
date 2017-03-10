@@ -2,9 +2,11 @@ package mobi.mateam.alarma.presenter;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.OpenableColumns;
 import android.text.TextUtils;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
@@ -64,7 +66,12 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
     newFragment.setOnTimeSetListener((view, hourOfDay, minute) -> {
       alarm.hour = hourOfDay;
       alarm.minutes = minute;
-      getView().showTime(hourOfDay + " : " + minute);
+
+      String hour = hourOfDay < 10 ? "0" + hourOfDay : String.valueOf(hourOfDay);
+      String valueOf = String.valueOf(minute);
+      String minutes = valueOf.length() < 1 ? 0 + valueOf : valueOf;
+
+      getView().showTime(hour + " : " + minutes);
     });
   }
 
@@ -107,8 +114,30 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
     if (uri != null) {
       alarm.mRingtone = uri;
       String ringTonePath = uri.getAuthority();
-      getView().showRingtone(ringTonePath);
+      getView().showRingtone(getFileName(uri));
     }
+  }
+
+  public String getFileName(Uri uri) {
+    String result = null;
+    if (uri.getScheme().equals("content")) {
+      Cursor cursor = getView().getActivityContext().getContentResolver().query(uri, null, null, null, null);
+      try {
+        if (cursor != null && cursor.moveToFirst()) {
+          result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
+        }
+      } finally {
+        cursor.close();
+      }
+    }
+    if (result == null) {
+      result = uri.getPath();
+      int cut = result.lastIndexOf('/');
+      if (cut != -1) {
+        result = result.substring(cut + 1);
+      }
+    }
+    return result;
   }
 
   public void onPlacePickerResult(Place place) {
@@ -141,7 +170,10 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
     }
     getView().showTime(this.alarm.hour + ":" + this.alarm.minutes);
     getView().showLabel(TextUtils.isEmpty(this.alarm.label) ? this.alarm.sportType.getText() : this.alarm.label);
-    getView().showLocation(this.alarm.getStringLocation());
+    String stringLocation = this.alarm.getStringLocation();
+    if (!TextUtils.isEmpty(stringLocation)) {
+      getView().showLocation(stringLocation);
+    }
     getView().showRingtone("Set Ringtone");
     getView().showWeatherParameters(alarm.conditions.getParamsList());
   }

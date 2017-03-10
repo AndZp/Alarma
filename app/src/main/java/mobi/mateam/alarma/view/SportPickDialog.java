@@ -3,6 +3,8 @@ package mobi.mateam.alarma.view;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,6 +23,9 @@ public class SportPickDialog extends DialogFragment {
 
   @Override public void onAttach(Context context) {
     super.onAttach(context);
+    ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+    actionBar.setDisplayHomeAsUpEnabled(true);
+    actionBar.setDisplayShowTitleEnabled(true);
   }
 
   // this method create view for your Dialog

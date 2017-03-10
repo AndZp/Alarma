@@ -12,7 +12,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
         android:orientation="vertical"
         >
       <TextView
@@ -20,25 +19,25 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_gravity="center"
-          android:layout_marginTop="10dp"
+          android:layout_marginBottom="24dp"
+          android:layout_marginTop="25dp"
           android:gravity="center"
           android:text="06:00"
-          android:textSize="40sp"
+          android:textColor="@android:color/primary_text_light"
+          android:textSize="45sp"
           />
-
-      <EditText
-          android:id="@+id/et_set_lable"
+      <View
           android:layout_width="match_parent"
-          android:layout_height="wrap_content"
-          android:layout_marginBottom="10dp"
-          android:hint="Lable"
-          android:textSize="30sp"
+          android:layout_height="1dp"
+          android:layout_marginBottom="7dp"
+          android:background="@color/black"
           />
 
       <CheckBox
           android:id="@+id/cb_weekday"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
+          android:layout_margin="10dp"
           android:text="Repeat"
           />
 
@@ -59,10 +58,12 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginBottom="10dp"
-          android:layout_marginTop="10dp"
-          android:drawableLeft="@android:drawable/ic_lock_silent_mode"
-          android:gravity="center"
-          android:text="Set ringtone"
+          android:layout_marginLeft="10dp"
+          android:layout_marginTop="15dp"
+          android:drawableLeft="@drawable/sound"
+          android:drawablePadding="10dp"
+          android:gravity="left|center_vertical"
+          android:text="Sound"
           android:textSize="20sp"
           />
 
@@ -72,12 +73,29 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_marginBottom="10dp"
+          android:layout_marginLeft="10dp"
           android:layout_marginTop="10dp"
-          android:drawableLeft="@android:drawable/ic_dialog_map"
-          android:gravity="center"
-          android:text="Set location"
+          android:drawableLeft="@drawable/location"
+          android:drawablePadding="10dp"
+          android:gravity="left|center_vertical"
+
+          android:text="Location"
           android:textSize="20sp"
           />
+
+
+      <EditText
+          android:drawableLeft="@drawable/label"
+          android:drawablePadding="10dp"
+          android:id="@+id/et_set_lable"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:layout_gravity="center"
+          android:layout_margin="10dp"
+          android:hint="Lable"
+          android:textSize="20sp"
+          />
+
 
       <android.support.v7.widget.RecyclerView
           android:id="@+id/rv_weather_params"
@@ -87,10 +105,13 @@
 
       <Button
           android:id="@+id/btn_save_alarm"
-          android:layout_width="wrap_content"
+
+          android:layout_width="150dp"
           android:layout_height="wrap_content"
           android:layout_gravity="bottom|center_horizontal"
           android:layout_margin="10dp"
+          android:textColor="?colorPrimary"
+
           android:text="Add alarm"
           />
     </LinearLayout>

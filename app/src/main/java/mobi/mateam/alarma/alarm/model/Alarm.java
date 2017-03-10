@@ -2,9 +2,7 @@ package mobi.mateam.alarma.alarm.model;
 
 import android.net.Uri;
 import android.text.TextUtils;
-
 import java.util.List;
-
 import mobi.mateam.alarma.weather.WeatherManager;
 import mobi.mateam.alarma.weather.model.AlarmWeatherConditions;
 import mobi.mateam.alarma.weather.model.ParameterType;
@@ -16,8 +14,8 @@ public class Alarm {
   public boolean vibrate;
   public String id;
   public String label;
-  public int hour;
-  public int minutes;
+  public int hour = 7;
+  public int minutes = 40;
   public Uri mRingtone = Uri.EMPTY;
   public boolean mVibrate = true;
   public PlaceData place;
