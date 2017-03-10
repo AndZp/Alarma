@@ -2,7 +2,7 @@ package mobi.mateam.alarma.weather.model.sports;
 
 import java.util.Arrays;
 import java.util.List;
-
+import mobi.mateam.alarma.R;
 import mobi.mateam.alarma.weather.model.ParameterType;
 
 /**
@@ -14,8 +14,8 @@ import mobi.mateam.alarma.weather.model.ParameterType;
 public enum SportTypes {
     //TODO: move to strings all text values
     RUNNING("Jogging", 0, 0,ParameterType.TEMPERATURE, ParameterType.RAIN, ParameterType.WIND_POWER),
-    CYCLING("Cycling", 1,1, ParameterType.TEMPERATURE, ParameterType.RAIN, ParameterType.WIND_POWER),
-    SNOWBOARDING("Snowboarding", 2, 2,ParameterType.TEMPERATURE, ParameterType.SNOW, ParameterType.WIND_POWER),
+    CYCLING("Cycling", 1,1, ParameterType.TEMPERATURE, ParameterType.RAIN, ParameterType.WIND_POWER), SNOWBOARDING("Snowboarding", 2,
+      R.drawable.category_dialog_mount, ParameterType.TEMPERATURE, ParameterType.SNOW, ParameterType.WIND_POWER),
     OTHERS("Others", 3, 3, ParameterType.TEMPERATURE, ParameterType.RAIN, ParameterType.WIND_POWER);
 
     private int id;

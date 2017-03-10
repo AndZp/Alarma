@@ -41,7 +41,7 @@ public class SportTypeAdapter extends RecyclerView.Adapter<SportTypeAdapter.View
   @Override public void onBindViewHolder(SportTypeAdapter.ViewHolder viewHolder, int position) {
     SportTypes sport = sportTypes.get(position);
 
-    glide.load(sport.getImageId()).into(viewHolder.ivIcon);
+    glide.load(R.drawable.category_dialog_mount).fitCenter().into(viewHolder.ivIcon);
     viewHolder.tvSportName.setText(sport.getText());
     viewHolder.cardView.setOnClickListener(v -> {
       if (onItemClickListener != null) {

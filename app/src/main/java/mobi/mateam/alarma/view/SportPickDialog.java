@@ -15,6 +15,7 @@ import mobi.mateam.alarma.view.interfaces.PickSportListener;
 import mobi.mateam.alarma.weather.model.sports.SportTypes;
 
 public class SportPickDialog extends DialogFragment {
+  public static final int LAYOUT = R.layout.fragment_sport_pick;
   private RecyclerView mRecyclerView;
   private PickSportListener pickSportListener;
 
@@ -25,8 +26,10 @@ public class SportPickDialog extends DialogFragment {
   // this method create view for your Dialog
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     //inflate layout with recycler view
+    getDialog().setTitle("Choose you kind of activity");
+
     pickSportListener = (PickSportListener) getActivity();
-    View v = inflater.inflate(R.layout.fragment_sport_pick, container, false);
+    View v = inflater.inflate(LAYOUT, container, false);
     mRecyclerView = (RecyclerView) v.findViewById(R.id.rv_sport_pick);
     mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
     //setadapter
