@@ -55,13 +55,14 @@ public class MainAlarmActivity extends BaseActivity implements MainAlarmView, Pi
     if (isFinishing()) presenter = null;
   }
 
-  @Override public void showSetAlarmView(Alarm alarm, boolean b) {
+  @Override public void showSetAlarmView(Alarm alarm, boolean b, int sportId) {
     SetAlarmFragment fragment = new SetAlarmFragment();
     if (alarm != null) {
 
       Bundle bundle = new Bundle();
       bundle.putString(SetAlarmView.ALRAM_ID_KEY, alarm.id);
       bundle.putBoolean(SetAlarmView.ALARM_IS_NEW, b);
+      bundle.putInt(SetAlarmView.ALARM_SPORT_TYPE_ID, sportId);
       fragment.setArguments(bundle);
     }
     getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
@@ -104,6 +105,6 @@ public class MainAlarmActivity extends BaseActivity implements MainAlarmView, Pi
   }
 
   @Override public void onSportPick(SportTypes sportTypes) {
-    showSetAlarmView(new Alarm(sportTypes), true);
+    showSetAlarmView(new Alarm(), true, sportTypes.getId());
   }
 }

@@ -21,6 +21,7 @@ import mobi.mateam.alarma.view.interfaces.SetAlarmView;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindPowerRange;
+import mobi.mateam.alarma.weather.model.sports.SportTypes;
 import mobi.mateam.alarma.weekdays.WeekdaysDataItem;
 
 public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
@@ -119,6 +120,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
     if (arguments != null) {
       String alarmId = arguments.getString(SetAlarmView.ALRAM_ID_KEY);
       isNewAlarm = arguments.getBoolean(SetAlarmView.ALARM_IS_NEW);
+      SportTypes sportTypes = SportTypes.getById(arguments.getInt(SetAlarmView.ALARM_SPORT_TYPE_ID));
       if (isNewAlarm) {
         alarm = new Alarm();
       } else if (!TextUtils.isEmpty(alarmId)) {
