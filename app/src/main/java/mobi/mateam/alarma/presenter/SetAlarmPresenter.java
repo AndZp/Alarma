@@ -6,19 +6,24 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
 import mobi.mateam.alarma.alarm.AlarmProvider;
 import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.model.repository.AlarmRepository;
 import mobi.mateam.alarma.view.fragment.TimePickerFragment;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
-import mobi.mateam.alarma.weather.model.WeatherParameter;
+import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
+import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
+import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindPowerRange;
 import mobi.mateam.alarma.weekdays.WeekdaysDataItem;
 
 public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
@@ -89,11 +94,11 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
     }
   }
 
-  public List<WeatherParameter> getParamList() {
+  public List<WeatherParamRange> getParamList() {
 
-    ArrayList<WeatherParameter> weatherParameters = new ArrayList<>();
-    weatherParameters.add(new WeatherParameter());
-    weatherParameters.add(new WeatherParameter());
+    ArrayList<WeatherParamRange> weatherParameters = new ArrayList<>();
+    weatherParameters.add(new TemperatureRange(13, 20));
+    weatherParameters.add(new WindPowerRange(20.0, 40.0));
 
     return weatherParameters;
   }

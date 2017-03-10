@@ -3,6 +3,8 @@ package mobi.mateam.alarma.alarm.model;
 import android.net.Uri;
 import android.text.TextUtils;
 import com.google.android.gms.location.places.Place;
+
+import mobi.mateam.alarma.weather.model.AlarmWeatherConditions;
 import mobi.mateam.alarma.weekdays.Weekday;
 
 public class Alarm {
@@ -16,6 +18,8 @@ public class Alarm {
   public boolean mVibrate = true;
   public Place place;
   public int[] weekdays;
+
+  public AlarmWeatherConditions conditions;
 
   public String getStringLocation() {
     return place == null ? null : place.getName().toString();

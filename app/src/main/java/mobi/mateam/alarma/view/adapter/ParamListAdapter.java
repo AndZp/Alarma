@@ -7,19 +7,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import java.util.List;
 import mobi.mateam.alarma.R;
-import mobi.mateam.alarma.weather.model.WeatherParameter;
+import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 
 public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.ViewHolder> {
   public static final int NORMAL = 1;
   public static final int FOOTER = 2;
   private final int NOTIFY_DELAY = 100;
-  private List<WeatherParameter> weatherParameters;
+  private List<WeatherParamRange> weatherParameters;
 
-  public ParamListAdapter(List<WeatherParameter> weatherParameters) {
+  public ParamListAdapter(List<WeatherParamRange> weatherParameters) {
     this.weatherParameters = weatherParameters;
   }
 
@@ -45,13 +47,14 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.View
       viewHolder.etMaxValue.setVisibility(View.GONE);
       viewHolder.btnAddRemoveParam.setText("Add param");
       viewHolder.btnAddRemoveParam.setOnClickListener(v -> {
-        addParam(new WeatherParameter(), position);
+        //addParam(new WeatherParameterRange(), position);
+        //open selection for parameter type
       });
     } else {
-      WeatherParameter parameter = weatherParameters.get(position);
-      viewHolder.tvParamName.setText(parameter.getName());
-      viewHolder.etMinValue.setText(parameter.getMinValue());
-      viewHolder.etMaxValue.setText(parameter.getMaxValue());
+      WeatherParamRange parameter = weatherParameters.get(position);
+      viewHolder.tvParamName.setText(parameter.getParametrType().getName());
+      viewHolder.etMinValue.setText(parameter.getMinValue().toString());
+      viewHolder.etMaxValue.setText(parameter.getMaxValue().toString());
       viewHolder.btnAddRemoveParam.setText("--");
       viewHolder.btnAddRemoveParam.setOnClickListener(v -> {
         removeParam(position);
@@ -59,15 +62,15 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.View
     }
   }
 
-  @Override public long getItemId(int position) {
-    return weatherParameters.get(position).getId();
-  }
+  //@Override public long getItemId(int position) {
+  //  return weatherParameters.get(position).getId();
+  //}
 
   @Override public int getItemCount() {
     return weatherParameters.size() + 1;
   }
 
-  public void addParam(final WeatherParameter parameter, final int position) {
+  public void addParam(final WeatherParamRange parameter, final int position) {
     weatherParameters.add(position, parameter);
     notifyItemInserted(position);
     notifyDataSetChanged();

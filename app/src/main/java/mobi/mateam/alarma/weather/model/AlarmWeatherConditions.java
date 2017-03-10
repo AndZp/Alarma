@@ -1,6 +1,8 @@
 package mobi.mateam.alarma.weather.model;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 import mobi.mateam.alarma.weather.model.params.ProblemParam;
@@ -20,7 +22,7 @@ public class AlarmWeatherConditions {
 
     public void addParam(WeatherParamRange range) {
         if (weatherConditionsMap == null) {
-            weatherConditionsMap = new HashMap<>();
+            weatherConditionsMap = new LinkedHashMap<>();
         }
         weatherConditionsMap.put(range.getParametrType(), range);
     }
@@ -32,7 +34,7 @@ public class AlarmWeatherConditions {
      *      map -> ParametrType(Temperature, pressure, etc.), ProblemParam
      */
     public Map<ParameterType, ProblemParam> checkWeather(CurrentWeatherState weatherState) {
-        Map<ParameterType, ProblemParam> result = new HashMap<>();
+        Map<ParameterType, ProblemParam> result = new LinkedHashMap<>();
         weatherConditionsMap
                 .keySet()
                 .stream()
@@ -54,5 +56,16 @@ public class AlarmWeatherConditions {
         alarmWeatherConditions.addParam(new TemperatureRange(10, 20));
         alarmWeatherConditions.addParam(new WindPowerRange(10.0, 20.0));
         return alarmWeatherConditions;
+    }
+
+    /**
+     * @return
+     *      List of param range objects
+     */
+    public List<WeatherParamRange> getParamsList(){
+        if(weatherConditionsMap!=null){
+            return new ArrayList<>(weatherConditionsMap.values());
+        }
+        return null;
     }
 }

@@ -18,12 +18,11 @@ public class AlarmRepository {
     Alarm alarm1 = new Alarm();
     alarm1.minutes = 05;
     alarm1.hour = 12;
-
     alarm1.enabled = true;
     alarm1.label = "Test1";
     alarm1.id = "777";
     alarm1.vibrate = true;
-    alarm1.stringLocation = "Israel, dead sea";
+
 
     Alarm alarm2 = new Alarm();
     alarm2.minutes = 15;
@@ -32,7 +31,6 @@ public class AlarmRepository {
     alarm2.label = "Test2";
     alarm2.id = "idasd";
     alarm2.vibrate = false;
-    alarm2.stringLocation = "Ukraine, Drag";
     ArrayList<Alarm> alarms = new ArrayList<>();
     alarms.add(alarm1);
     alarms.add(alarm2);

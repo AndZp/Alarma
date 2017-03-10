@@ -10,21 +10,23 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
-import java.util.ArrayList;
-import java.util.List;
 import mobi.mateam.alarma.R;
 import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.presenter.SetAlarmPresenter;
 import mobi.mateam.alarma.view.activity.MainAlarmActivity;
 import mobi.mateam.alarma.view.adapter.ParamListAdapter;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
-import mobi.mateam.alarma.weather.model.WeatherParameter;
+import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 import mobi.mateam.alarma.weekdays.WeekdaysDataItem;
 import mobi.mateam.alarma.weekdays.WeekdaysDataSource;
 
@@ -73,8 +75,8 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
     etLable.setText(label);
   }
 
-  @Override public void showWeatherParameters(List<WeatherParameter> parameters) {
-    ParamListAdapter paramListAdapter = new ParamListAdapter(parameters);
+  @Override public void showWeatherParameters(List<WeatherParamRange> conditions) {
+    ParamListAdapter paramListAdapter = new ParamListAdapter(conditions);
     rvParams.setLayoutManager(new LinearLayoutManager(getActivity()));
     rvParams.setAdapter(paramListAdapter);
   }

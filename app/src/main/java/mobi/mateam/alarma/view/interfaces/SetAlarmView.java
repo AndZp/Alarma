@@ -1,8 +1,9 @@
 package mobi.mateam.alarma.view.interfaces;
 
 import java.util.List;
+
 import mobi.mateam.alarma.alarm.model.Alarm;
-import mobi.mateam.alarma.weather.model.WeatherParameter;
+import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 
 public interface SetAlarmView extends MvpView {
   String ALRAM_ID_KEY = "alarm_id_key";
@@ -15,7 +16,7 @@ public interface SetAlarmView extends MvpView {
 
   void showLabel(String label);
 
-  void showWeatherParameters(List<WeatherParameter> parameters);
+  void showWeatherParameters(List<WeatherParamRange> conditions);
 
   void showWeekDays(int[] weekdays);
 
