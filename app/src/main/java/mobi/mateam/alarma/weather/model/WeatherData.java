@@ -18,6 +18,7 @@ public class WeatherData {
   @SerializedName("id") @Expose private Integer id;
   @SerializedName("name") @Expose private String name;
   @SerializedName("cod") @Expose private Integer cod;
+  @SerializedName("rain") @Expose private Rain rain;
 
   public Coord getCoord() {
     return coord;
@@ -113,6 +114,14 @@ public class WeatherData {
 
   public void setCod(Integer cod) {
     this.cod = cod;
+  }
+
+  public Rain getRain() {
+    return rain;
+  }
+
+  public void setRain(Rain rain) {
+    this.rain = rain;
   }
 
   @Override public String toString() {
