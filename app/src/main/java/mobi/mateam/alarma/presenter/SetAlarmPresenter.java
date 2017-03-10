@@ -122,7 +122,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
       isNewAlarm = arguments.getBoolean(SetAlarmView.ALARM_IS_NEW);
       SportTypes sportTypes = SportTypes.getById(arguments.getInt(SetAlarmView.ALARM_SPORT_TYPE_ID));
       if (isNewAlarm) {
-        alarm = new Alarm();
+        alarm = new Alarm(sportTypes);
       } else if (!TextUtils.isEmpty(alarmId)) {
         alarmRepository.getAlarmById(alarmId).subscribe(alarm -> this.alarm = alarm);
       }
@@ -139,7 +139,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
       getView().showWeekDays(res);
     }
     getView().showTime(alarm.hour + ":" + alarm.minutes);
-    getView().showLabel(alarm.label);
+    getView().showLabel(TextUtils.isEmpty(alarm.label) ? alarm.sportType.getText() : alarm.label);
     getView().showLocation(alarm.getStringLocation());
     getView().showRingtone("Set Ringtone");
     getView().showWeatherParameters(getParamList());

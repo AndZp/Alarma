@@ -26,6 +26,10 @@ public class Alarm {
 
   }
 
+  public Alarm(SportTypes sportTypes) {
+    this.sportType = sportTypes;
+  }
+
   public String getStringLocation() {
     return place == null ? null : place.getName().toString();
   }
