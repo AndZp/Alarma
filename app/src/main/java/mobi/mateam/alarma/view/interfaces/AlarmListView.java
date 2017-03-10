@@ -9,5 +9,7 @@ public interface AlarmListView extends MvpView {
 
   void showEmptyList();
 
-  void showSetAlarmView(Alarm alarm);
+  void showSetAlarmView(Alarm alarm, boolean b);
+
+  void showSportPicker();
 }

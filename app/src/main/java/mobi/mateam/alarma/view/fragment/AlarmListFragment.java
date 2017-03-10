@@ -14,6 +14,7 @@ import java.util.List;
 import mobi.mateam.alarma.R;
 import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.presenter.AlarmListPresenter;
+import mobi.mateam.alarma.view.SportPickDialog;
 import mobi.mateam.alarma.view.adapter.AlarmListAdapter;
 import mobi.mateam.alarma.view.interfaces.AlarmListView;
 import mobi.mateam.alarma.view.interfaces.MainAlarmView;
@@ -43,7 +44,7 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
     AlarmListAdapter alarmListAdapter = new AlarmListAdapter(alarms);
     alarmListAdapter.setOnItemClickListener(new AlarmListAdapter.OnItemClickListener() {
       @Override public void onItemClick(Alarm alarm) {
-        showSetAlarmView(alarm);
+        showSetAlarmView(alarm, false);
       }
 
       @Override public void onSwitchChange(Alarm alarm, boolean isActivated) {
@@ -58,8 +59,12 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
 
   }
 
-  public void showSetAlarmView(Alarm alarm) {
-    ((MainAlarmView) getActivity()).showSetAlarmView(alarm);
+  public void showSetAlarmView(Alarm alarm, boolean isNew) {
+    ((MainAlarmView) getActivity()).showSetAlarmView(alarm, isNew);
+  }
+
+  @Override public void showSportPicker() {
+    new SportPickDialog().show(getFragmentManager(), "Sport");
   }
 
   @OnClick(R.id.fab) public void addNewAlarm() {

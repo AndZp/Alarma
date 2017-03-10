@@ -19,7 +19,7 @@ public class AlarmRepository {
     alarm1.minutes = 05;
     alarm1.hour = 12;
 
-    alarm1.enabled = true;
+    alarm1.activated = true;
     alarm1.label = "Test1";
     alarm1.id = "777";
     alarm1.vibrate = true;
@@ -28,7 +28,7 @@ public class AlarmRepository {
     Alarm alarm2 = new Alarm();
     alarm2.minutes = 15;
     alarm2.hour = 7;
-    alarm2.enabled = false;
+    alarm2.activated = false;
     alarm2.label = "Test2";
     alarm2.id = "idasd";
     alarm2.vibrate = false;

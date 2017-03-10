@@ -39,18 +39,18 @@ public class AlarmListPresenter extends BasePresenter<AlarmListView> {
   }
 
   public void addNewAlarm() {
-    getView().showSetAlarmView(null);
+    getView().showSportPicker();
   }
 
   void editAlarm(Alarm alarm) {
-    getView().showSetAlarmView(alarm);
+    getView().showSetAlarmView(alarm, false);
   }
 
   void removeAlarm(Alarm alarm) {
   }
 
   public void onActivatedSwitchChange(Alarm alarm, boolean isActivated) {
-    alarm.enabled = isActivated;
+    alarm.activated = isActivated;
     alarmRepository.updateAlarm(alarm);
 
     if (isActivated) {
