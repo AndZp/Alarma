@@ -18,6 +18,7 @@ public class AlarmRepository {
     Alarm alarm1 = new Alarm();
     alarm1.minutes = 05;
     alarm1.hour = 12;
+
     alarm1.enabled = true;
     alarm1.label = "Test1";
     alarm1.id = "777";
@@ -48,5 +49,9 @@ public class AlarmRepository {
 
   public Observable<Alarm> getAlarmById(String id) {
     return alarmDb.getAlarmById(id);
+  }
+
+  public void updateAlarm(Alarm alarm) {
+    alarmDb.updateAlarm(alarm);
   }
 }

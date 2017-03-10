@@ -16,25 +16,14 @@ import mobi.mateam.alarma.alarm.model.Alarm;
 
 public class AlarmListAdapter extends RecyclerView.Adapter<AlarmListAdapter.ViewHolder> {
   private final int NOTIFY_DELAY = 500;
-
+  private OnItemClickListener onItemClickListener;
   private List<Alarm> alarms;
-
-  public static class ViewHolder extends RecyclerView.ViewHolder {
-    @BindView(R.id.tv_alarm_time) TextView tvAlarmTime;
-    @BindView(R.id.tv_alarm_lable) TextView tvAlarmLable;
-    @BindView(R.id.tv_alarm_days) TextView tvAlarmDays;
-    @BindView(R.id.tv_alarm_location) TextView tvAlarmLocation;
-    @BindView(R.id.btn_info) Button btnInfo;
-    @BindView(R.id.switch_alarm) Switch switchActivate;
-
-    public ViewHolder(View view) {
-      super(view);
-      ButterKnife.bind(this, view);
-    }
-  }
-
   public AlarmListAdapter(List<Alarm> alarms) {
     this.alarms = alarms;
+  }
+
+  public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+    this.onItemClickListener = onItemClickListener;
   }
 
   @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -50,17 +39,14 @@ public class AlarmListAdapter extends RecyclerView.Adapter<AlarmListAdapter.View
     viewHolder.tvAlarmLocation.setText(alarm.getStringLocation());
     viewHolder.tvAlarmDays.setText(alarm.getStringDays());
     viewHolder.switchActivate.setChecked(alarm.enabled);
+    viewHolder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(alarms.get(position)));
   }
-
-  /*@Override public long getItemId(int position) {
-    return alarms.get(position).id;
-  }*/
 
   @Override public int getItemCount() {
     return alarms.size();
   }
 
-  // region List manipulation methods
+
 
   public void addAlarm(final Alarm alarm, final int position) {
     // notify of the insertion with a delay, so there is a brief pause after returning
@@ -72,18 +58,33 @@ public class AlarmListAdapter extends RecyclerView.Adapter<AlarmListAdapter.View
     }, NOTIFY_DELAY);
   }
 
+  // region List manipulation methods
+
   public void removeAlarm(final int position) {
     alarms.remove(position);
 
     // notify of the removal with a delay so there is a brief pause after returning
     // from the book details screen; this makes the animation more noticeable
     Handler handler = new Handler();
-    handler.postDelayed(new Runnable() {
-      @Override public void run() {
-        notifyItemRemoved(position);
-      }
-    }, NOTIFY_DELAY);
+    handler.postDelayed(() -> notifyItemRemoved(position), NOTIFY_DELAY);
   }
 
+  public interface OnItemClickListener {
+    void onItemClick(Alarm alarm);
+  }
+
+  public static class ViewHolder extends RecyclerView.ViewHolder {
+    @BindView(R.id.tv_alarm_time) TextView tvAlarmTime;
+    @BindView(R.id.tv_alarm_lable) TextView tvAlarmLable;
+    @BindView(R.id.tv_alarm_days) TextView tvAlarmDays;
+    @BindView(R.id.tv_alarm_location) TextView tvAlarmLocation;
+    @BindView(R.id.btn_info) Button btnInfo;
+    @BindView(R.id.switch_alarm) Switch switchActivate;
+
+    public ViewHolder(View view) {
+      super(view);
+      ButterKnife.bind(this, view);
+    }
+  }
   // endregion
 }

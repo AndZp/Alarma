@@ -18,9 +18,6 @@ import mobi.mateam.alarma.view.adapter.AlarmListAdapter;
 import mobi.mateam.alarma.view.interfaces.AlarmListView;
 import mobi.mateam.alarma.view.interfaces.MainAlarmView;
 
-/**
- * A placeholder fragment containing a simple view.
- */
 public class AlarmListFragment extends BaseFragment implements AlarmListView {
 
   @BindView(R.id.rv_alarm_list) RecyclerView rvAlarmsList;
@@ -44,6 +41,9 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
 
   public void showAlarmList(List<Alarm> alarms) {
     AlarmListAdapter alarmListAdapter = new AlarmListAdapter(alarms);
+    alarmListAdapter.setOnItemClickListener(alarm -> {
+      showSetAlarmView(alarm);
+    });
     rvAlarmsList.setLayoutManager(new LinearLayoutManager(getActivity()));
     rvAlarmsList.setAdapter(alarmListAdapter);
   }

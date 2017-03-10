@@ -11,6 +11,10 @@ public class AlarmUtils {
   }
 
   public static int getDistanceToNextDay(Alarm alarm, Calendar time) {
+    if (alarm.weekdays == null) {
+      return -1;
+    }
+
     int calendarDay = time.get(DAY_OF_WEEK);
     for (int count = 0; count < 7; count++) {
       if (isWeekDayOn(alarm, calendarDay)) {
@@ -59,5 +63,4 @@ public class AlarmUtils {
 
     return nextInstanceTime;
   }
-
 }

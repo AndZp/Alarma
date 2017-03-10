@@ -12,7 +12,6 @@ public class AlarmPrefDb implements AlarmDbHelper {
 
   private Gson gson;
   private Context context;
-  private ArrayList<Alarm> alarmsCash;
 
   public AlarmPrefDb(Context context, Gson gson) {
     this.gson = gson;
@@ -20,19 +19,19 @@ public class AlarmPrefDb implements AlarmDbHelper {
   }
 
   @Override public Observable<ArrayList<Alarm>> getAllAlarms() {
-    if (alarmsCash == null) {
-      String jsonApps = PrefUtils.getStringPreference(context, Keys.ALL_ALARMS);
-      alarmsCash = gson.fromJson(jsonApps, new TypeToken<ArrayList<Alarm>>() {
-      }.getType());
-    }
-    alarmsCash = alarmsCash != null ? alarmsCash : new ArrayList<>();
-    return Observable.just(alarmsCash);
+
+    String jsonApps = PrefUtils.getStringPreference(context, Keys.ALL_ALARMS);
+    ArrayList<Alarm> alarmList = gson.fromJson(jsonApps, new TypeToken<ArrayList<Alarm>>() {
+    }.getType());
+
+    alarmList = alarmList != null ? alarmList : new ArrayList<>();
+    return Observable.just(alarmList);
   }
 
   @Override public Observable<Alarm> getAlarmById(String id) {
     return getAllAlarms().map(alarms1 -> {
       Alarm alarmById = null;
-      for (Alarm alarm : alarmsCash) {
+      for (Alarm alarm : alarms1) {
         if (alarm.id.equals(id)) {
           alarmById = alarm;
         }
@@ -50,14 +49,25 @@ public class AlarmPrefDb implements AlarmDbHelper {
   }
 
   @Override public Observable<Boolean> persistAlarmsList(ArrayList<Alarm> newAlarms) {
-    return getAllAlarms().map(alarms -> PrefUtils.setStringPreference(context, Keys.ALL_ALARMS, gson.toJson(alarms)));
+    String value = gson.toJson(newAlarms);
+    PrefUtils.setStringPreference(context, Keys.ALL_ALARMS, value);
+    return Observable.just(true);
+  }
 
+  @Override public void updateAlarm(Alarm alarm) {
+    getAllAlarms().subscribe(alarms -> {
+      int position = -1;
+      for (int i = 0; i < alarms.size(); i++) {
+        if (alarms.get(i).id.equals(alarm.id)) {
+          position = i;
+        }
 
-   /* getAllAlarms().subscribe(alarms -> {
-      alarmsCash = alarms;
-      PrefUtils.setStringPreference(context, Keys.ALL_ALARMS, gson.toJson(alarms));
+        if (position >= 0) {
+          alarms.set(position, alarm);
+        }
+        persistAlarmsList(alarms);
+      }
     });
-    return false;*/
   }
 
   @Override public boolean removeAlarm(Alarm alarm) {
@@ -81,8 +91,7 @@ public class AlarmPrefDb implements AlarmDbHelper {
   }
 
   @Override public boolean removeAllAlarms() {
-    alarmsCash.clear();
-    persistAlarmsList(alarmsCash);
+    persistAlarmsList(new ArrayList<>());
     return false;
   }
 

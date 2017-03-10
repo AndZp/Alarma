@@ -6,16 +6,13 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
-
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import mobi.mateam.alarma.alarm.AlarmProvider;
 import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.model.repository.AlarmRepository;
@@ -32,6 +29,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   private Alarm alarm;
   private AlarmProvider alarmProvider;
   private AlarmRepository alarmRepository;
+  private boolean isNewAlarm;
 
   public SetAlarmPresenter(AlarmProvider alarmProvider, AlarmRepository alarmRepository) {
     this.alarmProvider = alarmProvider;
@@ -121,9 +119,11 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
     if (arguments != null) {
       String alarmId = arguments.getString(SetAlarmView.ALRAM_ID_KEY);
       if (!TextUtils.isEmpty(alarmId)) {
+        isNewAlarm = false;
         alarmRepository.getAlarmById(alarmId).subscribe(alarm -> this.alarm = alarm);
       }
     } else {
+      isNewAlarm = true;
       alarm = new Alarm();
     }
     updateView();
@@ -142,9 +142,13 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   }
 
   public void onSaveAlarm() {
-    alarm.id = UUID.randomUUID().toString();
-    alarmRepository.saveAlarm(alarm);
-    alarmProvider.setNextAlarm(alarm);
+    if (isNewAlarm) {
+      alarm.id = UUID.randomUUID().toString();
+      alarmRepository.saveAlarm(alarm);
+      alarmProvider.setNextAlarm(alarm);
+    } else {
+      alarmRepository.updateAlarm(alarm);
+    }
     getView().returnResultAlarm(alarm);
   }
 
