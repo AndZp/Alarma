@@ -40,6 +40,7 @@ public enum ParameterType {
                 result.add(param);
             }
         }
+        return result;
     }
 }
 
