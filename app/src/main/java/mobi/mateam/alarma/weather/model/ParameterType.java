@@ -8,6 +8,8 @@ package mobi.mateam.alarma.weather.model;
 
 public enum ParameterType {
 
+    //TODO: Globalize or move to strings names
+
     TEMPERATURE("Temperature"), WIND_POWER("Wind power"), WIND_DIRECTION("Wind Direction"), PRESSURE("Pressure"), CLOUDS("Clouds");
 
     private String name;
