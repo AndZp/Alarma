@@ -4,6 +4,7 @@ import android.content.Context;
 import dagger.Component;
 import javax.inject.Singleton;
 import mobi.mateam.alarma.alarm.AlarmService;
+import mobi.mateam.alarma.alarm.BootCompleteReceiver;
 import mobi.mateam.alarma.di.module.AlarmModule;
 import mobi.mateam.alarma.di.module.AppModule;
 import mobi.mateam.alarma.di.module.NetModule;
@@ -29,5 +30,7 @@ import mobi.mateam.alarma.view.activity.MainAlarmActivity;
   void inject(AlarmService alarmService);
 
   SetAlarmPresenter getSetAlarmPresenter();
+
+  void inject(BootCompleteReceiver bootCompleteReceiver);
 }
 

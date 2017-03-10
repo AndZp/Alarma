@@ -118,8 +118,10 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   public void setAlarm(Bundle arguments) {
     if (arguments != null) {
       String alarmId = arguments.getString(SetAlarmView.ALRAM_ID_KEY);
-      if (!TextUtils.isEmpty(alarmId)) {
-        isNewAlarm = false;
+      isNewAlarm = arguments.getBoolean(SetAlarmView.ALARM_IS_NEW);
+      if (isNewAlarm) {
+        alarm = new Alarm();
+      } else if (!TextUtils.isEmpty(alarmId)) {
         alarmRepository.getAlarmById(alarmId).subscribe(alarm -> this.alarm = alarm);
       }
     } else {
@@ -144,7 +146,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   public void onSaveAlarm() {
     if (isNewAlarm) {
       alarm.id = UUID.randomUUID().toString();
-      alarm.enabled = true;
+      alarm.activated = true;
       alarmRepository.saveAlarm(alarm);
       alarmProvider.setNextAlarm(alarm);
     } else {

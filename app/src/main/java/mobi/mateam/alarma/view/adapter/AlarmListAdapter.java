@@ -38,7 +38,7 @@ public class AlarmListAdapter extends RecyclerView.Adapter<AlarmListAdapter.View
     viewHolder.tvAlarmLable.setText(alarm.label);
     viewHolder.tvAlarmLocation.setText(alarm.getStringLocation());
     viewHolder.tvAlarmDays.setText(alarm.getStringDays());
-    viewHolder.switchActivate.setChecked(alarm.enabled);
+    viewHolder.switchActivate.setChecked(alarm.activated);
 
     viewHolder.tvAlarmTime.setOnClickListener(v -> onItemClickListener.onItemClick(alarm));
     viewHolder.tvAlarmLable.setOnClickListener(v -> onItemClickListener.onItemClick(alarm));

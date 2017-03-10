@@ -6,6 +6,7 @@ import android.content.Intent;
 import java.util.UUID;
 import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.utils.AlarmManagerCompat;
+import timber.log.Timber;
 
 public class AlarmProvider implements IAlarmManager {
   public static final String KEY_ALARM_ID = "alarma.key.alarm.id";
@@ -21,6 +22,7 @@ public class AlarmProvider implements IAlarmManager {
   @Override public void setNextAlarm(Alarm alarm) {
     PendingIntent pendingIntent = getStartAlarmIntent(alarm.id);
     long nextAlarmFire = AlarmUtils.getNextAlarmFire(alarm);
+    Timber.d("alarmId = " + alarm.id + ", Set next alarm at " + nextAlarmFire);
     alarmManagerCompat.setExactAndAllowWhileIdle(android.app.AlarmManager.RTC_WAKEUP, nextAlarmFire, pendingIntent);
   }
 
