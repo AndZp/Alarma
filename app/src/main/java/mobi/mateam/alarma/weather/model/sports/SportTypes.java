@@ -13,8 +13,8 @@ import mobi.mateam.alarma.weather.model.ParameterType;
 
 public enum SportTypes {
     //TODO: move to strings all text values
-    RUNNING("Jogging",0, ParameterType.TEMPERATURE, ParameterType.RAIN, ParameterType.WIND_POWER),
-    CYCLING("Cycling",1, ParameterType.TEMPERATURE, ParameterType.RAIN, ParameterType.WIND_POWER),
+    RUNNING("Jogging", 0, ParameterType.TEMPERATURE, ParameterType.RAIN, ParameterType.WIND_POWER),
+    CYCLING("Cycling", 1, ParameterType.TEMPERATURE, ParameterType.RAIN, ParameterType.WIND_POWER),
     SNOWBOARDING("Snowboarding", 2, ParameterType.TEMPERATURE, ParameterType.RAIN, ParameterType.WIND_POWER),
     OTHERS("Others", 3, ParameterType.TEMPERATURE, ParameterType.RAIN, ParameterType.WIND_POWER);
 
