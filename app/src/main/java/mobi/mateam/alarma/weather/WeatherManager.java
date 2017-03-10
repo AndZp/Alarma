@@ -9,6 +9,11 @@ import mobi.mateam.alarma.weather.model.ParameterType;
 import mobi.mateam.alarma.weather.model.WeatherCheckResponse;
 import mobi.mateam.alarma.weather.model.WeatherData;
 import mobi.mateam.alarma.weather.model.params.ProblemParam;
+import mobi.mateam.alarma.weather.model.params.RainType;
+import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
+import mobi.mateam.alarma.weather.model.params.implementation.ranges.RainRange;
+import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
+import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindPowerRange;
 
 public class WeatherManager {
 
@@ -26,5 +31,26 @@ public class WeatherManager {
         Map<ParameterType, ProblemParam> problems = alarmWeatherConditions.checkWeather(currentWeatherState);
         //get problematic params and return response with date about isSutable and problems
         return new WeatherCheckResponse(problems);
+    }
+
+    /**
+     * @param type
+     *      type of parameter
+     * @return
+     *      default value for current type
+     */
+    public WeatherParamRange getDefaultValueForParam(ParameterType type){
+        switch (type){
+            case RAIN:{
+                return new RainRange(RainType.NO_RAIN, RainType.NO_RAIN);
+            }
+            case TEMPERATURE: {
+                return new TemperatureRange(15, 25);
+            }
+            case WIND_POWER: {
+                return new WindPowerRange(18.0, 30.0);
+            }
+            default:return null;
+        }
     }
 }
