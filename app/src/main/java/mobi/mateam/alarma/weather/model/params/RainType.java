@@ -7,15 +7,23 @@ package mobi.mateam.alarma.weather.model.params;
  */
 
 public enum RainType{
-    NO_RAIN("No rain"), LIGHT_RAIN("Light Rain"), MODERATE_RAIN("Moderate Rain"), HEAVY_RAIN("Heavy Rain"), VIOLENT_RAIN("Violent Rain");
+    NO_RAIN("No rain", 0), LIGHT_RAIN("Light Rain", 1), MODERATE_RAIN("Moderate Rain", 2), HEAVY_RAIN("Heavy Rain", 3), VIOLENT_RAIN("Violent Rain", 4);
 
     private String text;
+    /**
+     * rank for comparison mechanizm to work
+     */
+    private int rank;
 
-    RainType(String text){
+    RainType(String text, int rank){
         this.text = text;
     }
 
-    public RainType getRainTypeByMM(Integer rainMM){
+    public int getRank() {
+        return rank;
+    }
+
+    public static RainType getRainTypeByMM(Integer rainMM){
         if (rainMM == null || rainMM == 0){
             return NO_RAIN;
         } else if(rainMM < 7){

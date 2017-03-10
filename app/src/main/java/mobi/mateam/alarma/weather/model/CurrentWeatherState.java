@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import mobi.mateam.alarma.weather.model.params.WeatherParamValue;
+import mobi.mateam.alarma.weather.model.params.implementation.RainParam;
 import mobi.mateam.alarma.weather.model.params.implementation.TemperatureParam;
 import mobi.mateam.alarma.weather.model.params.implementation.WindPowerParam;
 
@@ -21,10 +22,12 @@ public class CurrentWeatherState {
     public CurrentWeatherState(){
         this.weatherParameterMap = new HashMap<>();
     }
+
     public CurrentWeatherState(WeatherData data){
         weatherParameterMap = new HashMap<>();
         weatherParameterMap.put(ParameterType.TEMPERATURE, new TemperatureParam(data.getMain().getTemp().intValue()));
         weatherParameterMap.put(ParameterType.WIND_POWER, new WindPowerParam(data.getWind().getSpeed()));
+        weatherParameterMap.put(ParameterType.RAIN, new RainParam(data.getRain() == null ? null : data.getRain().get3h()));
     }
 
     public Map<ParameterType, WeatherParamValue> getWeatherParameterMap() {
