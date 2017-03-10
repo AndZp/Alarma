@@ -19,8 +19,8 @@ public class PlaceData {
 
     public PlaceData(Place place) {
         this.name = place.getName().toString();
-        this.alt = String.valueOf(place.getLatLng().latitude);;
-        this.lat = String.valueOf(place.getLatLng().latitude);;
+        this.alt = String.valueOf(new Double(place.getLatLng().longitude).intValue());
+        this.lat = String.valueOf(new Double(place.getLatLng().latitude).intValue());
     }
 
     public String getName() {
