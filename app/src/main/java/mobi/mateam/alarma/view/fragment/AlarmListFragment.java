@@ -28,8 +28,16 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
   AlarmListPresenter presenter;
 
   private Unbinder unbinder;
+  private boolean isNeedUpdate;
 
   public AlarmListFragment() {
+  }
+
+  @Override public void onResume() {
+    super.onResume();
+    if (isNeedUpdate) {
+      presenter.updateView();
+    }
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -43,6 +51,9 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
   }
 
   public void showAlarmList(List<Alarm> alarms) {
+    tvEmptyState.setVisibility(View.GONE);
+    rvAlarmsList.setVisibility(View.VISIBLE);
+
     AlarmListAdapter alarmListAdapter = new AlarmListAdapter(alarms);
     alarmListAdapter.setOnItemClickListener(new AlarmListAdapter.OnItemClickListener() {
       @Override public void onItemClick(Alarm alarm) {
@@ -86,7 +97,9 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
   public void updateView() {
     if (presenter != null) {
       presenter.updateView();
-    } 
+    } else {
+      isNeedUpdate = true;
+    }
   }
 
   /*public PresenterComponent getComponent() {
