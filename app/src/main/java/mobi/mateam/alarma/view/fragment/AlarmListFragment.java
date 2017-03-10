@@ -41,8 +41,14 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
 
   public void showAlarmList(List<Alarm> alarms) {
     AlarmListAdapter alarmListAdapter = new AlarmListAdapter(alarms);
-    alarmListAdapter.setOnItemClickListener(alarm -> {
-      showSetAlarmView(alarm);
+    alarmListAdapter.setOnItemClickListener(new AlarmListAdapter.OnItemClickListener() {
+      @Override public void onItemClick(Alarm alarm) {
+        showSetAlarmView(alarm);
+      }
+
+      @Override public void onSwitchChange(Alarm alarm, boolean isActivated) {
+        presenter.onActivatedSwitchChange(alarm, isActivated);
+      }
     });
     rvAlarmsList.setLayoutManager(new LinearLayoutManager(getActivity()));
     rvAlarmsList.setAdapter(alarmListAdapter);

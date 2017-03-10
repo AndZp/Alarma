@@ -144,6 +144,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   public void onSaveAlarm() {
     if (isNewAlarm) {
       alarm.id = UUID.randomUUID().toString();
+      alarm.enabled = true;
       alarmRepository.saveAlarm(alarm);
       alarmProvider.setNextAlarm(alarm);
     } else {

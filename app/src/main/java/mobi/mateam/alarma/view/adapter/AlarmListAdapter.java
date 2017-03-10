@@ -39,7 +39,14 @@ public class AlarmListAdapter extends RecyclerView.Adapter<AlarmListAdapter.View
     viewHolder.tvAlarmLocation.setText(alarm.getStringLocation());
     viewHolder.tvAlarmDays.setText(alarm.getStringDays());
     viewHolder.switchActivate.setChecked(alarm.enabled);
-    viewHolder.itemView.setOnClickListener(v -> onItemClickListener.onItemClick(alarms.get(position)));
+
+    viewHolder.tvAlarmTime.setOnClickListener(v -> onItemClickListener.onItemClick(alarm));
+    viewHolder.tvAlarmLable.setOnClickListener(v -> onItemClickListener.onItemClick(alarm));
+    viewHolder.tvAlarmLocation.setOnClickListener(v -> onItemClickListener.onItemClick(alarm));
+    viewHolder.tvAlarmDays.setOnClickListener(v -> onItemClickListener.onItemClick(alarm));
+    viewHolder.switchActivate.setOnCheckedChangeListener((buttonView, isChecked) -> onItemClickListener.onSwitchChange(alarm, isChecked));
+
+
   }
 
   @Override public int getItemCount() {
@@ -71,6 +78,8 @@ public class AlarmListAdapter extends RecyclerView.Adapter<AlarmListAdapter.View
 
   public interface OnItemClickListener {
     void onItemClick(Alarm alarm);
+
+    void onSwitchChange(Alarm alarm, boolean isActivated);
   }
 
   public static class ViewHolder extends RecyclerView.ViewHolder {

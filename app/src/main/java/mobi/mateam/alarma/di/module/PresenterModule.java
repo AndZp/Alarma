@@ -14,8 +14,8 @@ import mobi.mateam.alarma.presenter.SetAlarmPresenter;
     return new MainAlarmPresenter();
   }
 
-  @Provides AlarmListPresenter provideAlarmListPresenter(AlarmRepository alarmRepository) {
-    return new AlarmListPresenter(alarmRepository);
+  @Provides AlarmListPresenter provideAlarmListPresenter(AlarmRepository alarmRepository, AlarmProvider alarmProvider) {
+    return new AlarmListPresenter(alarmRepository, alarmProvider);
   }
 
   @Provides SetAlarmPresenter provideSetAlarmPresenter(AlarmProvider alarmProvider, AlarmRepository alarmRepository) {
