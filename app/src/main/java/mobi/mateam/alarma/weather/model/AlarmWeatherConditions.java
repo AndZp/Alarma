@@ -25,12 +25,18 @@ public class AlarmWeatherConditions {
         weatherConditionsMap.put(range.getParametrType(), range);
     }
 
+    /**
+     * @param weatherState
+     *      current weather state
+     * @return
+     *      map -> ParametrType(Temperature, pressure, etc.), ProblemParam
+     */
     public Map<ParameterType, ProblemParam> checkWeather(CurrentWeatherState weatherState) {
         Map<ParameterType, ProblemParam> result = new HashMap<>();
         weatherConditionsMap
                 .keySet()
                 .stream()
-                //getting all elemnts from weather conditions and check if current value in range
+                //getting all elements from weather conditions and filter problematic ones
                 .filter(parametrType -> !weatherConditionsMap.get(parametrType).checkIfInRange(weatherState.getWeatherParam(parametrType).getValue()))
                 .forEach(parametrType -> {
                     result.put(parametrType, new ProblemParam());

@@ -22,7 +22,9 @@ public class WeatherManager {
      */
     public static WeatherCheckResponse checkTheWeather(WeatherData currentWeatherData, AlarmWeatherConditions alarmWeatherConditions){
         CurrentWeatherState currentWeatherState = new CurrentWeatherState(currentWeatherData);
+        //convert api weather data to our object with weather params
         Map<ParameterType, ProblemParam> problems = alarmWeatherConditions.checkWeather(currentWeatherState);
+        //get problematic params and return response with date about isSutable and problems
         return new WeatherCheckResponse(problems);
     }
 }
