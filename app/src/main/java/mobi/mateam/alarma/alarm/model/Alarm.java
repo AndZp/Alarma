@@ -3,7 +3,12 @@ package mobi.mateam.alarma.alarm.model;
 import android.net.Uri;
 import android.text.TextUtils;
 import com.google.android.gms.location.places.Place;
+
+import java.util.List;
+
+import mobi.mateam.alarma.weather.WeatherManager;
 import mobi.mateam.alarma.weather.model.AlarmWeatherConditions;
+import mobi.mateam.alarma.weather.model.ParameterType;
 import mobi.mateam.alarma.weather.model.sports.SportTypes;
 import mobi.mateam.alarma.weekdays.Weekday;
 
@@ -24,6 +29,15 @@ public class Alarm {
 
   public Alarm() {
 
+  }
+
+  public Alarm(SportTypes sportTypes) {
+    List<ParameterType> defaultParams = sportTypes.getDefaultParams();
+    this.sportType = sportTypes;  
+    conditions = new AlarmWeatherConditions();
+    for (ParameterType paramType : defaultParams) {
+      conditions.addParam(WeatherManager.getDefaultValueForParam(paramType));
+    }
   }
 
   public String getStringLocation() {

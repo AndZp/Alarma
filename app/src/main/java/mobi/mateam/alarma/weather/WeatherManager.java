@@ -39,7 +39,7 @@ public class WeatherManager {
      * @return
      *      default value for current type
      */
-    public WeatherParamRange getDefaultValueForParam(ParameterType type){
+    public static WeatherParamRange getDefaultValueForParam(ParameterType type){
         switch (type){
             case RAIN:{
                 return new RainRange(RainType.NO_RAIN, RainType.NO_RAIN);

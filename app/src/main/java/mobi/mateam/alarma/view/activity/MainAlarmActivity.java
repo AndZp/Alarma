@@ -105,6 +105,6 @@ public class MainAlarmActivity extends BaseActivity implements MainAlarmView, Pi
   }
 
   @Override public void onSportPick(SportTypes sportTypes) {
-    showSetAlarmView(new Alarm(), true, sportTypes.getId());
+    showSetAlarmView(new Alarm(sportTypes), true, sportTypes.getId());
   }
 }
