@@ -11,5 +11,5 @@ public interface IAlarmManager {
 
   Alarm getNextSetAlarm();
 
-  int getNewAlarmId();
+  String getNewAlarmId();
 }

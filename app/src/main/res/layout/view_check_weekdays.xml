@@ -11,7 +11,7 @@
     tools:showIn="@layout/fragment_set_alarm"
     >
   <CheckBox
-      android:id="@+id/cb_day_san"
+      android:id="@+id/cb_weekday"
       android:layout_width="52dp"
       android:layout_height="wrap_content"
       android:text="S"

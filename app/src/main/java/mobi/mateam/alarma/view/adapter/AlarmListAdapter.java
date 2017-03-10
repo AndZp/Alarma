@@ -52,9 +52,9 @@ public class AlarmListAdapter extends RecyclerView.Adapter<AlarmListAdapter.View
     viewHolder.switchActivate.setChecked(alarm.enabled);
   }
 
-  @Override public long getItemId(int position) {
-    return alarms.get(position).longID;
-  }
+  /*@Override public long getItemId(int position) {
+    return alarms.get(position).id;
+  }*/
 
   @Override public int getItemCount() {
     return alarms.size();

@@ -54,7 +54,7 @@ public class MainAlarmActivity extends BaseActivity implements MainAlarmView {
     SetAlarmFragment fragment = new SetAlarmFragment();
     if (alarm != null) {
       Bundle bundle = new Bundle();
-      bundle.putInt(SetAlarmView.ALRAM_ID_KEY, alarm.longID);
+      bundle.putString(SetAlarmView.ALRAM_ID_KEY, alarm.id);
       fragment.setArguments(bundle);
     }
     getFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();

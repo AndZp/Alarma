@@ -39,6 +39,7 @@ android {
 
 repositories {
   maven { url 'https://maven.fabric.io/public' }
+  maven { url "https://jitpack.io" }
 }
 buildscript {
   repositories {
@@ -87,6 +88,7 @@ dependencies {
   compile 'com.evernote:android-job:1.1.7'
   compile 'com.android.support.constraint:constraint-layout:1.0.0'
   compile 'com.android.support:support-v4:25.2.0'
+  compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
   testCompile 'junit:junit:4.12'
   testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
   annotationProcessor 'com.google.dagger:dagger-compiler:2.9'

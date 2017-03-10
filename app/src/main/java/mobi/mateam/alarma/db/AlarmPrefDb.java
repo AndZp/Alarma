@@ -29,11 +29,11 @@ public class AlarmPrefDb implements AlarmDbHelper {
     return Observable.just(alarmsCash);
   }
 
-  @Override public Observable<Alarm> getAlarmById(int id) {
+  @Override public Observable<Alarm> getAlarmById(String id) {
     return getAllAlarms().map(alarms1 -> {
       Alarm alarmById = null;
       for (Alarm alarm : alarmsCash) {
-        if (alarm.longID == id) {
+        if (alarm.id.equals(id)) {
           alarmById = alarm;
         }
       }
@@ -49,12 +49,15 @@ public class AlarmPrefDb implements AlarmDbHelper {
     return false;
   }
 
-  @Override public boolean persistAlarmsList(ArrayList<Alarm> newAlarms) {
-    getAllAlarms().subscribe(alarms -> {
+  @Override public Observable<Boolean> persistAlarmsList(ArrayList<Alarm> newAlarms) {
+    return getAllAlarms().map(alarms -> PrefUtils.setStringPreference(context, Keys.ALL_ALARMS, gson.toJson(alarms)));
+
+
+   /* getAllAlarms().subscribe(alarms -> {
       alarmsCash = alarms;
       PrefUtils.setStringPreference(context, Keys.ALL_ALARMS, gson.toJson(alarms));
     });
-    return false;
+    return false;*/
   }
 
   @Override public boolean removeAlarm(Alarm alarm) {
@@ -65,10 +68,10 @@ public class AlarmPrefDb implements AlarmDbHelper {
     return false;
   }
 
-  @Override public boolean removeAlarmById(long id) {
+  @Override public boolean removeAlarmById(String id) {
     getAllAlarms().subscribe(alarms -> {
       for (Alarm alarm : new ArrayList<>(alarms)) {
-        if (alarm.longID == id) {
+        if (alarm.id.equals(id)) {
           alarms.remove(alarm);
         }
       }

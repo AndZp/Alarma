@@ -12,10 +12,13 @@ import mobi.mateam.alarma.presenter.AlarmListPresenter;
 import mobi.mateam.alarma.presenter.MainAlarmPresenter;
 import mobi.mateam.alarma.presenter.SetAlarmPresenter;
 import mobi.mateam.alarma.view.activity.BaseActivity;
+import mobi.mateam.alarma.view.activity.MainAlarmActivity;
 
 @Singleton @Component(modules = { AppModule.class, AlarmModule.class, NetModule.class, PresenterModule.class }) public interface AppComponent {
 
   void inject(BaseActivity mainActivity);
+
+  void inject(MainAlarmActivity mainAlarmActivity);
 
   Context context();
 

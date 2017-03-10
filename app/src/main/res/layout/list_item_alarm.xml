@@ -62,9 +62,9 @@
       android:gravity="center"
       android:text="Sut, San"
 
+      android:layout_alignBaseline="@+id/tv_days_title"
       android:layout_alignBottom="@+id/tv_days_title"
-      android:layout_toEndOf="@+id/tv_alarm_location"
-      android:layout_alignTop="@+id/tv_days_title"
+      android:layout_toEndOf="@+id/tv_days_title"
       />
   <TextView
       android:id="@+id/tv_alarm_location"

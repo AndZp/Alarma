@@ -35,11 +35,23 @@
           android:textSize="30sp"
           />
 
+      <CheckBox
+          android:id="@+id/cb_weekday"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:text="Repeat"
+          />
 
-      <include
-          layout="@layout/view_check_weekdays"
-          android:id="@+id/view_weekdays"
-
+      <ViewStub
+          android:id="@+id/weekdays_stub"
+          android:layout_width="match_parent"
+          android:layout_height="?actionBarSize"
+          />
+      <android.support.v7.widget.RecyclerView
+          android:id="@+id/list"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:scrollbars="vertical"
           />
 
       <TextView
