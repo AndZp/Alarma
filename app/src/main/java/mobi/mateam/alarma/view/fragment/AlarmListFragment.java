@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -22,6 +23,7 @@ import mobi.mateam.alarma.view.interfaces.MainAlarmView;
 public class AlarmListFragment extends BaseFragment implements AlarmListView {
 
   @BindView(R.id.rv_alarm_list) RecyclerView rvAlarmsList;
+  @BindView(R.id.iv_empty_stay) TextView tvEmptyState;
 
   AlarmListPresenter presenter;
 
@@ -56,10 +58,13 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
   }
 
   public void showEmptyList() {
-
+    tvEmptyState.setVisibility(View.VISIBLE);
+    rvAlarmsList.setVisibility(View.GONE);
   }
 
   public void showSetAlarmView(Alarm alarm, boolean isNew, int sportTypeId) {
+    tvEmptyState.setVisibility(View.GONE);
+    rvAlarmsList.setVisibility(View.VISIBLE);
     ((MainAlarmView) getActivity()).showSetAlarmView(alarm, isNew, sportTypeId);
   }
 
@@ -76,6 +81,12 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
     unbinder.unbind();
     presenter.detachView();
     if (isRemoving()) presenter = null;
+  }
+
+  public void updateView() {
+    if (presenter != null) {
+      presenter.updateView();
+    } 
   }
 
   /*public PresenterComponent getComponent() {

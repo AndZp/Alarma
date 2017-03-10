@@ -10,16 +10,14 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnCheckedChanged;
 import butterknife.OnClick;
 import butterknife.OnTextChanged;
 import butterknife.Unbinder;
+import java.util.ArrayList;
+import java.util.List;
 import mobi.mateam.alarma.R;
 import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.presenter.SetAlarmPresenter;
@@ -36,7 +34,7 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
   @BindView(R.id.tv_set_time) TextView tvTime;
   @BindView(R.id.tv_set_location) TextView tvLocation;
   @BindView(R.id.tv_set_ringtone) TextView tvRingtone;
-  @BindView(R.id.et_set_lable) EditText etLable;
+  @BindView(R.id.et_set_lable) EditText etLabel;
   @BindView(R.id.cb_weekday) CheckBox cbWeekDays;
   @BindView(R.id.rv_weather_params) RecyclerView rvParams;
 
@@ -72,7 +70,7 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
   }
 
   @Override public void showLabel(String label) {
-    etLable.setText(label);
+    etLabel.setText(label);
   }
 
   @Override public void showWeatherParameters(List<WeatherParamRange> conditions) {

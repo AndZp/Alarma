@@ -19,23 +19,7 @@ public class AlarmListPresenter extends BasePresenter<AlarmListView> {
 
   @Override public void attachView(AlarmListView alarmListView) {
     super.attachView(alarmListView);
-    alarmRepository.getAlarmList().subscribe(new Subscriber<ArrayList<Alarm>>() {
-      @Override public void onCompleted() {
-
-      }
-
-      @Override public void onError(Throwable e) {
-        getView().showError(e);
-      }
-
-      @Override public void onNext(ArrayList<Alarm> alarms) {
-        if (alarms == null || alarms.isEmpty()) {
-          getView().showEmptyList();
-        } else {
-          getView().showAlarmList(alarms);
-        }
-      }
-    });
+    updateView();
   }
 
   public void addNewAlarm() {
@@ -59,5 +43,25 @@ public class AlarmListPresenter extends BasePresenter<AlarmListView> {
       alarmProvider.cancelAlarm(alarm);
     }
 
+  }
+
+  public void updateView() {
+    alarmRepository.getAlarmList().subscribe(new Subscriber<ArrayList<Alarm>>() {
+      @Override public void onCompleted() {
+
+      }
+
+      @Override public void onError(Throwable e) {
+        getView().showError(e);
+      }
+
+      @Override public void onNext(ArrayList<Alarm> alarms) {
+        if (alarms == null || alarms.isEmpty()) {
+          getView().showEmptyList();
+        } else {
+          getView().showAlarmList(alarms);
+        }
+      }
+    });
   }
 }

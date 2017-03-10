@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.activity.MainAlarmActivity"
+    android:layout_centerInParent="true"
     >
   <include layout="@layout/content_alarm_list"
       />

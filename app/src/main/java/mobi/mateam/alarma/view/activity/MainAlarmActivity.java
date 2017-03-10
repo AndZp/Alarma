@@ -73,7 +73,9 @@ public class MainAlarmActivity extends BaseActivity implements MainAlarmView, Pi
       alarmListFragment = new AlarmListFragment();
       getFragmentManager().beginTransaction().add(R.id.container, alarmListFragment).commit();
     } else {
+
       getFragmentManager().beginTransaction().replace(R.id.container, alarmListFragment).addToBackStack(null).commit();
+      alarmListFragment.updateView();
     }
   }
 

@@ -1,18 +1,20 @@
 package mobi.mateam.alarma.view.activity;
 
 import android.content.ClipData;
+import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import mobi.mateam.alarma.R;
+import mobi.mateam.alarma.alarm.AlarmService;
 import mobi.mateam.alarma.view.interfaces.AlarmView;
 import mobi.mateam.alarma.weather.model.AlarmWeatherConditions;
 
@@ -53,9 +55,20 @@ public class AlarmActivity extends BaseActivity implements AlarmView {
   }
 
   private void snoozeAlarm() {
-    Toast.makeText(AlarmActivity.this, "dismiss", Toast.LENGTH_LONG).show();
+    Intent localBroadcastIntent = new Intent(AlarmService.MOBI_MATEAM_ALARMA_ALARM_ACTION);
+    //you can add additional info to the Intent
+    localBroadcastIntent.putExtra(AlarmService.ACTION_KEY, AlarmService.ALARM_SNOOZE_ACTION);
+    LocalBroadcastManager myLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
+    myLocalBroadcastManager.sendBroadcast(localBroadcastIntent);
   }
 
+  private void dismissAlarm() {
+    Intent localBroadcastIntent = new Intent(AlarmService.MOBI_MATEAM_ALARMA_ALARM_ACTION);
+    //you can add additional info to the Intent
+    localBroadcastIntent.putExtra(AlarmService.ACTION_KEY, AlarmService.ALARM_DISMISS_ACTION);
+    LocalBroadcastManager myLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
+    myLocalBroadcastManager.sendBroadcast(localBroadcastIntent);
+  }
   private final class DragListener implements View.OnTouchListener {
     public boolean onTouch(View view, MotionEvent motionEvent) {
       if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
@@ -102,10 +115,6 @@ public class AlarmActivity extends BaseActivity implements AlarmView {
           break;
       }
       return true;
-    }
-
-    private void dismissAlarm() {
-      Toast.makeText(AlarmActivity.this, "dismiss", Toast.LENGTH_LONG).show();
     }
   }
 }
