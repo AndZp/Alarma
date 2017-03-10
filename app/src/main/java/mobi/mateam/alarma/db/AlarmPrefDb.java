@@ -1,9 +1,12 @@
 package mobi.mateam.alarma.db;
 
 import android.content.Context;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
 import java.util.ArrayList;
+
 import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.utils.PrefUtils;
 import rx.Observable;
@@ -98,4 +101,7 @@ public class AlarmPrefDb implements AlarmDbHelper {
   private class Keys {
     public static final String ALL_ALARMS = "PREF_KEY_ALL_ALARMS";
   }
+
+
 }
+
