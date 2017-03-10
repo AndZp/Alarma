@@ -27,6 +27,8 @@ public enum SportTypes {
 
     SportTypes(String text, int id, int imageId,  ParameterType... params) {
         this.text = text;
+        this.id = id;
+        this.imageId = imageId;
         if (params == null && params.length == 0) {
             this.defaultParams = Arrays.asList();
         }
@@ -45,12 +47,16 @@ public enum SportTypes {
         return defaultParams;
     }
 
-    public SportTypes getById(int id){
+    public static SportTypes getById(int id){
         for (SportTypes type: values()) {
             if(type.id == id){
                 return type;
             }
         }
         return null;
+    }
+
+    public int getId(){
+        return this.id;
     }
 }
