@@ -36,22 +36,18 @@ public class AlarmWeatherConditions {
       //TODO: Check and fix
 
       Map<ParameterType, ProblemParam> result = new LinkedHashMap<>();
-
-      for (Map.Entry<ParameterType, WeatherParamRange> entry : weatherConditionsMap.entrySet()) {
-        boolean inRange = weatherConditionsMap.get(entry.getKey()).checkIfInRange(weatherState.getWeatherParam(entry.getKey()).getValue());
-        if (!inRange) {
-          result.put(entry.getKey(), new ProblemParam());
+        // going over all params specified by user and check if current weather params are in range
+        for (Map.Entry<ParameterType, WeatherParamRange> entry : weatherConditionsMap.entrySet()) {
+            ParameterType key = entry.getKey();
+            // type of param(Temperature, rain, etc)
+            Comparable currentValue = weatherState.getWeatherParam(key).getValue();
+            // current value for specified param
+            WeatherParamRange weatherParamRange = weatherConditionsMap.get(key);
+            // range specified by User
+            if (!weatherParamRange.checkIfInRange(currentValue)) {
+                result.put(key, new ProblemParam(weatherState.getWeatherParam(key), weatherParamRange));
+            }
         }
-      }
-
-        /*weatherConditionsMap
-                .keySet()
-                .stream()
-                //getting all elements from weather conditions and filter problematic ones
-                .filter(parametrType -> !weatherConditionsMap.get(parametrType).checkIfInRange(weatherState.getWeatherParam(parametrType).getValue()))
-                .forEach(parametrType -> {
-                    result.put(parametrType, new ProblemParam());
-                });*/
         if (result.size() == 0) {
             //no problems found
             return null;

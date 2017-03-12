@@ -12,4 +12,8 @@ public class ProblemParam{
 
     private WeatherParamRange range;
 
+    public ProblemParam(WeatherParamValue currentValue, WeatherParamRange range) {
+        this.currentValue = currentValue;
+        this.range = range;
+    }
 }
