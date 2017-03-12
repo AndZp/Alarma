@@ -29,7 +29,6 @@ public class AlarmProvider implements IAlarmManager {
   @Override public void cancelAlarm(Alarm alarm) {
     PendingIntent pendingIntent = getCancelAlarmIntent(alarm.id);
     alarmManagerCompat.cancel(pendingIntent);
-    pendingIntent.cancel();
   }
 
   private PendingIntent getCancelAlarmIntent(String alarmId) {

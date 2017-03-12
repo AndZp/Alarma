@@ -98,7 +98,7 @@ public class AlarmService extends Service {
 
   private void checkAlarm(Alarm alarm) {
     this.alarm = alarm;
-    if(alarm.place == null){
+    if (alarm.place == null) {
       //TODO: check and fix this place - ze le tov
       return;
     }
