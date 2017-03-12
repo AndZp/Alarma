@@ -14,18 +14,20 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import mobi.mateam.alarma.alarm.AlarmProvider;
 import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.alarm.model.PlaceData;
 import mobi.mateam.alarma.model.repository.AlarmRepository;
 import mobi.mateam.alarma.view.fragment.TimePickerFragment;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
+import mobi.mateam.alarma.weather.model.AlarmWeatherConditions;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindPowerRange;
 import mobi.mateam.alarma.weather.model.sports.SportTypes;
 import mobi.mateam.alarma.weekdays.WeekdaysDataItem;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   public static final int TONE_PICKER_REQUEST = 222;
@@ -57,6 +59,32 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
 
   @Override public void attachView(SetAlarmView setAlarmView) {
     super.attachView(setAlarmView);
+  }
+
+  public void setAlarm(Bundle arguments) {
+    if (arguments != null) {
+      String alarmId = arguments.getString(SetAlarmView.ALRAM_ID_KEY);
+      SportTypes sportTypes = SportTypes.getById(arguments.getInt(SetAlarmView.ALARM_SPORT_TYPE_ID));
+      if (!TextUtils.isEmpty(alarmId)) {
+        isNewAlarm = false;
+
+        alarmRepository.getAlarmById(alarmId).subscribeOn(AndroidSchedulers.mainThread()).subscribe(alarm1 -> {
+          alarm = alarm1;
+          updateView(alarm);
+        });
+      } else if (sportTypes != null) {
+        isNewAlarm = true;
+        alarm = new Alarm();
+
+        alarm.sportType = sportTypes;
+
+        AlarmWeatherConditions alarmWeatherConditions = new AlarmWeatherConditions();
+        alarmWeatherConditions.addParam(getParamList().get(0));
+        alarm.conditions = alarmWeatherConditions;
+
+        updateView(alarm);
+      }
+    }
   }
 
   public void setTime() {
@@ -146,30 +174,21 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
     getView().showLocation(toastMsg);
   }
 
-  public void setAlarm(Bundle arguments) {
-    if (arguments != null) {
-      String alarmId = arguments.getString(SetAlarmView.ALRAM_ID_KEY);
-      isNewAlarm = arguments.getBoolean(SetAlarmView.ALARM_IS_NEW);
-      SportTypes sportTypes = SportTypes.getById(arguments.getInt(SetAlarmView.ALARM_SPORT_TYPE_ID));
-      if (isNewAlarm) {
-        alarm = new Alarm(sportTypes);
-      } else if (!TextUtils.isEmpty(alarmId)) {
-          alarmRepository.getAlarmById(alarmId).subscribe(alarm -> this.alarm = alarm);
-      }
-    } else {
-      isNewAlarm = true;
-      alarm = new Alarm();
-    }
-    updateView(alarm);
-  }
-
   private void updateView(Alarm alarm) {
     if (this.alarm.weekdays != null) {
       int[] res = getRepeatDaysIndexArray(this.alarm);
       getView().showWeekDays(res);
     }
     getView().showTime(this.alarm.hour + ":" + this.alarm.minutes);
-    getView().showLabel(TextUtils.isEmpty(this.alarm.label) ? this.alarm.sportType.getText() : this.alarm.label);
+
+    String label = "Label";
+    if (TextUtils.isEmpty(this.alarm.label)) {
+      label = this.alarm.sportType.getText();
+    } else {
+      label = this.alarm.label;
+    }
+    getView().showLabel(label);
+
     String stringLocation = this.alarm.getStringLocation();
     if (!TextUtils.isEmpty(stringLocation)) {
       getView().showLocation(stringLocation);
@@ -180,14 +199,19 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
 
   public void onSaveAlarm() {
     if (isNewAlarm) {
-      alarm.id = UUID.randomUUID().toString();
       alarm.activated = true;
-      alarmRepository.saveAlarm(alarm);
+      alarm.id = alarmRepository.getNewAlarmId();
       alarmProvider.setNextAlarm(alarm);
+      alarmRepository.saveAlarm(alarm)
+          .observeOn(AndroidSchedulers.mainThread())
+          .subscribeOn(Schedulers.io())
+          .subscribe(s -> getView().notifyAlarmSet(alarm));
     } else {
       alarmRepository.updateAlarm(alarm);
+      alarmProvider.updateAlarm(alarm);
+      getView().notifyAlarmSet(alarm);
     }
-    getView().returnResultAlarm(alarm);
+
   }
 
   public void onWeekDayClick(WeekdaysDataItem weekdaysDataItem) {
@@ -199,6 +223,10 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
 
   public void onRepeatUncheck() {
     alarm.weekdays = null;
+  }
+
+  public void onBackPressed() {
+    alarmRepository.removeAlarm(alarm);
   }
 }
 

@@ -99,12 +99,12 @@ public final class AsyncRingtonePlayer {
   }
 
   /**
-   * Posts a message to the ringtone-thread handler.
+   * Posts a id to the ringtone-thread handler.
    *
-   * @param messageCode the message to post
+   * @param messageCode the id to post
    * @param ringtoneUri the ringtone in question, if any
    * @param crescendoDuration the length of time, in ms, over which to crescendo the ringtone
-   * @param delayMillis the amount of time to delay sending the message, if any
+   * @param delayMillis the amount of time to delay sending the id, if any
    */
   private void postMessage(int messageCode, Uri ringtoneUri, long crescendoDuration, long delayMillis) {
     synchronized (this) {

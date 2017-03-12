@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import java.util.List;
 import mobi.mateam.alarma.R;
@@ -19,6 +18,8 @@ import mobi.mateam.alarma.view.SportPickDialog;
 import mobi.mateam.alarma.view.adapter.AlarmListAdapter;
 import mobi.mateam.alarma.view.interfaces.AlarmListView;
 import mobi.mateam.alarma.view.interfaces.MainAlarmView;
+import mobi.mateam.alarma.view.interfaces.OnEditAlarmListener;
+import timber.log.Timber;
 
 public class AlarmListFragment extends BaseFragment implements AlarmListView {
 
@@ -57,7 +58,11 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
     AlarmListAdapter alarmListAdapter = new AlarmListAdapter(alarms);
     alarmListAdapter.setOnItemClickListener(new AlarmListAdapter.OnItemClickListener() {
       @Override public void onItemClick(Alarm alarm) {
-        showSetAlarmView(alarm, false, alarm.sportType.getId());
+        try {
+          ((OnEditAlarmListener) getActivity()).onEditAlarm(alarm.id);
+        } catch (Exception e) {
+          Timber.e(e);
+        }
       }
 
       @Override public void onSwitchChange(Alarm alarm, boolean isActivated) {
@@ -83,7 +88,7 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
     new SportPickDialog().show(getFragmentManager(), "Sport");
   }
 
-  @OnClick(R.id.fab) public void addNewAlarm() {
+  public void addNewAlarm() {
     presenter.addNewAlarm();
   }
 

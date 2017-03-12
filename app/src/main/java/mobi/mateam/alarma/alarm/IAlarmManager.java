@@ -7,7 +7,7 @@ public interface IAlarmManager {
 
   void cancelAlarm(Alarm alarm);
 
-  void editAlarm(Alarm alarm);
+  void updateAlarm(Alarm alarm);
 
   Alarm getNextSetAlarm();
 

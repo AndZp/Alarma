@@ -21,7 +21,7 @@ import mobi.mateam.alarma.di.component.AppComponent;
 import mobi.mateam.alarma.model.repository.AlarmRepository;
 import mobi.mateam.alarma.network.WeatherService;
 import mobi.mateam.alarma.view.activity.AlarmActivity;
-import mobi.mateam.alarma.view.activity.MainAlarmActivity;
+import mobi.mateam.alarma.view.activity.main.MainAlarmActivity;
 import mobi.mateam.alarma.weather.WeatherManager;
 import mobi.mateam.alarma.weather.model.ParameterType;
 import mobi.mateam.alarma.weather.model.WeatherCheckResponse;
@@ -98,7 +98,7 @@ public class AlarmService extends Service {
 
   private void checkAlarm(Alarm alarm) {
     this.alarm = alarm;
-    if(alarm.place == null){
+    if (alarm.place == null) {
       //TODO: check and fix this place - ze le tov
       return;
     }

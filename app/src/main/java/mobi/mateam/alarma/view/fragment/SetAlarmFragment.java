@@ -21,16 +21,18 @@ import java.util.List;
 import mobi.mateam.alarma.R;
 import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.presenter.SetAlarmPresenter;
-import mobi.mateam.alarma.view.activity.MainAlarmActivity;
 import mobi.mateam.alarma.view.adapter.ParamListAdapter;
+import mobi.mateam.alarma.view.interfaces.OnAlarmSetListener;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 import mobi.mateam.alarma.weekdays.WeekdaysDataItem;
 import mobi.mateam.alarma.weekdays.WeekdaysDataSource;
+import timber.log.Timber;
 
 public class SetAlarmFragment extends BaseFragment implements SetAlarmView, WeekdaysDataSource.Callback {
   public static final int LAYOUT = R.layout.fragment_set_alarm;
   public static SetAlarmPresenter presenter;
+
   @BindView(R.id.tv_set_time) TextView tvTime;
   @BindView(R.id.tv_set_location) TextView tvLocation;
   @BindView(R.id.tv_set_ringtone) TextView tvRingtone;
@@ -85,12 +87,12 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
     viewWeekday.setSelectedDays(weekdays);
   }
 
-  @Override public void returnResultAlarm(Alarm alarm) {
-    ((MainAlarmActivity) getActivity()).showAlarmsListView();
-  }
-
-  @OnClick(R.id.btn_save_alarm) public void onSaveClick() {
-    presenter.onSaveAlarm();
+  @Override public void notifyAlarmSet(Alarm alarm) {
+    try {
+      ((OnAlarmSetListener) getActivity()).onAlarmSet(alarm.id);
+    } catch (Exception e) {
+      Timber.e(e);
+    }
   }
 
   @OnCheckedChanged(R.id.cb_weekday) public void onWeekDay(boolean isCheked) {
@@ -131,5 +133,9 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
 
   @Override public void onWeekdaysSelected(int i, ArrayList<WeekdaysDataItem> arrayList) {
 
+  }
+
+  public void onBackPressed() {
+    presenter.onBackPressed();
   }
 }

@@ -1,12 +1,11 @@
 package mobi.mateam.alarma.db;
 
 import android.content.Context;
-
+import android.text.TextUtils;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 import java.util.ArrayList;
-
+import java.util.UUID;
 import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.utils.PrefUtils;
 import rx.Observable;
@@ -43,16 +42,19 @@ public class AlarmPrefDb implements AlarmDbHelper {
     });
   }
 
-  @Override public boolean persistNewAlarm(Alarm alarm) {
-    getAllAlarms().subscribe(alarms -> {
+  @Override public Observable<String> persistNewAlarm(Alarm alarm) {
+    return getAllAlarms().map(alarms -> {
+      if (TextUtils.isEmpty(alarm.id)) {
+        alarm.id = UUID.randomUUID().toString();
+      }
       alarms.add(alarm);
       persistAlarmsList(alarms);
+      return alarm.id;
     });
-    return false;
   }
 
   @Override public Observable<Boolean> persistAlarmsList(ArrayList<Alarm> newAlarms) {
-      String value = gson.toJson(newAlarms);
+    String value = gson.toJson(newAlarms);
     PrefUtils.setStringPreference(context, Keys.ALL_ALARMS, value);
     return Observable.just(true);
   }
@@ -101,7 +103,5 @@ public class AlarmPrefDb implements AlarmDbHelper {
   private class Keys {
     public static final String ALL_ALARMS = "PREF_KEY_ALL_ALARMS";
   }
-
-
 }
 

@@ -7,30 +7,30 @@ import mobi.mateam.alarma.alarm.AlarmService;
 import mobi.mateam.alarma.alarm.BootCompleteReceiver;
 import mobi.mateam.alarma.di.module.AlarmModule;
 import mobi.mateam.alarma.di.module.AppModule;
+import mobi.mateam.alarma.di.module.EventBusModule;
 import mobi.mateam.alarma.di.module.NetModule;
 import mobi.mateam.alarma.di.module.PresenterModule;
 import mobi.mateam.alarma.presenter.AlarmListPresenter;
-import mobi.mateam.alarma.presenter.MainAlarmPresenter;
 import mobi.mateam.alarma.presenter.SetAlarmPresenter;
-import mobi.mateam.alarma.view.activity.BaseActivity;
-import mobi.mateam.alarma.view.activity.MainAlarmActivity;
+import mobi.mateam.alarma.presenter.SuperAlarmPresenter;
+import mobi.mateam.alarma.view.activity.main.MainAlarmActivity;
 
-@Singleton @Component(modules = { AppModule.class, AlarmModule.class, NetModule.class, PresenterModule.class }) public interface AppComponent {
-
-  void inject(BaseActivity mainActivity);
-
-  void inject(MainAlarmActivity mainAlarmActivity);
+@Singleton @Component(modules = { AppModule.class, AlarmModule.class, NetModule.class, PresenterModule.class, EventBusModule.class })
+public interface AppComponent {
 
   Context context();
 
-  MainAlarmPresenter getMainAlarmPresenter();
-
   AlarmListPresenter getAlarmListPresenter();
-
-  void inject(AlarmService alarmService);
 
   SetAlarmPresenter getSetAlarmPresenter();
 
+  SuperAlarmPresenter getSuperAlarmPresenter();
+
+  void inject(AlarmService alarmService);
+
   void inject(BootCompleteReceiver bootCompleteReceiver);
+
+  void inject(MainAlarmActivity mainAlarmActivity);
 }
+
 
