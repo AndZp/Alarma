@@ -12,23 +12,23 @@ public class PlaceData {
 
     private String name;
 
-    private String alt;
+    private String lon;
 
     private String lat;
 
 
     public PlaceData(Place place) {
         this.name = place.getName().toString();
-        this.alt = String.valueOf(new Double(place.getLatLng().longitude).intValue());
-        this.lat = String.valueOf(new Double(place.getLatLng().latitude).intValue());
+        this.lon = String.valueOf(Double.valueOf(place.getLatLng().longitude));
+        this.lat = String.valueOf(Double.valueOf(place.getLatLng().latitude));
     }
 
     public String getName() {
         return name;
     }
 
-    public String getAlt() {
-        return alt;
+    public String getLon() {
+        return lon;
     }
 
     public String getLat() {

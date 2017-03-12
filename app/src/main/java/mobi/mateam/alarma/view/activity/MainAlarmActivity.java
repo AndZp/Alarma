@@ -25,9 +25,7 @@ import mobi.mateam.alarma.view.fragment.SetAlarmFragment;
 import mobi.mateam.alarma.view.interfaces.MainAlarmView;
 import mobi.mateam.alarma.view.interfaces.PickSportListener;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
-import mobi.mateam.alarma.weather.model.WeatherData;
 import mobi.mateam.alarma.weather.model.sports.SportTypes;
-import rx.Subscriber;
 
 public class MainAlarmActivity extends BaseActivity implements MainAlarmView, PickSportListener {
   private static MainAlarmPresenter presenter;
@@ -50,19 +48,6 @@ public class MainAlarmActivity extends BaseActivity implements MainAlarmView, Pi
     actionBar.setDisplayHomeAsUpEnabled(true);
     actionBar.setDisplayShowTitleEnabled(true);*/
     presenter.onCreate();
-    weatherService.getWeatherByCity("Tel-Aviv").subscribe(new Subscriber<WeatherData>() {
-      @Override public void onCompleted() {
-
-      }
-
-      @Override public void onError(Throwable e) {
-
-      }
-
-      @Override public void onNext(WeatherData weatherData) {
-
-      }
-    });
   }
 
   private void setPresenter() {
