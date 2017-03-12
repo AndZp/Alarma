@@ -102,18 +102,6 @@
           android:layout_width="match_parent"
           android:layout_height="match_parent"
           />
-
-      <Button
-          android:id="@+id/btn_save_alarm"
-
-          android:layout_width="150dp"
-          android:layout_height="wrap_content"
-          android:layout_gravity="bottom|center_horizontal"
-          android:layout_margin="10dp"
-          android:textColor="?colorPrimary"
-
-          android:text="Add alarm"
-          />
     </LinearLayout>
   </ScrollView>
 </LinearLayout>

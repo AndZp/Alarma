@@ -9,7 +9,7 @@ public interface AlarmDbHelper {
 
   Observable<Alarm> getAlarmById(String id);
 
-  boolean persistNewAlarm(Alarm alarm);
+  Observable<String> persistNewAlarm(Alarm alarm);
 
   Observable<Boolean> persistAlarmsList(ArrayList<Alarm> alarms);
 

@@ -52,7 +52,7 @@ public class App extends Application {
   public class CrashlyticsTree extends Timber.Tree {
     private static final String CRASHLYTICS_KEY_PRIORITY = "priority";
     private static final String CRASHLYTICS_KEY_TAG = "tag";
-    private static final String CRASHLYTICS_KEY_MESSAGE = "message";
+    private static final String CRASHLYTICS_KEY_MESSAGE = "id";
 
     @Override protected void log(int priority, @Nullable String tag, @Nullable String message, @Nullable Throwable t) {
       if (priority == Log.VERBOSE || priority == Log.DEBUG || priority == Log.INFO) {

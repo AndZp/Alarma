@@ -2,11 +2,11 @@ package mobi.mateam.alarma.view.adapter;
 
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SwitchCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Switch;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,7 +85,7 @@ public class AlarmListAdapter extends RecyclerView.Adapter<AlarmListAdapter.View
     @BindView(R.id.tv_alarm_lable) TextView tvAlarmLable;
     @BindView(R.id.tv_alarm_days) TextView tvAlarmDays;
     @BindView(R.id.btn_info) ImageView btnInfo;
-    @BindView(R.id.switch_alarm) Switch switchActivate;
+    @BindView(R.id.switch_alarm) SwitchCompat switchActivate;
 
     public ViewHolder(View view) {
       super(view);

@@ -21,7 +21,7 @@ import mobi.mateam.alarma.di.component.AppComponent;
 import mobi.mateam.alarma.model.repository.AlarmRepository;
 import mobi.mateam.alarma.network.WeatherService;
 import mobi.mateam.alarma.view.activity.AlarmActivity;
-import mobi.mateam.alarma.view.activity.MainAlarmActivity;
+import mobi.mateam.alarma.view.activity.main.MainAlarmActivity;
 import mobi.mateam.alarma.weather.WeatherManager;
 import mobi.mateam.alarma.weather.model.ParameterType;
 import mobi.mateam.alarma.weather.model.WeatherCheckResponse;

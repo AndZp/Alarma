@@ -7,4 +7,6 @@ public interface MainAlarmView extends MvpView {
   void showSetAlarmView(Alarm alarm, boolean b, int sportID);
 
   void showAlarmsListView();
+
+  void showEmptyState();
 }

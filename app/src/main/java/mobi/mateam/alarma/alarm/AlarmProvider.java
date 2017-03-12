@@ -38,7 +38,7 @@ public class AlarmProvider implements IAlarmManager {
     return PendingIntent.getService(context, 0, serviceIntent, PendingIntent.FLAG_NO_CREATE);
   }
 
-  @Override public void editAlarm(Alarm alarm) {
+  @Override public void updateAlarm(Alarm alarm) {
     cancelAlarm(alarm);
     setNextAlarm(alarm);
   }
