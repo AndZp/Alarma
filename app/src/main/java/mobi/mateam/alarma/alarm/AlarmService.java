@@ -179,13 +179,15 @@ public class AlarmService extends Service {
     Map<ParameterType, ProblemParam> hashMap = response.getProblemParamMap();
 
     final String[] result = { "" };
-    hashMap.entrySet()
-        .forEach(parameterTypeProblemParamEntry -> result[0] = parameterTypeProblemParamEntry.getKey().getName() + " - " + "is't good for you");
+
+    if (hashMap != null || hashMap.size() > 0) {
+      Map.Entry<ParameterType, ProblemParam> next = hashMap.entrySet().iterator().next();
+      result[0] = next.getKey().getName();
+    }
 
     Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
     NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.drawable.leak_canary_icon)
-        .setContentTitle("Weather is not sutable for your parameters")
-        .setContentText(result[0])
+        .setContentTitle("Weather is not sutable for your parameters").setContentText(result[0] + " was not OK")
         .setAutoCancel(true)
         .setSound(defaultSoundUri)
         .setContentIntent(pendingIntent);

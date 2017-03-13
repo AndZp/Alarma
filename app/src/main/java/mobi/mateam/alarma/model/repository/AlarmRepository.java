@@ -1,6 +1,7 @@
 package mobi.mateam.alarma.model.repository;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.db.AlarmDbHelper;
@@ -61,5 +62,15 @@ public class AlarmRepository {
 
   public void removeAlarm(Alarm alarm) {
     alarmDb.removeAlarm(alarm);
+  }
+
+  public Observable<Alarm> getNextFiredAlarm() {
+    // TODO: 13/03/17 Implement
+    return null;
+  }
+
+  public Observable<List<Alarm>> getAllActivatedAlarms() {
+    // TODO: 13/03/17 Implement 
+    return null;
   }
 }
