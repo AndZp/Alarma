@@ -4,56 +4,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
     tools:context="mobi.mateam.alarma.view.activity.AlarmActivity"
     >
-
-  <!--<android.support.design.widget.AppBarLayout
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:theme="@style/AppTheme.AppBarOverlay"
-      >
-
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimary"
-        app:popupTheme="@style/AppTheme.PopupOverlay"
-        />
-
-  </android.support.design.widget.AppBarLayout>
-
-  <include layout="@layout/content_alarm"/>
--->
   <TextClock
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
-      android:layout_marginTop="50dp"
+      android:layout_marginTop="80dp"
+      android:format24Hour="HH:mm"
       android:gravity="center"
-      android:textSize="50sp"
+      android:textColor="@android:color/white"
+      android:textSize="60sp"
+      android:textStyle="bold"
       />
   <TextView
-      android:id="@+id/tv_alarm_name"
+      android:id="@+id/tv_alarm_date"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:text="Friday, 10 March"
+      android:textColor="@android:color/white"
+      android:textSize="20sp"
       />
 
-  <ImageView
-      android:id="@+id/iv_alarm_anim"
+  <TextView
+      android:id="@+id/tv_alarm_weather"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
       android:layout_gravity="center"
       android:layout_margin="20dp"
+      android:drawableLeft="@drawable/weather_snowy"
+      android:drawablePadding="10dp"
+      android:text="-15"
+      android:textColor="@android:color/white"
+      android:textSize="25sp"
 
-      android:src="@android:drawable/ic_lock_idle_alarm"
       />
+
+  <TextView
+      android:id="@+id/tv_alarm_name"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:gravity="center"
+      android:text="Time for snowboarding"
+      android:textColor="@android:color/white"
+      android:textSize="25sp"
+      />
+
+
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_gravity="center"
       android:layout_weight="31"
+      android:background="@drawable/background_alarm_activity"
       android:gravity="center"
       >
 
@@ -64,15 +71,28 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:src="@android:drawable/ic_lock_silent_mode"
+        android:visibility="invisible"
 
         />
-    <ImageButton
-        android:id="@+id/btn_alarm_controler"
+    <android.support.v7.widget.ContentFrameLayout
+        android:id="@+id/fl_alarm_btn_background"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp"
-        android:src="@android:drawable/ic_lock_silent_mode"
-        />
+        android:background="@drawable/circle_button_background"
+        android:elevation="15dp"
+        >
+
+      <android.support.v7.widget.AppCompatImageView
+          android:id="@+id/btn_alarm_controler"
+          android:layout_width="60dp"
+          android:layout_height="60dp"
+          android:layout_margin="20dp"
+          android:background="@drawable/circle_alarm_icon_background"
+          android:elevation="25dp"
+          android:padding="18dp"
+          android:src="@drawable/ic_alarm_orange"
+          />
+    </android.support.v7.widget.ContentFrameLayout>
 
 
     <ImageButton
@@ -81,7 +101,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="20dp"
         android:src="@android:drawable/ic_lock_silent_mode"
-
+        android:visibility="invisible"
         />
 
 

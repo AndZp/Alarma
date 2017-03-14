@@ -27,6 +27,7 @@ import mobi.mateam.alarma.weather.model.ParameterType;
 import mobi.mateam.alarma.weather.model.WeatherCheckResponse;
 import mobi.mateam.alarma.weather.model.params.ProblemParam;
 import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
 import timber.log.Timber;
 
 public class AlarmService extends Service {
@@ -106,18 +107,19 @@ public class AlarmService extends Service {
     String lon = alarm.place.getLon();
     weatherService.getCurrentWeatherByLocation(lat, lon)
         .map(weatherData -> WeatherManager.checkTheWeather(weatherData, alarm.conditions))
+        .observeOn(AndroidSchedulers.mainThread())
         .subscribe(new Subscriber<WeatherCheckResponse>() {
           @Override public void onCompleted() {
-            System.out.println("1111");
+            Timber.d("WeatherCheckResponse onCompleted");
           }
 
           @Override public void onError(Throwable e) {
-
-            System.out.println("test");
+            Timber.e(e);
           }
 
           @Override public void onNext(WeatherCheckResponse weatherCheckResponse) {
             if (weatherCheckResponse.isSutableWeather()) {
+              //if (true) {
               startAlarmAction(weatherCheckResponse);
             } else {
               showUnsutebleNotification(weatherCheckResponse);
@@ -126,14 +128,13 @@ public class AlarmService extends Service {
         });
 
     Timber.d(alarm.id + ", " + alarm.label + ", " + alarm.getStringLocation());
-    AlarmKlaxon.start(getApplicationContext(), alarm);
+
     alarmProvider.setNextAlarm(alarm);
-    final Handler handler = new Handler();
-    handler.postDelayed(() -> AlarmKlaxon.stop(getApplicationContext()), 1000 * 60);
   }
 
   private void startAlarmAction(WeatherCheckResponse weatherCheckResponse) {
     AlarmKlaxon.start(getApplicationContext(), alarm);
+
     alarmProvider.setNextAlarm(alarm);
     final Handler handler = new Handler();
     handler.postDelayed(() -> {
@@ -142,7 +143,7 @@ public class AlarmService extends Service {
     }, 1000 * 60);
 
     Intent intent = new Intent(getApplicationContext(), AlarmActivity.class);
-    intent.getExtras().putString(ALARM_ID_KEY, alarm.id);
+    intent.putExtra(ALARM_ID_KEY, alarm.id);
     getApplicationContext().startActivity(intent);
   }
 
@@ -187,7 +188,8 @@ public class AlarmService extends Service {
 
     Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
     NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this).setSmallIcon(R.drawable.leak_canary_icon)
-        .setContentTitle("Weather is not sutable for your parameters").setContentText(result[0] + " was not OK")
+        .setContentTitle("Weather is not sutable for your parameters")
+        .setContentText(result[0] + " was not OK")
         .setAutoCancel(true)
         .setSound(defaultSoundUri)
         .setContentIntent(pendingIntent);

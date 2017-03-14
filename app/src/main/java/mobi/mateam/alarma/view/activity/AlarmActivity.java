@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
+import android.support.v7.widget.AppCompatImageView;
+import android.support.v7.widget.ContentFrameLayout;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,9 +22,10 @@ import mobi.mateam.alarma.view.interfaces.AlarmView;
 import mobi.mateam.alarma.weather.model.AlarmWeatherConditions;
 
 public class AlarmActivity extends BaseActivity implements AlarmView {
-  @BindView(R.id.iv_alarm_anim) ImageView alarmAnim;
-  @BindView(R.id.tv_alarm_name) TextView alarmLabel;
-  @BindView(R.id.btn_alarm_controler) ImageButton btnControler;
+  @BindView(R.id.tv_alarm_weather) TextView tvWeather;
+  @BindView(R.id.tv_alarm_name) TextView tvLabel;
+  @BindView(R.id.btn_alarm_controler) AppCompatImageView btnControler;
+  @BindView(R.id.fl_alarm_btn_background) ContentFrameLayout flBtnBackground;
   @BindView(R.id.btn_alarm_dismiss) ImageButton btnDismiss;
   @BindView(R.id.btn_alarm_snooze) ImageButton btnSnooze;
 
@@ -30,8 +34,9 @@ public class AlarmActivity extends BaseActivity implements AlarmView {
     setContentView(R.layout.activity_alarm);
     ButterKnife.bind(this);
     btnControler.setOnTouchListener(new DragListener());
-    btnDismiss.setOnDragListener(new MyDragListener());
-    btnSnooze.setOnDragListener(new MyDragListener());
+    btnDismiss.setOnDragListener(new AlarmOnDragListener());
+    btnSnooze.setOnDragListener(new AlarmOnDragListener());
+    runAnimation();
   }
 
   @Override public void showWeather(AlarmWeatherConditions weatherConditions) {
@@ -43,11 +48,12 @@ public class AlarmActivity extends BaseActivity implements AlarmView {
   }
 
   @Override public void showAlarmLabel(String label) {
-
+    tvLabel.setText(label);
   }
 
   @Override public void runAnimation() {
-
+    Animation shake = AnimationUtils.loadAnimation(this, R.anim.vibrate_anim);
+    btnControler.startAnimation(shake);
   }
 
   @Override public void onBackPressed() {
@@ -69,6 +75,7 @@ public class AlarmActivity extends BaseActivity implements AlarmView {
     LocalBroadcastManager myLocalBroadcastManager = LocalBroadcastManager.getInstance(this);
     myLocalBroadcastManager.sendBroadcast(localBroadcastIntent);
   }
+
   private final class DragListener implements View.OnTouchListener {
     public boolean onTouch(View view, MotionEvent motionEvent) {
       if (motionEvent.getAction() == MotionEvent.ACTION_DOWN) {
@@ -83,7 +90,7 @@ public class AlarmActivity extends BaseActivity implements AlarmView {
     }
   }
 
-  class MyDragListener implements View.OnDragListener {
+  class AlarmOnDragListener implements View.OnDragListener {
     Drawable enterShape = getResources().getDrawable(R.drawable.common_full_open_on_phone);
     Drawable normalShape = getResources().getDrawable(R.drawable.common_google_signin_btn_icon_dark);
 

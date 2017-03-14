@@ -70,7 +70,7 @@ public class AlarmRepository {
   }
 
   public Observable<List<Alarm>> getAllActivatedAlarms() {
-    // TODO: 13/03/17 Implement 
+    // TODO: 13/03/17 Implement
     return null;
   }
 }

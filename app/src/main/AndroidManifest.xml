@@ -51,7 +51,7 @@
         android:name=".view.activity.AlarmActivity"
         android:label="@string/title_activity_alarm"
         android:parentActivityName=".view.activity.BaseActivity"
-        android:theme="@style/AppTheme.NoActionBar">
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
       <meta-data
           android:name="android.support.PARENT_ACTIVITY"
           android:value="mobi.mateam.alarma.view.activity.BaseActivity"/>

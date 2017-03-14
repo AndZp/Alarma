@@ -27,15 +27,14 @@ public class AlarmProvider implements IAlarmManager {
   }
 
   @Override public void cancelAlarm(Alarm alarm) {
-    PendingIntent pendingIntent = getCancelAlarmIntent(alarm.id);
+    PendingIntent pendingIntent = getStartAlarmIntent(alarm.id);
     alarmManagerCompat.cancel(pendingIntent);
   }
 
-  private PendingIntent getCancelAlarmIntent(String alarmId) {
-    Intent serviceIntent = new Intent(context, AlarmService.class);
-    serviceIntent.putExtra(KEY_ALARM_ID, alarmId);
+ /* private PendingIntent getCancelAlarmIntent(String alarmId) {
+    PendingIntent serviceIntent = getStartAlarmIntent(alarmId);
     return PendingIntent.getService(context, 0, serviceIntent, PendingIntent.FLAG_NO_CREATE);
-  }
+  }*/
 
   @Override public void updateAlarm(Alarm alarm) {
     cancelAlarm(alarm);
