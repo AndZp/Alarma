@@ -35,7 +35,12 @@ android {
     sourceCompatibility JavaVersion.VERSION_1_8
     targetCompatibility JavaVersion.VERSION_1_8
   }
+  dexOptions {
+    javaMaxHeapSize "12g"
+  }
 }
+
+
 
 repositories {
   maven { url 'https://maven.fabric.io/public' }
@@ -87,7 +92,7 @@ dependencies {
   compile 'com.jakewharton:butterknife:8.5.1'
   compile 'com.evernote:android-job:1.1.7'
   compile 'com.android.support.constraint:constraint-layout:1.0.0'
-  compile 'com.android.support:support-v4:25.2.0'
+  compile "com.android.support:support-v4:$supportLibraryVersion"
   compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
   compile 'com.github.bumptech.glide:glide:3.7.0'
   testCompile 'junit:junit:4.12'
