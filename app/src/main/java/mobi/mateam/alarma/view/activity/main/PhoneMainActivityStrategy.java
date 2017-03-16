@@ -78,7 +78,7 @@ public class PhoneMainActivityStrategy implements MainActivityStrategy {
   }
 
   @Override public void showAlarmListMode() {
-    appBarLayout.setExpanded(false);
+    appBarLayout.setExpanded(true);
     toolbarImageView.setImageResource(0);
     if (alarmListFragment == null) {
       alarmListFragment = new AlarmListFragment();

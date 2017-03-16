@@ -1,9 +1,12 @@
 package mobi.mateam.alarma.presenter;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import mobi.mateam.alarma.alarm.AlarmProvider;
+import mobi.mateam.alarma.alarm.AlarmUtils;
 import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.model.repository.AlarmRepository;
+import mobi.mateam.alarma.utils.DateUtils;
 import mobi.mateam.alarma.view.interfaces.SuperAlarmView;
 import mobi.mateam.alarma.weather.model.sports.SportTypes;
 import rx.Subscriber;
@@ -65,5 +68,13 @@ public class SuperAlarmPresenter extends BasePresenter<SuperAlarmView> {
   public void onSportPicked(SportTypes sportTypes) {
 
     getView().showSetNewAlarmMode(sportTypes);
+  }
+
+  public void onAlarmSet(String alarmId) {
+    alarmRepository.getAlarmById(alarmId).subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread()).subscribe(alarm -> {
+      Calendar nextAlarmTime = AlarmUtils.getNextAlarmTime(alarm, Calendar.getInstance());
+      String message = DateUtils.formatElapsedTimeUntilAlarm(getView().getActivityContext(), nextAlarmTime.getTimeInMillis());
+      getView().showNotification(message);
+    });
   }
 }

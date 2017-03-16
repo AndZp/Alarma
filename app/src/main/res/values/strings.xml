@@ -1,8 +1,66 @@
-<resources>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
   <string name="app_name">Alarma</string>
   <string name="action_settings">Settings</string>
 
   <!-- TODO: Remove or change this placeholder text -->
   <string name="hello_blank_fragment">Hello blank fragment</string>
   <string name="title_activity_alarm">AlarmActivity</string>
+  <string name="about">About</string>
+
+  <!-- Alarm confirmation toast: days -->
+  <plurals name="days">
+    <!-- Duration for one day -->
+    <item quantity="one">1 day</item>
+    <!-- Duration for more than one day -->
+    <item quantity="other"><xliff:g example="7" id="number">%s</xliff:g> days</item>
+  </plurals>
+
+  <!-- Alarm confirmation toast, timer notification and world clock ahead/behind: hours -->
+  <plurals name="hours">
+    <!-- Duration for one hour -->
+    <item quantity="one">1 hour</item>
+    <!-- Duration for more than one hour -->
+    <item quantity="other"><xliff:g example="7" id="number">%s</xliff:g> hours</item>
+  </plurals>
+
+  <plurals name="hours_short">
+    <!-- Duration for one hour [CHAR LIMIT=8] -->
+    <item quantity="one">1 hr</item>
+    <!-- Duration for more than one hour [CHAR LIMIT=8]-->
+    <item quantity="other"><xliff:g example="7" id="number">%s</xliff:g> hr</item>
+  </plurals>
+
+  <!-- Alarm confirmation toast and timer notification: minutes -->
+  <plurals name="minutes">
+    <!-- Duration for one minute -->
+    <item quantity="one">1 minute</item>
+    <!-- Duration for more than one minute -->
+    <item quantity="other"><xliff:g example="7" id="number">%s</xliff:g> minutes</item>
+  </plurals>
+
+  <plurals name="minutes_short">
+    <!-- Duration for one minute [CHAR LIMIT=8] -->
+    <item quantity="one">1 min</item>
+    <!-- Duration for more than one minute [CHAR LIMIT=8] -->
+    <item quantity="other"><xliff:g example="7" id="number">%s</xliff:g> min</item>
+  </plurals>
+
+  <!-- Timer accessibility announcement -->
+  <plurals name="seconds">
+    <!-- Duration for one second -->
+    <item quantity="one">1 second</item>
+    <!-- Duration for more than one minute -->
+    <item quantity="other"><xliff:g example="7" id="number">%s</xliff:g> seconds</item>
+  </plurals>
+
+  <string-array name="alarm_set">
+    <item>Alarm set for less than 1 minute from now.</item>
+    <item>Alarm set for <xliff:g example="2 days" id="DAYS">%1$s</xliff:g> from now.</item>
+    <item>Alarm set for <xliff:g example="2 hours" id="HOURS">%2$s</xliff:g> from now.</item>
+    <item>Alarm set for <xliff:g example="2 days" id="DAYS">%1$s</xliff:g> and <xliff:g example="2 hours" id="HOURS">%2$s</xliff:g> from now.</item>
+    <item>Alarm set for <xliff:g example="2 minutes" id="MINUTES">%3$s</xliff:g> from now.</item>
+    <item>Alarm set for <xliff:g example="2 days" id="DAYS">%1$s</xliff:g> and <xliff:g example="2 minutes" id="MINUTES">%3$s</xliff:g> from now.</item>
+    <item>Alarm set for <xliff:g example="2 hours" id="HOURS">%2$s</xliff:g> and <xliff:g example="2 minutes" id="MINUTES">%3$s</xliff:g> from now.</item>
+    <item>Alarm set for <xliff:g example="2 days" id="DAYS">%1$s</xliff:g>, <xliff:g example="2 hours" id="HOURS">%2$s</xliff:g>, and <xliff:g example="2 minutes" id="MINUTES">%3$s</xliff:g> from now.</item>
+  </string-array>
 </resources>

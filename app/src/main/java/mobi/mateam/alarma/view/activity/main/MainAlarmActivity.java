@@ -4,7 +4,12 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import com.google.android.gms.location.places.Place;
@@ -27,7 +32,7 @@ public class MainAlarmActivity extends BaseActivity implements SuperAlarmView, P
   private static SuperAlarmPresenter presenter;
 
   @BindView(R.id.toolbar) Toolbar toolbar;
-
+  @BindView(R.id.cl_main_layout) CoordinatorLayout clMainLayout;
   private MainActivityStrategy activityStrategy;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +40,26 @@ public class MainAlarmActivity extends BaseActivity implements SuperAlarmView, P
     setContentView(LAYOUT);
     ButterKnife.bind(this);
     setSupportActionBar(toolbar);
+    getSupportActionBar().setDisplayShowTitleEnabled(false);
     setActivityStrategy();
     setPresenter();
+  }
+
+  @Override public boolean onCreateOptionsMenu(Menu menu) {
+    getMenuInflater().inflate(R.menu.menu_main_alarm, menu);
+    return true;
+  }
+
+  @Override public boolean onOptionsItemSelected(MenuItem item) {
+    switch (item.getItemId()) {
+      case R.id.action_settings:
+        Toast.makeText(this, "You have selected Settings Menu", Toast.LENGTH_SHORT).show();
+        break;
+      case R.id.action_about:
+        Toast.makeText(this, "You have selected About Menu", Toast.LENGTH_SHORT).show();
+        break;
+    }
+    return true;
   }
 
   private void setActivityStrategy() {
@@ -79,6 +102,10 @@ public class MainAlarmActivity extends BaseActivity implements SuperAlarmView, P
     activityStrategy.showSetNewAlarmMode(sportTypes);
   }
 
+  @Override public void showNotification(String message) {
+    Snackbar.make(clMainLayout, message, Snackbar.LENGTH_LONG).show();
+  }
+
   @Override public void showEmptyStateMode() {
     activityStrategy.showEmptyStateMode();
   }
@@ -110,7 +137,9 @@ public class MainAlarmActivity extends BaseActivity implements SuperAlarmView, P
   }
 
   @Override public void onAlarmSet(String alarmId) {
+
     presenter.updateMode();
+    presenter.onAlarmSet(alarmId);
   }
 
   @Override public void onEditAlarm(String alarmId) {

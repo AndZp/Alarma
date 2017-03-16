@@ -44,11 +44,16 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_alarm_list, container, false);
     unbinder = ButterKnife.bind(this, view);
+    setPresenter();
+
+    return view;
+  }
+
+  private void setPresenter() {
     if (presenter == null) {
       presenter = getAppComponent().getAlarmListPresenter();
     }
     presenter.attachView(this);
-    return view;
   }
 
   public void showAlarmList(List<Alarm> alarms) {

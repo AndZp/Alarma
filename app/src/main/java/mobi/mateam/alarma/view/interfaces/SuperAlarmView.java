@@ -13,4 +13,6 @@ public interface SuperAlarmView extends MvpView {
   void showEditAlarmMode(String alarmId);
 
   void showSetNewAlarmMode(SportTypes sportTypes);
+
+  void showNotification(String message);
 }
