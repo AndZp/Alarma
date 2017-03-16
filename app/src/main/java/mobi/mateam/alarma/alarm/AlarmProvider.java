@@ -3,7 +3,6 @@ package mobi.mateam.alarma.alarm;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import java.util.UUID;
 import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.utils.AlarmManagerCompat;
 import timber.log.Timber;
@@ -31,22 +30,9 @@ public class AlarmProvider implements IAlarmManager {
     alarmManagerCompat.cancel(pendingIntent);
   }
 
- /* private PendingIntent getCancelAlarmIntent(String alarmId) {
-    PendingIntent serviceIntent = getStartAlarmIntent(alarmId);
-    return PendingIntent.getService(context, 0, serviceIntent, PendingIntent.FLAG_NO_CREATE);
-  }*/
-
   @Override public void updateAlarm(Alarm alarm) {
     cancelAlarm(alarm);
     setNextAlarm(alarm);
-  }
-
-  @Override public Alarm getNextSetAlarm() {
-    return null;
-  }
-
-  @Override public String getNewAlarmId() {
-    return UUID.randomUUID().toString();
   }
 
   private PendingIntent getStartAlarmIntent(String alarmId) {

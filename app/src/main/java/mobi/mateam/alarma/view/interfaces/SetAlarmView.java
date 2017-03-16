@@ -22,4 +22,6 @@ public interface SetAlarmView extends MvpView {
   void showWeekDays(int[] weekdays);
 
   void notifyAlarmSet(Alarm alarm);
+
+  void uncheckRepeat();
 }

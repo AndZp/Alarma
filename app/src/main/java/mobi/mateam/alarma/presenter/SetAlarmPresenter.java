@@ -219,14 +219,23 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
       alarm.weekdays = new int[] { 0, 0, 0, 0, 0, 0, 0 };
     }
     alarm.weekdays[weekdaysDataItem.getCalendarDayId() - 1] = weekdaysDataItem.isSelected() ? 1 : 0;
+
+    boolean isRepeatDaysExist = false;
+    for (int i = 0; i < alarm.weekdays.length; i++) {
+      if (alarm.weekdays[i] > 0) {
+        isRepeatDaysExist = true;
+      }
+    }
+
+    if (!isRepeatDaysExist) {
+      onRepeatUncheck();
+      getView().uncheckRepeat();
+    }
+
   }
 
   public void onRepeatUncheck() {
     alarm.weekdays = null;
-  }
-
-  public void onBackPressed() {
-    alarmRepository.removeAlarm(alarm);
   }
 }
 

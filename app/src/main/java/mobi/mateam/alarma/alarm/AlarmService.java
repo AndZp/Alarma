@@ -49,6 +49,7 @@ public class AlarmService extends Service {
   /** A public action sent by AlarmService when the alarm has started. */
   public static final String ALARM_ALERT_ACTION = "mobi.mateam.alarma.ALARM_ALERT";
 
+  public static final String PUBLIC_ALARM_ALERT_ACTION = "com.android.deskclock.ALARM_ALERT";
   /** A public action sent by AlarmService when the alarm has stopped for any reason. */
   public static final String ALARM_DONE_ACTION = "mobi.mateam.alarma.ALARM_DONE";
 
@@ -118,8 +119,8 @@ public class AlarmService extends Service {
           }
 
           @Override public void onNext(WeatherCheckResponse weatherCheckResponse) {
-            if (weatherCheckResponse.isSutableWeather()) {
-              //if (true) {
+            // if (weatherCheckResponse.isSutableWeather()) {
+            if (true) {
               startAlarmAction(weatherCheckResponse);
             } else {
               showUnsutebleNotification(weatherCheckResponse);
@@ -128,14 +129,13 @@ public class AlarmService extends Service {
         });
 
     Timber.d(alarm.id + ", " + alarm.label + ", " + alarm.getStringLocation());
-
-    alarmProvider.setNextAlarm(alarm);
+    checkAndSetNextAlarm(alarm);
   }
 
   private void startAlarmAction(WeatherCheckResponse weatherCheckResponse) {
-    AlarmKlaxon.start(getApplicationContext(), alarm);
+    //AlarmKlaxon.start(getApplicationContext(), alarm);
+    sendBroadcast(new Intent(PUBLIC_ALARM_ALERT_ACTION));
 
-    alarmProvider.setNextAlarm(alarm);
     final Handler handler = new Handler();
     handler.postDelayed(() -> {
       AlarmKlaxon.stop(getApplicationContext());
@@ -145,6 +145,12 @@ public class AlarmService extends Service {
     Intent intent = new Intent(getApplicationContext(), AlarmActivity.class);
     intent.putExtra(ALARM_ID_KEY, alarm.id);
     getApplicationContext().startActivity(intent);
+  }
+
+  private void checkAndSetNextAlarm(Alarm alarm) {
+    if (AlarmUtils.isRepeatAlarm(alarm)) {
+      alarmProvider.setNextAlarm(alarm);
+    }
   }
 
   public AppComponent getAppComponent() {

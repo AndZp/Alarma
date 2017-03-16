@@ -9,7 +9,4 @@ public interface IAlarmManager {
 
   void updateAlarm(Alarm alarm);
 
-  Alarm getNextSetAlarm();
-
-  String getNewAlarmId();
 }

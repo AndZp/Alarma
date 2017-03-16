@@ -125,7 +125,7 @@ public class PhoneMainActivityStrategy implements MainActivityStrategy {
     if (f instanceof AlarmListFragment) {
       activity.finish();
     } else if (f instanceof SetAlarmFragment) {
-      ((SetAlarmFragment) f).onBackPressed();
+      showAlarmListMode();
     }
   }
 }

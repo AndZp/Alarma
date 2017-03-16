@@ -1,6 +1,7 @@
 package mobi.mateam.alarma.view.fragment;
 
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -51,7 +52,8 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
 
     unbinder = ButterKnife.bind(this, view);
     viewWeekday = new WeekdaysDataSource((AppCompatActivity) getActivity(), R.id.weekdays_stub, view);
-
+    viewWeekday.setSelectedColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+    viewWeekday.setUnselectedColor(ContextCompat.getColor(getActivity(), R.color.grey));
     if (presenter == null) {
       presenter = getAppComponent().getSetAlarmPresenter();
     }
@@ -95,6 +97,10 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
     }
   }
 
+  @Override public void uncheckRepeat() {
+    cbWeekDays.setChecked(false);
+  }
+
   @OnCheckedChanged(R.id.cb_weekday) public void onWeekDay(boolean isCheked) {
     if (isCheked) {
       viewWeekday.start(this);
@@ -133,9 +139,5 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
 
   @Override public void onWeekdaysSelected(int i, ArrayList<WeekdaysDataItem> arrayList) {
 
-  }
-
-  public void onBackPressed() {
-    presenter.onBackPressed();
   }
 }

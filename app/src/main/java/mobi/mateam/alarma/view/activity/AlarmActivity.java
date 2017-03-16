@@ -10,6 +10,7 @@ import android.support.v7.widget.ContentFrameLayout;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageButton;
@@ -33,9 +34,19 @@ public class AlarmActivity extends BaseActivity implements AlarmView {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_alarm);
     ButterKnife.bind(this);
+
+    getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+        | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD
+        | WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON
+        | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
+        | WindowManager.LayoutParams.FLAG_ALLOW_LOCK_WHILE_SCREEN_ON);
+
+    sendBroadcast(new Intent(Intent.ACTION_CLOSE_SYSTEM_DIALOGS));
+
     btnControler.setOnTouchListener(new DragListener());
     btnDismiss.setOnDragListener(new AlarmOnDragListener());
     btnSnooze.setOnDragListener(new AlarmOnDragListener());
+
     runAnimation();
   }
 
@@ -90,7 +101,7 @@ public class AlarmActivity extends BaseActivity implements AlarmView {
     }
   }
 
-  class AlarmOnDragListener implements View.OnDragListener {
+  private class AlarmOnDragListener implements View.OnDragListener {
     Drawable enterShape = getResources().getDrawable(R.drawable.common_full_open_on_phone);
     Drawable normalShape = getResources().getDrawable(R.drawable.common_google_signin_btn_icon_dark);
 

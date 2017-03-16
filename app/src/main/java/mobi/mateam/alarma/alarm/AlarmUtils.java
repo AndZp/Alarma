@@ -63,4 +63,8 @@ public class AlarmUtils {
 
     return nextInstanceTime;
   }
+
+  public static boolean isRepeatAlarm(Alarm alarm) {
+    return alarm.weekdays != null;
+  }
 }
