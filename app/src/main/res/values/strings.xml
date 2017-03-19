@@ -6,6 +6,7 @@
   <string name="hello_blank_fragment">Hello blank fragment</string>
   <string name="title_activity_alarm">AlarmActivity</string>
   <string name="about">About</string>
+  <string name="button_undo">undo</string>
 
   <!-- Alarm confirmation toast: days -->
   <plurals name="days">

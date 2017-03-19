@@ -3,6 +3,7 @@ package mobi.mateam.alarma.view.fragment;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,10 +20,13 @@ import mobi.mateam.alarma.view.adapter.AlarmListAdapter;
 import mobi.mateam.alarma.view.interfaces.AlarmListView;
 import mobi.mateam.alarma.view.interfaces.MainAlarmView;
 import mobi.mateam.alarma.view.interfaces.OnEditAlarmListener;
+import mobi.mateam.alarma.view.tools.AlarmAnimDecorHelper;
+import mobi.mateam.alarma.view.tools.AlarmListCallBack;
 import timber.log.Timber;
 
 public class AlarmListFragment extends BaseFragment implements AlarmListView {
 
+  public static final int LAYOUT = R.layout.fragment_alarm_list;
   @BindView(R.id.rv_alarm_list) RecyclerView rvAlarmsList;
   @BindView(R.id.iv_empty_stay) TextView tvEmptyState;
 
@@ -42,7 +46,7 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-    View view = inflater.inflate(R.layout.fragment_alarm_list, container, false);
+    View view = inflater.inflate(LAYOUT, container, false);
     unbinder = ButterKnife.bind(this, view);
     setPresenter();
 
@@ -73,9 +77,18 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
       @Override public void onSwitchChange(Alarm alarm, boolean isActivated) {
         presenter.onActivatedSwitchChange(alarm, isActivated);
       }
+
+      @Override public void onItemRemoved(Alarm alarm) {
+        presenter.onAlarmRemoved(alarm);
+      }
     });
     rvAlarmsList.setLayoutManager(new LinearLayoutManager(getActivity()));
     rvAlarmsList.setAdapter(alarmListAdapter);
+
+    ItemTouchHelper mItemTouchHelper = new ItemTouchHelper(new AlarmListCallBack(getActivity(), alarmListAdapter, 0, ItemTouchHelper.LEFT));
+    mItemTouchHelper.attachToRecyclerView(rvAlarmsList);
+
+    rvAlarmsList.addItemDecoration(new AlarmAnimDecorHelper());
   }
 
   public void showEmptyList() {

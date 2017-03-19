@@ -64,4 +64,9 @@ public class AlarmListPresenter extends BasePresenter<AlarmListView> {
       }
     });
   }
+
+  public void onAlarmRemoved(Alarm alarm) {
+    alarmRepository.removeAlarm(alarm);
+    alarmProvider.cancelAlarm(alarm);
+  }
 }

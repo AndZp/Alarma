@@ -57,4 +57,25 @@ public class Alarm {
       return res;
     }
   }
+
+  @Override public boolean equals(Object o) {
+
+    if (o == this) return true;
+    if (!(o instanceof Alarm)) {
+      return false;
+    }
+
+    Alarm alarm = (Alarm) o;
+
+    return alarm.id.equals(id) && alarm.hour == hour && alarm.minutes == minutes;
+  }
+
+  //Idea from effective Java : Item 9
+  @Override public int hashCode() {
+    int result = 17;
+    result = 31 * result + id.hashCode();
+    result = 31 * result + minutes;
+    result = 31 * result + hour;
+    return result;
+  }
 }
