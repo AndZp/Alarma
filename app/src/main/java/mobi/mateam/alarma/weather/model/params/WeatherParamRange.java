@@ -5,7 +5,7 @@ package mobi.mateam.alarma.weather.model.params;
  * General class for weather params
  */
 
-public abstract class WeatherParamRange<T extends Comparable<T>> extends WeatherParamGeneral<T> {
+public abstract class WeatherParamRange<T extends Comparable<T>, S extends Enum> extends WeatherParamGeneral<T, S> {
 
   /**
    * minimum limit value for weather param

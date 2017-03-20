@@ -7,7 +7,8 @@ import mobi.mateam.alarma.weather.model.ParameterType;
  * General class for weather params
  */
 
-public abstract class WeatherParamGeneral<T extends Comparable<T>> {
+public abstract class WeatherParamGeneral<T extends Comparable<T>, S extends Enum> {
 
     public abstract ParameterType getParametrType();
+
 }

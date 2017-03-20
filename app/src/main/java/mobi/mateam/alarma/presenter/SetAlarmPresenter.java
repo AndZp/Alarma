@@ -23,7 +23,9 @@ import mobi.mateam.alarma.view.interfaces.SetAlarmView;
 import mobi.mateam.alarma.weather.model.AlarmWeatherConditions;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
-import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindPowerRange;
+import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindSpeedRange;
+import mobi.mateam.alarma.weather.model.params.implementation.units.TemperatureUnits;
+import mobi.mateam.alarma.weather.model.params.implementation.units.WindUnits;
 import mobi.mateam.alarma.weather.model.sports.SportTypes;
 import mobi.mateam.alarma.weekdays.WeekdaysDataItem;
 import rx.android.schedulers.AndroidSchedulers;
@@ -132,8 +134,8 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   public List<WeatherParamRange> getParamList() {
 
     ArrayList<WeatherParamRange> weatherParameters = new ArrayList<>();
-    weatherParameters.add(new TemperatureRange(13, 20));
-    weatherParameters.add(new WindPowerRange(20.0, 40.0));
+    weatherParameters.add(new TemperatureRange(TemperatureUnits.CELSIUM, 13, 20));
+    weatherParameters.add(new WindSpeedRange(WindUnits.METERSEC, 20.0, 40.0));
 
     return weatherParameters;
   }

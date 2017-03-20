@@ -6,7 +6,7 @@ package mobi.mateam.alarma.weather.model.params;
  * Class for current value for weather param
  */
 
-public abstract class WeatherParamValue<T extends Comparable<T>> extends WeatherParamGeneral<T>{
+public abstract class WeatherParamValue<T extends Comparable<T>, S extends Enum> extends WeatherParamGeneral<T, S>{
 
     private T value;
 
