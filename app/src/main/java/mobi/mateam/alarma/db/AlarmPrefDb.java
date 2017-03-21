@@ -59,7 +59,7 @@ public class AlarmPrefDb implements AlarmDbHelper {
     return Observable.just(true);
   }
 
-  @Override public void updateAlarm(Alarm alarm) {
+  @Override public Observable<String> updateAlarm(Alarm alarm) {
     getAllAlarms().subscribe(alarms -> {
       int position = -1;
       for (int i = 0; i < alarms.size(); i++) {
@@ -73,6 +73,8 @@ public class AlarmPrefDb implements AlarmDbHelper {
         persistAlarmsList(alarms);
       }
     });
+
+    return Observable.just(alarm.id);
   }
 
   @Override public boolean removeAlarm(Alarm alarm) {

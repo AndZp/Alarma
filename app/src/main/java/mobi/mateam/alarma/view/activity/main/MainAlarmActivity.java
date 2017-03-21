@@ -15,25 +15,22 @@ import butterknife.ButterKnife;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
 import mobi.mateam.alarma.R;
+import mobi.mateam.alarma.presenter.MainAlarmPresenter;
 import mobi.mateam.alarma.presenter.SetAlarmPresenter;
-import mobi.mateam.alarma.presenter.SuperAlarmPresenter;
 import mobi.mateam.alarma.view.activity.BaseActivity;
 import mobi.mateam.alarma.view.fragment.SetAlarmFragment;
-import mobi.mateam.alarma.view.interfaces.OnAlarmSetListener;
 import mobi.mateam.alarma.view.interfaces.OnEditAlarmListener;
-import mobi.mateam.alarma.view.interfaces.PickSportListener;
 import mobi.mateam.alarma.view.interfaces.SuperAlarmView;
-import mobi.mateam.alarma.weather.model.sports.SportTypes;
 
-public class MainAlarmActivity extends BaseActivity implements SuperAlarmView, PickSportListener, OnAlarmSetListener, OnEditAlarmListener {
+public class MainAlarmActivity extends BaseActivity implements SuperAlarmView, OnEditAlarmListener {
   public static final int LAYOUT = R.layout.activity_super_main_alarm;
   public static final int SET_ALARM_MODE = 2;
   public static final int ALARM_LIST_MODE = 1;
-  private static SuperAlarmPresenter presenter;
+  private static MainAlarmPresenter presenter;
 
   @BindView(R.id.toolbar) Toolbar toolbar;
   @BindView(R.id.cl_main_layout) CoordinatorLayout clMainLayout;
-  private MainActivityStrategy activityStrategy;
+  private Navigator navigator;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -41,8 +38,10 @@ public class MainAlarmActivity extends BaseActivity implements SuperAlarmView, P
     ButterKnife.bind(this);
     setSupportActionBar(toolbar);
     getSupportActionBar().setDisplayShowTitleEnabled(false);
-    setActivityStrategy();
     setPresenter();
+    setNavigator();
+
+    navigator.updateMode();
   }
 
   @Override public boolean onCreateOptionsMenu(Menu menu) {
@@ -62,16 +61,6 @@ public class MainAlarmActivity extends BaseActivity implements SuperAlarmView, P
     return true;
   }
 
-  private void setActivityStrategy() {
-    if (getResources().getBoolean(R.bool.isTablet)) {
-      activityStrategy = new TabletMainActivityStrategy();
-    } else {
-      activityStrategy = new PhoneMainActivityStrategy();
-    }
-
-    activityStrategy.onCreate(MainAlarmActivity.this);
-  }
-
   private void setPresenter() {
     if (presenter == null) {
       presenter = getAppComponent().getSuperAlarmPresenter();
@@ -79,35 +68,30 @@ public class MainAlarmActivity extends BaseActivity implements SuperAlarmView, P
     presenter.attachView(this);
   }
 
+  private void setNavigator() {
+    navigator = presenter.getNavigator();
+    navigator.onAttachView(MainAlarmActivity.this);
+  }
+
   @Override protected void onDestroy() {
     super.onDestroy();
     presenter.detachView();
-    activityStrategy.onDestroy();
-    if (isFinishing()) presenter = null;
+    navigator.onDestroy();
+    if (isFinishing()) {
+      presenter = null;
+    }
   }
 
   @Override public void showAlarmsListMode() {
-    activityStrategy.showAlarmListMode();
-  }
-
-  @Override public void showSportPickView() {
-    activityStrategy.showSportPickView();
+    navigator.showAlarmListMode();
   }
 
   @Override public void showEditAlarmMode(String alarmId) {
-    activityStrategy.showEditAlarmMode(alarmId);
-  }
-
-  @Override public void showSetNewAlarmMode(SportTypes sportTypes) {
-    activityStrategy.showSetNewAlarmMode(sportTypes);
+    navigator.showEditAlarmMode(alarmId);
   }
 
   @Override public void showNotification(String message) {
     Snackbar.make(clMainLayout, message, Snackbar.LENGTH_LONG).show();
-  }
-
-  @Override public void showEmptyStateMode() {
-    activityStrategy.showEmptyStateMode();
   }
 
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -129,17 +113,7 @@ public class MainAlarmActivity extends BaseActivity implements SuperAlarmView, P
   }
 
   @Override public void onBackPressed() {
-    activityStrategy.onBackPressed();
-  }
-
-  @Override public void onSportPick(SportTypes sportTypes) {
-    presenter.onSportPicked(sportTypes);
-  }
-
-  @Override public void onAlarmSet(String alarmId) {
-
-    presenter.updateMode();
-    presenter.onAlarmSet(alarmId);
+    navigator.onBackPressed();
   }
 
   @Override public void onEditAlarm(String alarmId) {
@@ -149,11 +123,12 @@ public class MainAlarmActivity extends BaseActivity implements SuperAlarmView, P
   public void onFABClick(int mode) {
     switch (mode) {
       case ALARM_LIST_MODE:
-        presenter.onAddNewAlarmClick();
+        navigator.showEditAlarmMode(null);
         break;
       case SET_ALARM_MODE:
         if (SetAlarmFragment.presenter != null) {
           SetAlarmFragment.presenter.onSaveAlarm();
+          navigator.showAlarmListMode();
           break;
         }
     }

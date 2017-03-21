@@ -20,7 +20,7 @@ import mobi.mateam.alarma.alarm.model.Alarm;
 
 public class AlarmListAdapter extends RecyclerView.Adapter<AlarmListAdapter.ViewHolder> {
   private final int NOTIFY_DELAY = 500;
-  private static final int PENDING_REMOVAL_TIMEOUT = 3000; // 3sec
+  private static final int PENDING_REMOVAL_TIMEOUT = 2000; // 2sec
 
   boolean undoOn = true; // is undo on, you can turn it on from the toolbar menu
   private OnItemClickListener onItemClickListener;
@@ -86,26 +86,6 @@ public class AlarmListAdapter extends RecyclerView.Adapter<AlarmListAdapter.View
     return alarms.size();
   }
 
-  public void addAlarm(final Alarm alarm, final int position) {
-    // notify of the insertion with a delay, so there is a brief pause after returning
-    // from the new alarm screen; this makes the animation more noticeable
-    Handler handler = new Handler();
-    handler.postDelayed(() -> {
-      alarms.add(position, alarm);
-      notifyItemInserted(position);
-    }, NOTIFY_DELAY);
-  }
-
-  // region List manipulation methods
-
-  public void removeAlarm(final int position) {
-    alarms.remove(position);
-
-    // notify of the removal with a delay so there is a brief pause after returning
-    // from the book details screen; this makes the animation more noticeable
-    Handler handler = new Handler();
-    handler.postDelayed(() -> notifyItemRemoved(position), NOTIFY_DELAY);
-  }
 
   public void setUndoOn(boolean undoOn) {
     this.undoOn = undoOn;

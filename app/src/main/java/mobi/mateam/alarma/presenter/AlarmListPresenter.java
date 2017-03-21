@@ -3,34 +3,50 @@ package mobi.mateam.alarma.presenter;
 import java.util.ArrayList;
 import mobi.mateam.alarma.alarm.AlarmProvider;
 import mobi.mateam.alarma.alarm.model.Alarm;
+import mobi.mateam.alarma.bus.Event;
+import mobi.mateam.alarma.bus.EventBus;
 import mobi.mateam.alarma.model.repository.AlarmRepository;
 import mobi.mateam.alarma.view.interfaces.AlarmListView;
 import rx.Subscriber;
+import timber.log.Timber;
 
 public class AlarmListPresenter extends BasePresenter<AlarmListView> {
 
-  AlarmRepository alarmRepository;
-  AlarmProvider alarmProvider;
+  private final EventBus eventBus;
+  private AlarmRepository alarmRepository;
+  private AlarmProvider alarmProvider;
+  private Subscriber<Event.SetAlarm> subscriber;
 
-  public AlarmListPresenter(AlarmRepository alarmRepository, AlarmProvider alarmProvider) {
+  public AlarmListPresenter(AlarmRepository alarmRepository, AlarmProvider alarmProvider, EventBus eventBus) {
     this.alarmRepository = alarmRepository;
     this.alarmProvider = alarmProvider;
+    this.eventBus = eventBus;
+    initSubscriber();
+
   }
 
   @Override public void attachView(AlarmListView alarmListView) {
     super.attachView(alarmListView);
     updateView();
+    eventBus.observeEvents(Event.SetAlarm.class).subscribe(subscriber);
   }
 
-  public void addNewAlarm() {
-    getView().showSportPicker();
-  }
+  private void initSubscriber() {
+    subscriber = new Subscriber<Event.SetAlarm>() {
+      @Override public void onCompleted() {
+        updateView();
+      }
 
-  void editAlarm(Alarm alarm) {
-    getView().showSetAlarmView(alarm, false, alarm.sportType.getId());
-  }
+      @Override public void onError(Throwable e) {
 
-  void removeAlarm(Alarm alarm) {
+      }
+
+      @Override public void onNext(Event.SetAlarm setAlarm) {
+
+      }
+    };
+
+
   }
 
   public void onActivatedSwitchChange(Alarm alarm, boolean isActivated) {
@@ -42,7 +58,6 @@ public class AlarmListPresenter extends BasePresenter<AlarmListView> {
     } else {
       alarmProvider.cancelAlarm(alarm);
     }
-
   }
 
   public void updateView() {
@@ -52,6 +67,7 @@ public class AlarmListPresenter extends BasePresenter<AlarmListView> {
       }
 
       @Override public void onError(Throwable e) {
+        Timber.e(e);
         getView().showError(e);
       }
 
@@ -65,8 +81,14 @@ public class AlarmListPresenter extends BasePresenter<AlarmListView> {
     });
   }
 
+
   public void onAlarmRemoved(Alarm alarm) {
     alarmRepository.removeAlarm(alarm);
     alarmProvider.cancelAlarm(alarm);
+  }
+
+  @Override public void detachView() {
+    super.detachView();
+    subscriber.unsubscribe();
   }
 }

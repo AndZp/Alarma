@@ -1,7 +1,7 @@
 package mobi.mateam.alarma.view.fragment;
 
-import android.app.Fragment;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.widget.Toast;
 import mobi.mateam.alarma.App;
 import mobi.mateam.alarma.di.component.AppComponent;

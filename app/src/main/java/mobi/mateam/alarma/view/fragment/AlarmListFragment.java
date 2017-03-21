@@ -33,16 +33,8 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
   AlarmListPresenter presenter;
 
   private Unbinder unbinder;
-  private boolean isNeedUpdate;
 
   public AlarmListFragment() {
-  }
-
-  @Override public void onResume() {
-    super.onResume();
-    if (isNeedUpdate) {
-      presenter.updateView();
-    }
   }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -106,27 +98,10 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
     new SportPickDialog().show(getFragmentManager(), "Sport");
   }
 
-  public void addNewAlarm() {
-    presenter.addNewAlarm();
-  }
-
   @Override public void onDestroyView() {
     super.onDestroyView();
     unbinder.unbind();
     presenter.detachView();
     if (isRemoving()) presenter = null;
   }
-
-  public void updateView() {
-    if (presenter != null) {
-      presenter.updateView();
-    } else {
-      isNeedUpdate = true;
-    }
-  }
-
-  /*public PresenterComponent getComponent() {
-    BaseActivity activity = (BaseActivity) getActivity();
-    return DaggerPresenterComponent.builder().appComponent(activity.getAppComponent()).build();
-  }*/
 }

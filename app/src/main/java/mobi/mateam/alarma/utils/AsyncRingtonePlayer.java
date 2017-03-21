@@ -55,7 +55,7 @@ public final class AsyncRingtonePlayer {
   // Volume suggested by media team for in-call alarms.
   private static final float IN_CALL_VOLUME = 0.125f;
 
-  // Message codes used with the ringtone thread.
+  // SetAlarm codes used with the ringtone thread.
   private static final int EVENT_PLAY = 1;
   private static final int EVENT_STOP = 2;
   private static final int EVENT_VOLUME = 3;

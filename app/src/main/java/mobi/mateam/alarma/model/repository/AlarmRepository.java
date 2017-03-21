@@ -52,8 +52,8 @@ public class AlarmRepository {
     return alarmDb.getAlarmById(id);
   }
 
-  public void updateAlarm(Alarm alarm) {
-    alarmDb.updateAlarm(alarm);
+  public Observable<String> updateAlarm(Alarm alarm) {
+    return alarmDb.updateAlarm(alarm);
   }
 
   public String getNewAlarmId() {

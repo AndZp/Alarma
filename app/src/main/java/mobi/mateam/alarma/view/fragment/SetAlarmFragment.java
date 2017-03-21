@@ -20,15 +20,13 @@ import butterknife.Unbinder;
 import java.util.ArrayList;
 import java.util.List;
 import mobi.mateam.alarma.R;
-import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.presenter.SetAlarmPresenter;
+import mobi.mateam.alarma.view.SportPickDialog;
 import mobi.mateam.alarma.view.adapter.ParamListAdapter;
-import mobi.mateam.alarma.view.interfaces.OnAlarmSetListener;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 import mobi.mateam.alarma.weekdays.WeekdaysDataItem;
 import mobi.mateam.alarma.weekdays.WeekdaysDataSource;
-import timber.log.Timber;
 
 public class SetAlarmFragment extends BaseFragment implements SetAlarmView, WeekdaysDataSource.Callback {
   public static final int LAYOUT = R.layout.fragment_set_alarm;
@@ -85,20 +83,20 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
   }
 
   @Override public void showWeekDays(int[] weekdays) {
-    cbWeekDays.setChecked(true);
-    viewWeekday.setSelectedDays(weekdays);
-  }
-
-  @Override public void notifyAlarmSet(Alarm alarm) {
-    try {
-      ((OnAlarmSetListener) getActivity()).onAlarmSet(alarm.id);
-    } catch (Exception e) {
-      Timber.e(e);
+    if (weekdays != null) {
+      cbWeekDays.setChecked(true);
+      viewWeekday.setSelectedDays(weekdays);
+    } else {
+      cbWeekDays.setChecked(false);
     }
   }
 
   @Override public void uncheckRepeat() {
     cbWeekDays.setChecked(false);
+  }
+
+  @Override public void showSportPickDialog() {
+    new SportPickDialog().show(getFragmentManager(), "SportPickDialog");
   }
 
   @OnCheckedChanged(R.id.cb_weekday) public void onWeekDay(boolean isCheked) {

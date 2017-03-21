@@ -13,7 +13,7 @@ public interface AlarmDbHelper {
 
   Observable<Boolean> persistAlarmsList(ArrayList<Alarm> alarms);
 
-  void updateAlarm(Alarm alarm);
+  Observable<String> updateAlarm(Alarm alarm);
 
   boolean removeAlarm(Alarm alarm);
 

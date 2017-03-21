@@ -1,9 +1,28 @@
 package mobi.mateam.alarma.bus;
 
-public class Event {
-  public int id;
+import mobi.mateam.alarma.alarm.model.Alarm;
+import mobi.mateam.alarma.weather.model.sports.SportTypes;
 
-  public Event(int id) {
-    this.id = id;
+public class Event {
+
+  private Event() {
+
+  }
+
+  public static class SetAlarm {
+
+    public Alarm alarm;
+
+    public SetAlarm(Alarm alarm) {
+      this.alarm = alarm;
+    }
+  }
+
+  public static class SportPicked {
+    public final SportTypes sportType;
+
+    public SportPicked(SportTypes sportTypes) {
+      this.sportType = sportTypes;
+    }
   }
 }
