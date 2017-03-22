@@ -5,14 +5,10 @@ import rx.subjects.PublishSubject;
 import rx.subjects.Subject;
 
 public class EventBus<T> {
-  private final Subject<T, T> subject;
+  private final Subject<T, T> subject = PublishSubject.<T>create();
 
   public EventBus() {
-    this(PublishSubject.<T>create());
-  }
 
-  public EventBus(Subject<T, T> subject) {
-    this.subject = subject;
   }
 
   public <E extends T> void post(E event) {

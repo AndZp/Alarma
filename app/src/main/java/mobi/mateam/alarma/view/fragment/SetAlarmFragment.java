@@ -99,8 +99,8 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
     new SportPickDialog().show(getFragmentManager(), "SportPickDialog");
   }
 
-  @OnCheckedChanged(R.id.cb_weekday) public void onWeekDay(boolean isCheked) {
-    if (isCheked) {
+  @OnCheckedChanged(R.id.cb_weekday) public void onWeekDay(boolean isChecked) {
+    if (isChecked) {
       viewWeekday.start(this);
     } else {
       viewWeekday.setVisible(false);

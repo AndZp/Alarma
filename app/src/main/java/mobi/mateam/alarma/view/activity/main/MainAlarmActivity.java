@@ -37,7 +37,7 @@ public class MainAlarmActivity extends BaseActivity implements SuperAlarmView, O
     setContentView(LAYOUT);
     ButterKnife.bind(this);
     setSupportActionBar(toolbar);
-    getSupportActionBar().setDisplayShowTitleEnabled(false);
+    getSupportActionBar().setDisplayShowTitleEnabled(true);
     setPresenter();
     setNavigator();
 

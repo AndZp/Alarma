@@ -31,6 +31,7 @@ import mobi.mateam.alarma.weather.model.params.implementation.units.WindUnits;
 import mobi.mateam.alarma.weekdays.WeekdaysDataItem;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
+import timber.log.Timber;
 
 public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   public static final int TONE_PICKER_REQUEST = 222;
@@ -40,13 +41,40 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   private AlarmProvider alarmProvider;
   private AlarmRepository alarmRepository;
   private boolean isNewAlarm;
-  private Subscriber<Event.SportPicked> subscriber;
+  private Subscriber subscriber;
 
   public SetAlarmPresenter(AlarmProvider alarmProvider, AlarmRepository alarmRepository, EventBus eventBus) {
     this.alarmProvider = alarmProvider;
     this.alarmRepository = alarmRepository;
     this.eventBus = eventBus;
-    initSubscriber();
+
+  }
+
+  @Override public void attachView(SetAlarmView setAlarmView) {
+    super.attachView(setAlarmView);
+    subscribeToEventBas();
+  }
+
+  private void subscribeToEventBas() {
+    subscriber = new Subscriber() {
+      @Override public void onCompleted() {
+
+      }
+
+      @Override public void onError(Throwable e) {
+        Timber.e(e);
+      }
+
+      @Override public void onNext(Object event) {
+        if (event instanceof Event.SportPicked) {
+          Event.SportPicked sportPicked = (Event.SportPicked) event;
+          isNewAlarm = true;
+          alarm.sportType = sportPicked.sportType;
+          updateView();
+        }
+      }
+    };
+    eventBus.observeEvents(Event.SportPicked.class).subscribe(subscriber);
   }
 
   private static int[] getRepeatDaysIndexArray(Alarm alarm) {
@@ -64,34 +92,6 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
     return res;
   }
 
-  private void initSubscriber() {
-    subscriber = new Subscriber<Event.SportPicked>() {
-      @Override public void onCompleted() {
-
-      }
-
-      @Override public void onError(Throwable e) {
-
-      }
-
-      @Override public void onNext(Event.SportPicked event) {
-        isNewAlarm = true;
-        alarm = new Alarm();
-        alarm.sportType = event.sportType;
-
-        AlarmWeatherConditions alarmWeatherConditions = new AlarmWeatherConditions();
-        alarmWeatherConditions.addParam(getParamList().get(0));
-        alarm.conditions = alarmWeatherConditions;
-        updateView();
-      }
-    };
-  }
-
-  @Override public void attachView(SetAlarmView setAlarmView) {
-    super.attachView(setAlarmView);
-    eventBus.observeEvents(Event.SportPicked.class).subscribe(subscriber);
-  }
-
   public void setAlarm(Bundle arguments) {
     if (alarm != null) {
       updateView();
@@ -107,20 +107,12 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
           updateView();
         });
       }
-
-      /*else if (sportTypes != null) {
-        isNewAlarm = true;
-        alarm = new Alarm();
-
-        alarm.sportType = sportTypes;
-
-        AlarmWeatherConditions alarmWeatherConditions = new AlarmWeatherConditions();
-        alarmWeatherConditions.addParam(getParamList().get(0));
-        alarm.conditions = alarmWeatherConditions;
-
-        updateView(alarm);
-      }*/
     } else {
+      alarm = new Alarm();
+      isNewAlarm = true;
+      AlarmWeatherConditions alarmWeatherConditions = new AlarmWeatherConditions();
+      alarmWeatherConditions.addParam(getParamList().get(0));
+      alarm.conditions = alarmWeatherConditions;
       getView().showSportPickDialog();
     }
   }
@@ -165,7 +157,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
       Activity activity = (Activity) getView().getActivityContext();
       activity.startActivityForResult(builder.build(activity), PLACE_PICKER_REQUEST);
     } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
-      e.printStackTrace();
+      Timber.e(e);
     }
   }
 
@@ -181,7 +173,6 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   public void onRingtonePickerResult(Uri uri) {
     if (uri != null) {
       alarm.mRingtone = uri;
-      String ringTonePath = uri.getAuthority();
       getView().showRingtone(getFileName(uri));
     }
   }
@@ -222,7 +213,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
     getView().showTime(this.alarm.hour + ":" + this.alarm.minutes);
 
     String label = "Label";
-    if (TextUtils.isEmpty(this.alarm.label)) {
+    if (alarm.sportType != null && TextUtils.isEmpty(this.alarm.label)) {
       label = this.alarm.sportType.getText();
     } else {
       label = this.alarm.label;

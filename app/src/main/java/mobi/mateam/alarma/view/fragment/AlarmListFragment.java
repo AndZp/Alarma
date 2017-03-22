@@ -15,10 +15,8 @@ import java.util.List;
 import mobi.mateam.alarma.R;
 import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.presenter.AlarmListPresenter;
-import mobi.mateam.alarma.view.SportPickDialog;
 import mobi.mateam.alarma.view.adapter.AlarmListAdapter;
 import mobi.mateam.alarma.view.interfaces.AlarmListView;
-import mobi.mateam.alarma.view.interfaces.MainAlarmView;
 import mobi.mateam.alarma.view.interfaces.OnEditAlarmListener;
 import mobi.mateam.alarma.view.tools.AlarmAnimDecorHelper;
 import mobi.mateam.alarma.view.tools.AlarmListCallBack;
@@ -86,16 +84,6 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
   public void showEmptyList() {
     tvEmptyState.setVisibility(View.VISIBLE);
     rvAlarmsList.setVisibility(View.GONE);
-  }
-
-  public void showSetAlarmView(Alarm alarm, boolean isNew, int sportTypeId) {
-    tvEmptyState.setVisibility(View.GONE);
-    rvAlarmsList.setVisibility(View.VISIBLE);
-    ((MainAlarmView) getActivity()).showSetAlarmView(alarm, isNew, sportTypeId);
-  }
-
-  @Override public void showSportPicker() {
-    new SportPickDialog().show(getFragmentManager(), "Sport");
   }
 
   @Override public void onDestroyView() {

@@ -21,12 +21,12 @@ public class MainAlarmPresenter extends BasePresenter<SuperAlarmView> {
 
   public MainAlarmPresenter(EventBus eventBus) {
     this.eventBus = eventBus;
-    initSubscriber();
+
   }
 
   @Override public void attachView(SuperAlarmView mainAlarmView) {
     super.attachView(mainAlarmView);
-    eventBus.observeEvents(Event.SetAlarm.class).subscribe(subscriber);
+    subscribeToEventBas();
   }
 
   public Navigator getNavigator() {
@@ -40,7 +40,7 @@ public class MainAlarmPresenter extends BasePresenter<SuperAlarmView> {
     return navigator;
   }
 
-  private void initSubscriber() {
+  private void subscribeToEventBas() {
     subscriber = new Subscriber() {
       @Override public void onCompleted() {
 
@@ -60,6 +60,7 @@ public class MainAlarmPresenter extends BasePresenter<SuperAlarmView> {
         }
       }
     };
+    eventBus.observeEvents(Event.SetAlarm.class).subscribe(subscriber);
   }
 
   public void onEditAlarmClick(String alarmId) {

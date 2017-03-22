@@ -21,17 +21,18 @@ public class AlarmListPresenter extends BasePresenter<AlarmListView> {
     this.alarmRepository = alarmRepository;
     this.alarmProvider = alarmProvider;
     this.eventBus = eventBus;
-    initSubscriber();
+
 
   }
 
   @Override public void attachView(AlarmListView alarmListView) {
     super.attachView(alarmListView);
+    subscribeToEventBas();
     updateView();
-    eventBus.observeEvents(Event.SetAlarm.class).subscribe(subscriber);
+
   }
 
-  private void initSubscriber() {
+  private void subscribeToEventBas() {
     subscriber = new Subscriber<Event.SetAlarm>() {
       @Override public void onCompleted() {
         updateView();
@@ -45,7 +46,7 @@ public class AlarmListPresenter extends BasePresenter<AlarmListView> {
 
       }
     };
-
+    eventBus.observeEvents(Event.SetAlarm.class).subscribe(subscriber);
 
   }
 
