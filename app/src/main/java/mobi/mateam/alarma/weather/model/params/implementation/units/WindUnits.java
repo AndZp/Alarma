@@ -12,7 +12,7 @@ public enum WindUnits {
 
     public static Double convertToDefault(WindUnits units, Double value) {
         if(WindUnits.MILESHOUR.equals(units)){
-            return value * 2.23;
+            return value * 0.447;
         }
         return value;
     }
