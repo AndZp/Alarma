@@ -47,7 +47,6 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(LAYOUT, container, false);
-
     unbinder = ButterKnife.bind(this, view);
     viewWeekday = new WeekdaysDataSource((AppCompatActivity) getActivity(), R.id.weekdays_stub, view);
     viewWeekday.setSelectedColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));

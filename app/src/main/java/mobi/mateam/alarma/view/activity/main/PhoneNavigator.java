@@ -2,13 +2,18 @@ package mobi.mateam.alarma.view.activity.main;
 
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.ViewCompat;
+import android.support.v4.widget.NestedScrollView;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.AppCompatImageView;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.View;
 import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import mobi.mateam.alarma.R;
@@ -16,23 +21,24 @@ import mobi.mateam.alarma.view.fragment.AlarmListFragment;
 import mobi.mateam.alarma.view.fragment.SetAlarmFragment;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
 
-import static mobi.mateam.alarma.R.id.fab;
-
 public class PhoneNavigator implements Navigator {
   private AppBarLayout appBarLayout;
-  private AppCompatImageView toolbarImageView;
   private FloatingActionButton floatingActionButton;
-
   private MainAlarmActivity activity;
   private AlarmListFragment alarmListFragment;
   private SetAlarmFragment setAlarmFragment;
   private int state = MainAlarmActivity.ALARM_LIST_MODE;
+  private AppCompatImageView toolbarImageView;
+  private NestedScrollView nestedScrollView;
+  private CollapsingToolbarLayout collapsingToolbarLayout;
 
   @Override public void onAttachView(MainAlarmActivity activity) {
     this.activity = activity;
     appBarLayout = ButterKnife.findById(activity, R.id.app_bar_lay);
     toolbarImageView = ButterKnife.findById(activity, R.id.iv_toolbar_image);
-    floatingActionButton = ButterKnife.findById(activity, fab);
+    floatingActionButton = ButterKnife.findById(activity, R.id.fab);
+    nestedScrollView = ButterKnife.findById(activity, R.id.scroll);
+    collapsingToolbarLayout = ButterKnife.findById(activity, R.id.collapsing_toolbar);
   }
 
   @Override public void showEditAlarmMode(String alarmID) {
@@ -46,45 +52,79 @@ public class PhoneNavigator implements Navigator {
       activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, setAlarmFragment).addToBackStack(null).commit();
     }
 
-    Glide.with(activity).load(R.drawable.mount_background).into(toolbarImageView);
-    appBarLayout.setExpanded(true);
-    setFABinSetAlarmMode();
     state = MainAlarmActivity.SET_ALARM_MODE;
+
+    setActionBarToMode(state);
+    setFABtoMode(state);
   }
 
   @Override public void showAlarmListMode() {
-    appBarLayout.setExpanded(true);
-    toolbarImageView.setImageResource(0);
     if (alarmListFragment == null) {
       alarmListFragment = new AlarmListFragment();
       activity.getSupportFragmentManager().beginTransaction().add(R.id.container, alarmListFragment, null).commit();
     }
     activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, alarmListFragment).commit();
-    setFABinAlarmListMode();
     state = MainAlarmActivity.ALARM_LIST_MODE;
+    setFABtoMode(state);
+    setActionBarToMode(state);
   }
 
-  private void setFABinSetAlarmMode() {
-    floatingActionButton.setImageResource(R.drawable.ic_done);
-    floatingActionButton.setOnClickListener(v -> {
-      activity.onFABClick(MainAlarmActivity.SET_ALARM_MODE);
-      setAlarmFragment = null;
-    });
+  private void setActionBarToMode(int mode) {
+    ActionBar supportActionBar = activity.getSupportActionBar();
 
-    CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) floatingActionButton.getLayoutParams();
-    params.setAnchorId(R.id.scroll);
-    params.anchorGravity = Gravity.TOP | Gravity.RIGHT | GravityCompat.END;
-    params.gravity = 0;
-    floatingActionButton.setLayoutParams(params);
+    switch (mode) {
+      case MainAlarmActivity.SET_ALARM_MODE:
+        if (supportActionBar != null) {
+          supportActionBar.setDisplayShowTitleEnabled(false);
+          supportActionBar.setDisplayHomeAsUpEnabled(true);
+          appBarLayout.setExpanded(true, true);
+          ViewCompat.setNestedScrollingEnabled(nestedScrollView, true);
+          toolbarImageView.setVisibility(View.VISIBLE);
+          Glide.with(activity).load(R.drawable.mount_background).into(toolbarImageView);
+
+          AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
+          params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+        }
+        break;
+      case MainAlarmActivity.ALARM_LIST_MODE:
+        if (supportActionBar != null) {
+          supportActionBar.setDisplayShowTitleEnabled(true);
+          supportActionBar.setDisplayHomeAsUpEnabled(false);
+          appBarLayout.setExpanded(false, false);
+          ViewCompat.setNestedScrollingEnabled(nestedScrollView, false);
+
+          // Glide.with(activity).load(R.drawable.mount_background).into(toolbarImageView);
+          toolbarImageView.setVisibility(View.GONE);
+          AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
+          params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+
+          params.setScrollFlags(0);
+          collapsingToolbarLayout.setTitleEnabled(false);
+        }
+        break;
+    }
   }
 
-  private void setFABinAlarmListMode() {
-    floatingActionButton.setImageResource(R.drawable.ic_add_white);
-    floatingActionButton.setOnClickListener(v -> activity.onFABClick(MainAlarmActivity.ALARM_LIST_MODE));
-
+  private void setFABtoMode(int state) {
     CoordinatorLayout.LayoutParams params = (CoordinatorLayout.LayoutParams) floatingActionButton.getLayoutParams();
-    params.setAnchorId(R.id.scroll);
-    params.anchorGravity = Gravity.BOTTOM | Gravity.RIGHT | GravityCompat.END;
+    switch (state) {
+      case MainAlarmActivity.ALARM_LIST_MODE:
+        floatingActionButton.setImageResource(R.drawable.ic_add_white_24dp);
+        floatingActionButton.setOnClickListener(v -> activity.onFABClick(MainAlarmActivity.ALARM_LIST_MODE));
+        params.setAnchorId(R.id.scroll);
+        params.anchorGravity = Gravity.BOTTOM | Gravity.RIGHT | GravityCompat.END;
+        break;
+      case MainAlarmActivity.SET_ALARM_MODE:
+        floatingActionButton.setImageResource(R.drawable.ic_done);
+        params.setAnchorId(R.id.scroll);
+        params.anchorGravity = Gravity.TOP | Gravity.RIGHT | GravityCompat.END;
+        params.gravity = 0;
+
+        floatingActionButton.setOnClickListener(v -> {
+          activity.onFABClick(MainAlarmActivity.SET_ALARM_MODE);
+          setAlarmFragment = null;
+        });
+    }
     floatingActionButton.setLayoutParams(params);
   }
 
@@ -102,14 +142,12 @@ public class PhoneNavigator implements Navigator {
   }
 
   @Override public void updateMode() {
-
     switch (state) {
       case MainAlarmActivity.ALARM_LIST_MODE:
         showAlarmListMode();
         break;
       case MainAlarmActivity.SET_ALARM_MODE:
         showEditAlarmMode(null);
-
     }
   }
 }

@@ -11,18 +11,19 @@ import java.util.Arrays;
 import mobi.mateam.alarma.App;
 import mobi.mateam.alarma.R;
 import mobi.mateam.alarma.bus.Event;
+import mobi.mateam.alarma.bus.EventBus;
 import mobi.mateam.alarma.di.component.AppComponent;
 import mobi.mateam.alarma.view.adapter.SportTypeAdapter;
 import mobi.mateam.alarma.weather.model.sports.SportTypes;
 
 public class SportPickDialog extends DialogFragment {
   public static final int LAYOUT = R.layout.fragment_sport_pick;
-
+  private EventBus eventBus;
 
   // this method create view for your Dialog
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     //inflate layout with recycler view
-
+    eventBus = getAppComponent().getEventBus();
     getDialog().setTitle("Choose you kind of activity");
 
     View v = inflater.inflate(LAYOUT, container, false);
@@ -33,7 +34,7 @@ public class SportPickDialog extends DialogFragment {
 
     SportTypeAdapter adapter = new SportTypeAdapter(getActivity(), Arrays.asList(SportTypes.values()));
     adapter.setOnItemClickListener(sportTypes -> {
-      getAppComponent().getEventBus().post(new Event.SportPicked(sportTypes));
+      eventBus.post(new Event.SportPicked(sportTypes));
       SportPickDialog.this.dismiss();
     });
     mRecyclerView.setAdapter(adapter);

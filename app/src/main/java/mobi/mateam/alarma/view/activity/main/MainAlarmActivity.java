@@ -37,7 +37,6 @@ public class MainAlarmActivity extends BaseActivity implements SuperAlarmView, O
     setContentView(LAYOUT);
     ButterKnife.bind(this);
     setSupportActionBar(toolbar);
-    getSupportActionBar().setDisplayShowTitleEnabled(true);
     setPresenter();
     setNavigator();
 
@@ -56,6 +55,9 @@ public class MainAlarmActivity extends BaseActivity implements SuperAlarmView, O
         break;
       case R.id.action_about:
         Toast.makeText(this, "You have selected About Menu", Toast.LENGTH_SHORT).show();
+        break;
+      case android.R.id.home:
+        onBackPressed();
         break;
     }
     return true;
