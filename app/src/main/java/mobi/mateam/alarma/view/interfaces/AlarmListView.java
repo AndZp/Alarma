@@ -7,5 +7,5 @@ public interface AlarmListView extends MvpView {
 
   void showAlarmList(List<Alarm> alarms);
 
-  void showEmptyList();
+  void showEmptyState();
 }

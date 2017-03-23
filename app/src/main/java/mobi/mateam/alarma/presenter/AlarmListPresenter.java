@@ -74,7 +74,7 @@ public class AlarmListPresenter extends BasePresenter<AlarmListView> {
 
       @Override public void onNext(ArrayList<Alarm> alarms) {
         if (alarms == null || alarms.isEmpty()) {
-          getView().showEmptyList();
+          getView().showEmptyState();
         } else {
           getView().showAlarmList(alarms);
         }
@@ -86,6 +86,11 @@ public class AlarmListPresenter extends BasePresenter<AlarmListView> {
   public void onAlarmRemoved(Alarm alarm) {
     alarmRepository.removeAlarm(alarm);
     alarmProvider.cancelAlarm(alarm);
+    alarmRepository.getAlarmList().subscribe(alarms -> {
+      if (alarms == null || alarms.size() == 0) {
+        getView().showEmptyState();
+      }
+    });
   }
 
   @Override public void detachView() {

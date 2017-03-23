@@ -30,7 +30,7 @@ public class AlarmListCallBack extends ItemTouchHelper.SimpleCallback {
   }
 
   private void init() {
-    background = new ColorDrawable(Color.RED);
+    background = new ColorDrawable(ContextCompat.getColor(mContext, R.color.colorPrimaryDark));
     xMark = ContextCompat.getDrawable(mContext, R.drawable.ic_clear_24dp);
     xMark.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP);
     xMarkMargin = (int) mContext.getResources().getDimension(R.dimen.ic_clear_margin);

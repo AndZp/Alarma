@@ -27,11 +27,13 @@
       android:drawableTop="@drawable/empty_state_icon_gray"
       android:gravity="center"
       android:layout_gravity="center"
+
       android:drawablePadding="20dp"
       android:foregroundGravity="center"
-      android:text="To set an alarm, tap + button"
+      android:text="@string/alarm_list_empty_state_add_alarm_text"
       android:visibility="visible"
-      android:textSize="21sp"
-      android:layout_marginTop="-10dp"
+      android:textSize="20sp"
+      android:textColor="@color/text_grey"
+      android:layout_marginTop="-15dp"
       />
 </FrameLayout>

@@ -6,6 +6,7 @@ import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewCompat;
 import android.support.v4.widget.NestedScrollView;
@@ -49,7 +50,12 @@ public class PhoneNavigator implements Navigator {
         bundle.putString(SetAlarmView.ALARM_ID_KEY, alarmID);
         setAlarmFragment.setArguments(bundle);
       }
-      activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, setAlarmFragment).addToBackStack(null).commit();
+      //activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, setAlarmFragment).addToBackStack(null).commit();
+
+      FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+      // transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+      transaction.replace(R.id.container, setAlarmFragment);
+      transaction.commit();
     }
 
     state = MainAlarmActivity.SET_ALARM_MODE;
@@ -63,7 +69,15 @@ public class PhoneNavigator implements Navigator {
       alarmListFragment = new AlarmListFragment();
       activity.getSupportFragmentManager().beginTransaction().add(R.id.container, alarmListFragment, null).commit();
     }
-    activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, alarmListFragment).commit();
+
+    FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+    transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+    transaction.replace(R.id.container, alarmListFragment);
+    transaction.commit();
+
+    /*activity.getSupportFragmentManager()
+        .beginTransaction()
+        .replace(R.id.container, alarmListFragment).commit();*/
     state = MainAlarmActivity.ALARM_LIST_MODE;
     setFABtoMode(state);
     setActionBarToMode(state);
@@ -93,11 +107,11 @@ public class PhoneNavigator implements Navigator {
           appBarLayout.setExpanded(false, false);
           ViewCompat.setNestedScrollingEnabled(nestedScrollView, false);
 
-          // Glide.with(activity).load(R.drawable.mount_background).into(toolbarImageView);
           toolbarImageView.setVisibility(View.GONE);
+
+          //Lock in collapsed state
           AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
           params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
-
           params.setScrollFlags(0);
           collapsingToolbarLayout.setTitleEnabled(false);
         }
@@ -139,6 +153,14 @@ public class PhoneNavigator implements Navigator {
       setAlarmFragment = null;
       showAlarmListMode();
     }
+  }
+
+  public void replaceFragmentWithAnimation(android.support.v4.app.Fragment fragment, String tag) {
+    FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
+    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
+    transaction.replace(R.id.container, fragment);
+    transaction.addToBackStack(tag);
+    transaction.commit();
   }
 
   @Override public void updateMode() {

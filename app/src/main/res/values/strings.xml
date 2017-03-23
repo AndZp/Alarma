@@ -65,4 +65,5 @@
     <item>Alarm set for <xliff:g example="2 days" id="DAYS">%1$s</xliff:g>, <xliff:g example="2 hours" id="HOURS">%2$s</xliff:g>, and <xliff:g example="2 minutes" id="MINUTES">%3$s</xliff:g> from now.</item>
   </string-array>
   <string name="title_activity_fragment_container">FragmentContainerActivity</string>
+  <string name="alarm_list_empty_state_add_alarm_text">To set an alarm, tap + button</string>
 </resources>

@@ -81,7 +81,7 @@ public class AlarmListFragment extends BaseFragment implements AlarmListView {
     rvAlarmsList.addItemDecoration(new AlarmAnimDecorHelper());
   }
 
-  public void showEmptyList() {
+  public void showEmptyState() {
     tvEmptyState.setVisibility(View.VISIBLE);
     rvAlarmsList.setVisibility(View.GONE);
   }

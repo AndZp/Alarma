@@ -1,6 +1,5 @@
 package mobi.mateam.alarma.view.adapter;
 
-import android.graphics.Color;
 import android.os.Handler;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SwitchCompat;
@@ -50,7 +49,7 @@ public class AlarmListAdapter extends RecyclerView.Adapter<AlarmListAdapter.View
     Alarm alarm = alarms.get(position);
 
     if (itemsPendingRemoval.contains(alarm)) {
-      viewHolder.itemView.setBackgroundColor(Color.RED);
+      viewHolder.itemView.setBackgroundResource(R.color.colorPrimaryDark);
       viewHolder.btnUndo.setVisibility(View.VISIBLE);
 
       viewHolder.tvAlarmTime.setVisibility(View.INVISIBLE);
@@ -69,7 +68,7 @@ public class AlarmListAdapter extends RecyclerView.Adapter<AlarmListAdapter.View
         notifyItemChanged(alarms.indexOf(alarm));
       });
     } else {
-
+      viewHolder.btnUndo.setVisibility(View.INVISIBLE);
       viewHolder.tvAlarmTime.setText(alarm.hour + ":" + alarm.minutes);
       viewHolder.tvAlarmLable.setText(alarm.label);
       viewHolder.tvAlarmDays.setText(alarm.getStringDays());
@@ -147,5 +146,4 @@ public class AlarmListAdapter extends RecyclerView.Adapter<AlarmListAdapter.View
       ButterKnife.bind(this, view);
     }
   }
-  // endregion
 }

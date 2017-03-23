@@ -1,26 +1,29 @@
 package mobi.mateam.alarma.view.tools;
 
+import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import mobi.mateam.alarma.R;
 
 public class AlarmAnimDecorHelper extends RecyclerView.ItemDecoration {
   // we want to cache this and not allocate anything repeatedly in the onDraw method
   Drawable background;
   boolean initiated;
 
-  private void init() {
-    background = new ColorDrawable(Color.RED);
+  private void init(Context context) {
+
+    background = new ColorDrawable(ContextCompat.getColor(context, R.color.colorPrimaryDark));
     initiated = true;
   }
 
   @Override public void onDraw(Canvas c, RecyclerView parent, RecyclerView.State state) {
 
     if (!initiated) {
-      init();
+      init(parent.getContext());
     }
 
     // only if animation is in progress
