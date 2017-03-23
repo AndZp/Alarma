@@ -2,7 +2,6 @@ package mobi.mateam.alarma.weather.model;
 
 import java.util.HashMap;
 import java.util.Map;
-
 import mobi.mateam.alarma.weather.model.params.WeatherParamValue;
 import mobi.mateam.alarma.weather.model.params.implementation.RainParam;
 import mobi.mateam.alarma.weather.model.params.implementation.TemperatureParam;
@@ -45,6 +44,6 @@ public class CurrentWeatherState {
         if(weatherParameterMap == null){
             weatherParameterMap = new HashMap<>();
         }
-        weatherParameterMap.put(value.getParametrType(), value);
+      weatherParameterMap.put(value.getParameterType(), value);
     }
 }

@@ -1,8 +1,6 @@
 package mobi.mateam.alarma.weather.model.params.implementation;
 
 import mobi.mateam.alarma.weather.model.ParameterType;
-import mobi.mateam.alarma.weather.model.params.WeatherParamGeneral;
-import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 import mobi.mateam.alarma.weather.model.params.WeatherParamValue;
 import mobi.mateam.alarma.weather.model.params.implementation.units.PressureUnits;
 
@@ -18,8 +16,7 @@ public class PressureParam extends WeatherParamValue<Integer, PressureUnits> {
         super(PressureUnits.convertToDefault(units, value));
     }
 
-    @Override
-    public ParameterType getParametrType() {
+    @Override public ParameterType getParameterType() {
         return ParameterType.PRESSURE;
     }
 

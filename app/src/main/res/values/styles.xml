@@ -7,6 +7,7 @@
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
     <item name="android:dialogTheme">@style/TitleDialog</item>
+    <item name="preferenceTheme">@style/prefTheme</item>
 
   </style>
 
@@ -22,6 +23,12 @@
   <style name="AppTheme.NoActionBar">
     <item name="windowActionBar">false</item>
     <item name="windowNoTitle">true</item>
+  </style>
+
+  <style name="prefTheme" parent="@style/PreferenceThemeOverlay">
+
+    <item name="android:textColorSecondary">@color/text_grey</item>
+    <item name="android:textSize">15sp</item>
   </style>
 
   <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>

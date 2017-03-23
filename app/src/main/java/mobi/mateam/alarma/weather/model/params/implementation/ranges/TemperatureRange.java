@@ -1,8 +1,8 @@
 package mobi.mateam.alarma.weather.model.params.implementation.ranges;
 
+import mobi.mateam.alarma.R;
 import mobi.mateam.alarma.weather.model.ParameterType;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
-import mobi.mateam.alarma.weather.model.params.implementation.units.NoUnits;
 import mobi.mateam.alarma.weather.model.params.implementation.units.TemperatureUnits;
 
 /**
@@ -12,11 +12,10 @@ import mobi.mateam.alarma.weather.model.params.implementation.units.TemperatureU
 public class TemperatureRange extends WeatherParamRange<Integer, TemperatureUnits> {
 
     public TemperatureRange(TemperatureUnits units, Integer minValue, Integer maxValue) {
-        super(TemperatureUnits.convertToDefault(units, minValue), TemperatureUnits.convertToDefault(units, maxValue));
+      super(TemperatureUnits.convertToDefault(units, minValue), TemperatureUnits.convertToDefault(units, maxValue), R.drawable.location);
     }
 
-    @Override
-    public ParameterType getParametrType() {
+    @Override public ParameterType getParameterType() {
         return ParameterType.TEMPERATURE;
     }
 

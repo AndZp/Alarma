@@ -16,8 +16,7 @@ public class CloudsParam extends WeatherParamValue<Integer, NoUnits> {
         super(value);
     }
 
-    @Override
-    public ParameterType getParametrType() {
+    @Override public ParameterType getParameterType() {
         return ParameterType.CLOUDS;
     }
 }

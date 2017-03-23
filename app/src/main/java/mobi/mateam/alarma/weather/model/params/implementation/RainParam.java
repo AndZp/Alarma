@@ -13,8 +13,7 @@ import mobi.mateam.alarma.weather.model.params.implementation.units.NoUnits;
 
 public class RainParam extends WeatherParamValue<RainType, NoUnits> {
 
-    @Override
-    public ParameterType getParametrType() {
+    @Override public ParameterType getParameterType() {
         return ParameterType.RAIN;
     }
 

@@ -1,5 +1,6 @@
 package mobi.mateam.alarma.view.adapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,22 +8,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.util.List;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import java.util.List;
 import mobi.mateam.alarma.R;
+import mobi.mateam.alarma.view.settings.Settings;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 
 public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.ViewHolder> {
   public static final int NORMAL = 1;
   public static final int FOOTER = 2;
   private final int NOTIFY_DELAY = 100;
+  private final Context context;
   private List<WeatherParamRange> weatherParameters;
 
-  public ParamListAdapter(List<WeatherParamRange> weatherParameters) {
+  public ParamListAdapter(Context context, List<WeatherParamRange> weatherParameters) {
     this.weatherParameters = weatherParameters;
+    this.context = context;
   }
 
   @Override public int getItemViewType(int position) {
@@ -43,8 +45,10 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.View
   @Override public void onBindViewHolder(ViewHolder viewHolder, int position) {
     if (position == weatherParameters.size()) {
       viewHolder.tvParamName.setVisibility(View.GONE);
+      viewHolder.tvUnits.setVisibility(View.GONE);
       viewHolder.etMinValue.setVisibility(View.GONE);
       viewHolder.etMaxValue.setVisibility(View.GONE);
+
       viewHolder.btnAddRemoveParam.setText("Add param");
       viewHolder.btnAddRemoveParam.setOnClickListener(v -> {
         //addParam(new WeatherParameterRange(), position);
@@ -52,10 +56,14 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.View
       });
     } else {
       WeatherParamRange parameter = weatherParameters.get(position);
-      viewHolder.tvParamName.setText(parameter.getParametrType().getName());
+      viewHolder.tvParamName.setText(parameter.getParameterType().getName());
+      viewHolder.tvParamName.setCompoundDrawablesWithIntrinsicBounds(parameter.getIconId(), 0, 0, 0);
+
+      viewHolder.tvUnits.setText(Settings.getUserTemperatureUnits(context).name().substring(0, 3));
+
       viewHolder.etMinValue.setText(parameter.getMinValue().toString());
       viewHolder.etMaxValue.setText(parameter.getMaxValue().toString());
-      viewHolder.btnAddRemoveParam.setText("--");
+      viewHolder.btnAddRemoveParam.setText("-");
       viewHolder.btnAddRemoveParam.setOnClickListener(v -> {
         removeParam(position);
       });
@@ -97,6 +105,7 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.View
 
   public static class ViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tv_param_name) TextView tvParamName;
+    @BindView(R.id.tv_units) TextView tvUnits;
     @BindView(R.id.et_min_value) EditText etMinValue;
     @BindView(R.id.et_max_value) EditText etMaxValue;
     @BindView(R.id.btn_item_param) Button btnAddRemoveParam;

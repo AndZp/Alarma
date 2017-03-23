@@ -1,5 +1,6 @@
 package mobi.mateam.alarma.weather.model.params.implementation.ranges;
 
+import mobi.mateam.alarma.R;
 import mobi.mateam.alarma.weather.model.ParameterType;
 import mobi.mateam.alarma.weather.model.params.RainType;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
@@ -12,11 +13,10 @@ import mobi.mateam.alarma.weather.model.params.implementation.units.NoUnits;
 public class RainRange extends WeatherParamRange<RainType, NoUnits> {
 
     public RainRange(RainType minValue, RainType maxValue) {
-        super(RainType.NO_RAIN, maxValue);
+      super(RainType.NO_RAIN, maxValue, R.drawable.location);
     }
 
-    @Override
-    public ParameterType getParametrType() {
+    @Override public ParameterType getParameterType() {
         return ParameterType.RAIN;
     }
 

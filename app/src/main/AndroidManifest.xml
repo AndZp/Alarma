@@ -56,6 +56,10 @@
           android:name="android.support.PARENT_ACTIVITY"
           android:value="mobi.mateam.alarma.view.activity.BaseActivity"/>
     </activity>
+    <activity
+        android:name=".view.activity.SettingsActivity"
+        android:label="@string/title_activity_settings">
+    </activity>
   </application>
 
 </manifest>

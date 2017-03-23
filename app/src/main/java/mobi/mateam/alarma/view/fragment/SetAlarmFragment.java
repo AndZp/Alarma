@@ -85,7 +85,7 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
   }
 
   @Override public void showWeatherParameters(List<WeatherParamRange> conditions) {
-    ParamListAdapter paramListAdapter = new ParamListAdapter(conditions);
+    ParamListAdapter paramListAdapter = new ParamListAdapter(getActivity(), conditions);
     rvParams.setLayoutManager(new LinearLayoutManager(getActivity()));
     rvParams.setAdapter(paramListAdapter);
   }

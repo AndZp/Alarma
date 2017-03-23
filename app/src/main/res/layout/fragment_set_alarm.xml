@@ -25,7 +25,7 @@
           android:layout_marginTop="25dp"
           android:gravity="center"
           android:text="06:00"
-          android:textColor="@color/text_grey"
+          android:textColor="@android:color/primary_text_light"
           android:textSize="50sp"
           />
       <View
@@ -123,7 +123,13 @@
           style="@style/SetAlarmOption"
           />
 
-
+      <View
+          android:layout_width="match_parent"
+          android:layout_height="1dp"
+          android:layout_marginTop="10dp"
+          android:layout_marginBottom="10dp"
+          android:background="@color/separator"
+          />
       <android.support.v7.widget.RecyclerView
           android:id="@+id/rv_weather_params"
           android:layout_width="match_parent"

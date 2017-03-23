@@ -4,8 +4,6 @@ import mobi.mateam.alarma.weather.model.ParameterType;
 import mobi.mateam.alarma.weather.model.params.WeatherParamValue;
 import mobi.mateam.alarma.weather.model.params.implementation.units.TemperatureUnits;
 
-import static mobi.mateam.alarma.weather.model.params.implementation.units.TemperatureUnits.KELVIN;
-
 /**
  * Created by Des63rus on 3/9/2017.
  *
@@ -19,8 +17,7 @@ public class TemperatureParam extends WeatherParamValue<Integer, TemperatureUnit
         super(TemperatureUnits.convertToDefault(units, value));
     }
 
-    @Override
-    public ParameterType getParametrType() {
+    @Override public ParameterType getParameterType() {
         return ParameterType.TEMPERATURE;
     }
 

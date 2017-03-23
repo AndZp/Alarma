@@ -25,7 +25,7 @@ public class AlarmWeatherConditions {
         if (weatherConditionsMap == null) {
             weatherConditionsMap = new LinkedHashMap<>();
         }
-        weatherConditionsMap.put(range.getParametrType(), range);
+      weatherConditionsMap.put(range.getParameterType(), range);
     }
 
     /**

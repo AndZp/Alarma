@@ -1,19 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-  <EditTextPreference
-      android:title="Your Name"
-      android:key="username"
-      android:summary="Please provide your username"></EditTextPreference>
-  <CheckBoxPreference
-      android:title="Application Updates"
-      android:defaultValue="false"
-      android:summary="This option if selected will allow the application to check for latest versions."
-      android:key="applicationUpdates"/>
-  <ListPreference
-      android:title="Download Details"
-      android:summary="Select the kind of data that you would like to download"
-      android:key="downloadType"
-      android:defaultValue="1"
-      android:entries="@array/temperature_array"
-      android:entryValues="@array/listValues"/>
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <PreferenceCategory android:title="Localization">
+    <ListPreference
+        android:defaultValue="English"
+        android:entries="@array/language_array"
+        android:entryValues="@array/language_array"
+        android:key="pref_key_language"
+        android:title="Language"
+        />
+
+    <ListPreference
+        android:defaultValue="Celsius"
+        android:entries="@array/temperature_title_array"
+        android:entryValues="@array/temperature_values_array"
+        android:key="pref_key_temp_units"
+        android:title="Temperature units"
+        />
+
+    <ListPreference
+        android:defaultValue="Meters per second [m/s]"
+        android:entries="@array/speed_array"
+        android:entryValues="@array/speed_array"
+        android:key="pref_key_speed_units"
+        android:title="Speed units"
+        />
+
+    <ListPreference
+        android:defaultValue="Meters per second [m/s]"
+        android:entries="@array/pressure_array"
+        android:entryValues="@array/pressure_array"
+        android:key="pref_key_pressure_units"
+        android:title="Pressure units"
+        />
+  </PreferenceCategory>
+
+
+  <PreferenceCategory android:title="Alarm settings">
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="pref_key_is_vibrate"
+        android:title="Vibrate"/>
+
+    <ListPreference
+        android:defaultValue="10"
+        android:dialogTitle="@string/auto_silence_title"
+        android:entries="@array/auto_silence_entries"
+        android:entryValues="@array/auto_silence_values"
+        android:key="pref_auto_silent"
+        android:title="@string/auto_silence_title"/>
+
+    <ListPreference
+        android:defaultValue="10"
+        android:dialogTitle="@string/snooze_duration_title"
+        android:entries="@array/snooze_duration_entries"
+        android:entryValues="@array/snooze_duration_values"
+        android:key="pref_key_snooze_duration"
+        android:title="@string/snooze_duration_title"/>
+
+  </PreferenceCategory>
 </PreferenceScreen>

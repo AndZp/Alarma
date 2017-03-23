@@ -3,38 +3,64 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:gravity="center"
+    android:layout_gravity="center_vertical"
     android:layout_margin="8dp"
+    android:gravity="center"
+    android:orientation="horizontal"
     >
 
   <TextView
       android:id="@+id/tv_param_name"
-      android:layout_width="match_parent"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_weight="25"
-      android:text="Parameter Name"
+      android:layout_marginStart="21dp"
+      android:drawablePadding="10dp"
+      android:drawableStart="@drawable/location"
+      android:gravity="center_vertical|start"
+      android:text="Parameter"
+      android:textColor="@color/text_grey"
+      android:layout_weight="8"
+      android:textSize="16sp"
       />
   <EditText
       android:id="@+id/et_min_value"
-      android:layout_width="match_parent"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_weight="30"
+      android:textColor="@color/text_grey"
+      android:textSize="16sp"
+      android:gravity="bottom|start"
+      android:layout_weight="4"
+
       android:hint="Min value"
       />
   <EditText
       android:id="@+id/et_max_value"
-      android:layout_width="match_parent"
+      android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_weight="30"
+      android:textColor="@color/text_grey"
+      android:layout_weight="4"
+
+      android:textSize="16sp"
       android:hint="Min value"
+      />
+
+  <TextView
+      android:id="@+id/tv_units"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:textColor="@color/text_grey"
+      android:textSize="16sp"
+      android:text="Cel"
+      android:layout_weight="4"
+
+
       />
   <Button
       android:id="@+id/btn_item_param"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:layout_weight="5"
       android:text="-"
+      android:visibility="gone"
       />
 
 </LinearLayout>

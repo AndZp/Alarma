@@ -18,6 +18,7 @@ import mobi.mateam.alarma.R;
 import mobi.mateam.alarma.presenter.MainAlarmPresenter;
 import mobi.mateam.alarma.presenter.SetAlarmPresenter;
 import mobi.mateam.alarma.view.activity.BaseActivity;
+import mobi.mateam.alarma.view.activity.SettingsActivity;
 import mobi.mateam.alarma.view.fragment.SetAlarmFragment;
 import mobi.mateam.alarma.view.interfaces.OnEditAlarmListener;
 import mobi.mateam.alarma.view.interfaces.SuperAlarmView;
@@ -51,7 +52,7 @@ public class MainAlarmActivity extends BaseActivity implements SuperAlarmView, O
   @Override public boolean onOptionsItemSelected(MenuItem item) {
     switch (item.getItemId()) {
       case R.id.action_settings:
-        Toast.makeText(this, "You have selected Settings Menu", Toast.LENGTH_SHORT).show();
+        startActivity(SettingsActivity.getStartIntent(getApplicationContext()));
         break;
       case R.id.action_about:
         Toast.makeText(this, "You have selected About Menu", Toast.LENGTH_SHORT).show();

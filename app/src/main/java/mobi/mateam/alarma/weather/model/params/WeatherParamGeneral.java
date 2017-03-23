@@ -9,6 +9,6 @@ import mobi.mateam.alarma.weather.model.ParameterType;
 
 public abstract class WeatherParamGeneral<T extends Comparable<T>, S extends Enum> {
 
-    public abstract ParameterType getParametrType();
+  public abstract ParameterType getParameterType();
 
 }

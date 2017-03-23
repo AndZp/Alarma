@@ -16,8 +16,7 @@ public class WindPowerParam extends WeatherParamValue<Double, WindUnits> {
         super(WindUnits.convertToDefault(units, value));
     }
 
-    @Override
-    public ParameterType getParametrType() {
+    @Override public ParameterType getParameterType() {
         return ParameterType.WIND_POWER;
     }
 
