@@ -17,15 +17,20 @@ import static junit.framework.Assert.assertTrue;
 
 /**
  * Created by Des63rus on 3/9/2017.
+ *
+ * Test for logic of creation and checking of weather params
  */
 public class AlarmWeatherConditionsTest {
 
-    private AlarmWeatherConditions conditions = new AlarmWeatherConditions();
+    private AlarmWeatherConditions conditionsCelsiumMeterSec = new AlarmWeatherConditions();
+    private AlarmWeatherConditions conditionsKelvinMilesHour = new AlarmWeatherConditions();
 
     @Before
     public void setup(){
-        conditions.addParam(new TemperatureRange(TemperatureUnits.CELSIUM, 10,20));
-        conditions.addParam(new WindSpeedRange(WindUnits.METERSEC, 10.0, 20.0));
+        conditionsCelsiumMeterSec.addParam(new TemperatureRange(TemperatureUnits.CELSIUM, 10,20));
+        conditionsCelsiumMeterSec.addParam(new WindSpeedRange(WindUnits.METERSEC, 10.0, 20.0));
+        conditionsKelvinMilesHour.addParam(new TemperatureRange(TemperatureUnits.KELVIN, 283,293));
+        conditionsKelvinMilesHour.addParam(new WindSpeedRange(WindUnits.MILESHOUR, 22.3, 44.7));
     }
 
     @Test
@@ -36,9 +41,13 @@ public class AlarmWeatherConditionsTest {
         CurrentWeatherState notSutable = new CurrentWeatherState();
         notSutable.addParam(new TemperatureParam(TemperatureUnits.CELSIUM, 25));
         notSutable.addParam(new WindPowerParam(WindUnits.METERSEC, 15.0));
-        assertTrue(conditions.checkWeather(sutableState) == null);
-        Map<ParameterType, ProblemParam> parameterTypeProblemParamMap = conditions.checkWeather(notSutable);
+        assertTrue(conditionsCelsiumMeterSec.checkWeather(sutableState) == null);
+        assertTrue(conditionsKelvinMilesHour.checkWeather(sutableState) == null);
+        Map<ParameterType, ProblemParam> parameterTypeProblemParamMap = conditionsCelsiumMeterSec.checkWeather(notSutable);
         assertTrue(parameterTypeProblemParamMap != null && parameterTypeProblemParamMap.size()==1);
+        Map<ParameterType, ProblemParam> parameterTypeProblemParamMapKelv = conditionsKelvinMilesHour.checkWeather(notSutable);
+        assertTrue(parameterTypeProblemParamMapKelv != null && parameterTypeProblemParamMapKelv.size()==1);
+
     }
 
 }
