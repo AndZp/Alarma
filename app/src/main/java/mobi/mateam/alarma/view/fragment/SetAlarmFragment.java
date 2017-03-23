@@ -3,12 +3,12 @@ package mobi.mateam.alarma.view.fragment;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
@@ -36,7 +36,8 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
   @BindView(R.id.tv_set_location) TextView tvLocation;
   @BindView(R.id.tv_set_ringtone) TextView tvRingtone;
   @BindView(R.id.et_set_lable) EditText etLabel;
-  @BindView(R.id.cb_weekday) CheckBox cbWeekDays;
+  @BindView(R.id.cb_weekday) AppCompatCheckBox cbWeekDays;
+  @BindView(R.id.cb_vibrate) AppCompatCheckBox cbVibrate;
   @BindView(R.id.rv_weather_params) RecyclerView rvParams;
 
   private Unbinder unbinder;
@@ -48,15 +49,23 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(LAYOUT, container, false);
     unbinder = ButterKnife.bind(this, view);
-    viewWeekday = new WeekdaysDataSource((AppCompatActivity) getActivity(), R.id.weekdays_stub, view);
-    viewWeekday.setSelectedColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-    viewWeekday.setUnselectedColor(ContextCompat.getColor(getActivity(), R.color.grey));
+    initWeekDaysView(view);
+    setPresenter();
+    presenter.setAlarm(getArguments());
+    return view;
+  }
+
+  private void setPresenter() {
     if (presenter == null) {
       presenter = getAppComponent().getSetAlarmPresenter();
     }
     presenter.attachView(this);
-    presenter.setAlarm(getArguments());
-    return view;
+  }
+
+  private void initWeekDaysView(View view) {
+    viewWeekday = new WeekdaysDataSource((AppCompatActivity) getActivity(), R.id.weekdays_stub, view);
+    viewWeekday.setSelectedColor(ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+    viewWeekday.setUnselectedColor(ContextCompat.getColor(getActivity(), R.color.grey));
   }
 
   @Override public void showTime(String time) {
@@ -98,6 +107,10 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
     new SportPickDialog().show(getFragmentManager(), "SportPickDialog");
   }
 
+  @Override public void setVibrateCheck(boolean vibrate) {
+    cbVibrate.setChecked(vibrate);
+  }
+
   @OnCheckedChanged(R.id.cb_weekday) public void onWeekDay(boolean isChecked) {
     if (isChecked) {
       viewWeekday.start(this);
@@ -105,6 +118,10 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
       viewWeekday.setVisible(false);
       presenter.onRepeatUncheck();
     }
+  }
+
+  @OnCheckedChanged(R.id.cb_vibrate) public void onVibrate(boolean isChecked) {
+    presenter.onVibrateChange(isChecked);
   }
 
   @OnClick(R.id.tv_set_time) public void onTimeClick() {
@@ -116,11 +133,11 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
   }
 
   @OnClick(R.id.tv_set_location) public void onLocationClick() {
-    presenter.setLocation();
+    presenter.startLocationDialog();
   }
 
   @OnClick(R.id.tv_set_ringtone) public void onRingtoneClick() {
-    presenter.setRingtone();
+    presenter.startRingtoneDialog();
   }
 
   @Override public void onDestroyView() {

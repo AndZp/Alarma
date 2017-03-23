@@ -5,5 +5,7 @@
   <color name="colorAccent">#F57C00</color>
   <color name="black">#0d0d0d</color>
   <color name="grey">#bdbdbd</color>
-  <color name="text_grey">#46212121</color>
+  <color name="text_grey_70">#46212121</color>
+  <color name="text_grey">#9A9A9A</color>
+  <color name="separator">#33bdbdbd</color>
 </resources>

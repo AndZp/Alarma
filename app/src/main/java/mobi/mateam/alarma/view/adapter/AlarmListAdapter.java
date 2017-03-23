@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import mobi.mateam.alarma.R;
+import mobi.mateam.alarma.alarm.AlarmUtils;
 import mobi.mateam.alarma.alarm.model.Alarm;
 
 public class AlarmListAdapter extends RecyclerView.Adapter<AlarmListAdapter.ViewHolder> {
@@ -69,7 +70,7 @@ public class AlarmListAdapter extends RecyclerView.Adapter<AlarmListAdapter.View
       });
     } else {
       viewHolder.btnUndo.setVisibility(View.INVISIBLE);
-      viewHolder.tvAlarmTime.setText(alarm.hour + ":" + alarm.minutes);
+      viewHolder.tvAlarmTime.setText(AlarmUtils.getTimeStrFromAlarm(alarm));
       viewHolder.tvAlarmLable.setText(alarm.label);
       viewHolder.tvAlarmDays.setText(alarm.getStringDays());
       viewHolder.switchActivate.setChecked(alarm.activated);

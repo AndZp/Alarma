@@ -2,19 +2,17 @@ package mobi.mateam.alarma.presenter;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.database.Cursor;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.OpenableColumns;
 import android.text.TextUtils;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
-import java.util.ArrayList;
-import java.util.List;
+import mobi.mateam.alarma.R;
 import mobi.mateam.alarma.alarm.AlarmProvider;
+import mobi.mateam.alarma.alarm.AlarmUtils;
 import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.alarm.model.PlaceData;
 import mobi.mateam.alarma.bus.Event;
@@ -22,12 +20,6 @@ import mobi.mateam.alarma.bus.EventBus;
 import mobi.mateam.alarma.model.repository.AlarmRepository;
 import mobi.mateam.alarma.view.fragment.TimePickerFragment;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
-import mobi.mateam.alarma.weather.model.AlarmWeatherConditions;
-import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
-import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
-import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindSpeedRange;
-import mobi.mateam.alarma.weather.model.params.implementation.units.TemperatureUnits;
-import mobi.mateam.alarma.weather.model.params.implementation.units.WindUnits;
 import mobi.mateam.alarma.weekdays.WeekdaysDataItem;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -47,7 +39,6 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
     this.alarmProvider = alarmProvider;
     this.alarmRepository = alarmRepository;
     this.eventBus = eventBus;
-
   }
 
   @Override public void attachView(SetAlarmView setAlarmView) {
@@ -68,8 +59,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
       @Override public void onNext(Object event) {
         if (event instanceof Event.SportPicked) {
           Event.SportPicked sportPicked = (Event.SportPicked) event;
-          isNewAlarm = true;
-          alarm.sportType = sportPicked.sportType;
+          alarm = new Alarm(sportPicked.sportType);
           updateView();
         }
       }
@@ -77,42 +67,27 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
     eventBus.observeEvents(Event.SportPicked.class).subscribe(subscriber);
   }
 
-  private static int[] getRepeatDaysIndexArray(Alarm alarm) {
-    ArrayList<Integer> result = new ArrayList<>();
-    for (int i = 0; i < alarm.weekdays.length; i++) {
-      if (alarm.weekdays[i] == 1) {
-        result.add(i);
-      }
-    }
-
-    int[] res = new int[result.size()];
-    for (int i = 0; i < result.size(); i++) {
-      res[i] = result.get(i);
-    }
-    return res;
-  }
-
   public void setAlarm(Bundle arguments) {
+    // in case if presenter already exist (OnOrientationChange)
     if (alarm != null) {
       updateView();
       return;
     }
+    // Edit Alarm case
     if (arguments != null) {
       String alarmId = arguments.getString(SetAlarmView.ALARM_ID_KEY);
       if (!TextUtils.isEmpty(alarmId)) {
         isNewAlarm = false;
-
         alarmRepository.getAlarmById(alarmId).subscribeOn(AndroidSchedulers.mainThread()).subscribe(alarm1 -> {
           alarm = alarm1;
+          eventBus.post(new Event.SportPicked(alarm.sportType));
           updateView();
         });
       }
+      // New Alarm creation
     } else {
       alarm = new Alarm();
       isNewAlarm = true;
-      AlarmWeatherConditions alarmWeatherConditions = new AlarmWeatherConditions();
-      alarmWeatherConditions.addParam(getParamList().get(0));
-      alarm.conditions = alarmWeatherConditions;
       getView().showSportPickDialog();
     }
   }
@@ -124,12 +99,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
     newFragment.setOnTimeSetListener((view, hourOfDay, minute) -> {
       alarm.hour = hourOfDay;
       alarm.minutes = minute;
-
-      String hour = hourOfDay < 10 ? "0" + hourOfDay : String.valueOf(hourOfDay);
-      String valueOf = String.valueOf(minute);
-      String minutes = valueOf.length() < 1 ? 0 + valueOf : valueOf;
-
-      getView().showTime(hour + " : " + minutes);
+      getView().showTime(AlarmUtils.getTimeStrFromAlarm(alarm));
     });
   }
 
@@ -139,7 +109,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
     }
   }
 
-  public void setRingtone() {
+  public void startRingtoneDialog() {
     final Uri currentTone = RingtoneManager.getActualDefaultRingtoneUri(getView().getActivityContext(), RingtoneManager.TYPE_ALARM);
     Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
     intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_ALARM);
@@ -150,7 +120,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
     ((Activity) getView().getActivityContext()).startActivityForResult(intent, TONE_PICKER_REQUEST);
   }
 
-  public void setLocation() {
+  public void startLocationDialog() {
 
     PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
     try {
@@ -161,71 +131,59 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
     }
   }
 
-  public List<WeatherParamRange> getParamList() {
-
-    ArrayList<WeatherParamRange> weatherParameters = new ArrayList<>();
-    weatherParameters.add(new TemperatureRange(TemperatureUnits.CELSIUM, 13, 20));
-    weatherParameters.add(new WindSpeedRange(WindUnits.METERSEC, 20.0, 40.0));
-
-    return weatherParameters;
-  }
-
   public void onRingtonePickerResult(Uri uri) {
     if (uri != null) {
       alarm.mRingtone = uri;
-      getView().showRingtone(getFileName(uri));
+      getView().showRingtone(AlarmUtils.getFileName(uri, getView().getActivityContext()));
     }
-  }
-
-  public String getFileName(Uri uri) {
-    String result = null;
-    if (uri.getScheme().equals("content")) {
-      Cursor cursor = getView().getActivityContext().getContentResolver().query(uri, null, null, null, null);
-      try {
-        if (cursor != null && cursor.moveToFirst()) {
-          result = cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME));
-        }
-      } finally {
-        cursor.close();
-      }
-    }
-    if (result == null) {
-      result = uri.getPath();
-      int cut = result.lastIndexOf('/');
-      if (cut != -1) {
-        result = result.substring(cut + 1);
-      }
-    }
-    return result;
   }
 
   public void onPlacePickerResult(Place place) {
-    String toastMsg = String.format("Place: %s", place.getName());
+    String toastMsg = String.format(getView().getAppContext().getString(R.string.set_fragment_place), place.getName());
     alarm.place = new PlaceData(place);
     getView().showLocation(toastMsg);
   }
 
   public void updateView() {
+    showWeekDays();
+
+    getView().showTime(AlarmUtils.getTimeStrFromAlarm(alarm));
+
+    getView().setVibrateCheck(alarm.vibrate);
+
+    showLabel();
+
+    showLocation();
+
+    getView().showRingtone(AlarmUtils.getFileName(alarm.mRingtone, getView().getActivityContext()));
+
+    if (alarm.conditions != null) {
+      getView().showWeatherParameters(alarm.conditions.getParamsList());
+    }
+  }
+
+  private void showLocation() {
+    String stringLocation = this.alarm.getStringLocation();
+    if (!TextUtils.isEmpty(stringLocation)) {
+      getView().showLocation(stringLocation);
+    }
+  }
+
+  private void showWeekDays() {
     if (this.alarm.weekdays != null) {
-      int[] res = getRepeatDaysIndexArray(this.alarm);
+      int[] res = AlarmUtils.getRepeatDaysIndexArray(this.alarm);
       getView().showWeekDays(res);
     }
-    getView().showTime(this.alarm.hour + ":" + this.alarm.minutes);
+  }
 
-    String label = "Label";
+  private void showLabel() {
+    String label;
     if (alarm.sportType != null && TextUtils.isEmpty(this.alarm.label)) {
       label = this.alarm.sportType.getText();
     } else {
       label = this.alarm.label;
     }
     getView().showLabel(label);
-
-    String stringLocation = this.alarm.getStringLocation();
-    if (!TextUtils.isEmpty(stringLocation)) {
-      getView().showLocation(stringLocation);
-    }
-    getView().showRingtone("Set Ringtone");
-    getView().showWeatherParameters(alarm.conditions.getParamsList());
   }
 
   public void onSaveAlarm() {
@@ -264,6 +222,10 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   @Override public void detachView() {
     super.detachView();
     subscriber.unsubscribe();
+  }
+
+  public void onVibrateChange(boolean isChecked) {
+    alarm.vibrate = isChecked;
   }
 }
 

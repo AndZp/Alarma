@@ -21,4 +21,6 @@ public interface SetAlarmView extends MvpView {
   void uncheckRepeat();
 
   void showSportPickDialog();
+
+  void setVibrateCheck(boolean vibrate);
 }

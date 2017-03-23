@@ -66,4 +66,12 @@
   </string-array>
   <string name="title_activity_fragment_container">FragmentContainerActivity</string>
   <string name="alarm_list_empty_state_add_alarm_text">To set an alarm, tap + button</string>
+  <string name="sport_pick_dialog_title">Choose you kind of activity</string>
+  <string name="set_alarm_cb_repeat_text">Repeat</string>
+  <string name="set_alarm_option_sound">Sound</string>
+  <string name="set_alarm_option_label_hint">Label</string>
+  <string name="set_alarm_option_location">Location</string>
+  <string name="set_alarm_cb_vibrate">Vibrate</string>
+  <string name="default_alarm_text">Default Alarm</string>
+  <string name="set_fragment_place">Place: %s</string>
 </resources>

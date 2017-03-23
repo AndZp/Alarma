@@ -96,6 +96,10 @@ public class MainAlarmActivity extends BaseActivity implements SuperAlarmView, O
     Snackbar.make(clMainLayout, message, Snackbar.LENGTH_LONG).show();
   }
 
+  @Override public void setActionBarImage(int imageId) {
+    navigator.setActionBarImage(imageId);
+  }
+
   protected void onActivityResult(int requestCode, int resultCode, Intent data) {
     if (requestCode == SetAlarmPresenter.PLACE_PICKER_REQUEST) {
       if (resultCode == RESULT_OK) {

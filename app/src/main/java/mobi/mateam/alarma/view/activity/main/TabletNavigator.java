@@ -25,4 +25,8 @@ public class TabletNavigator implements Navigator {
   @Override public void updateMode() {
 
   }
+
+  @Override public void setActionBarImage(int imageId) {
+    // do nothing. Method just for phone
+  }
 }

@@ -7,4 +7,6 @@ public interface SuperAlarmView extends MvpView {
   void showEditAlarmMode(String alarmId);
 
   void showNotification(String message);
+
+  void setActionBarImage(int imageId);
 }

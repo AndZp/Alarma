@@ -1,5 +1,6 @@
 package mobi.mateam.alarma.alarm.model;
 
+import android.media.RingtoneManager;
 import android.net.Uri;
 import android.text.TextUtils;
 import java.util.List;
@@ -11,12 +12,12 @@ import mobi.mateam.alarma.weekdays.Weekday;
 
 public class Alarm {
   public boolean activated;
-  public boolean vibrate;
+  public boolean vibrate = true;
   public String id;
   public String label;
   public int hour = 7;
   public int minutes = 40;
-  public Uri mRingtone = Uri.EMPTY;
+  public Uri mRingtone = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
   public boolean mVibrate = true;
   public PlaceData place;
   public int[] weekdays;

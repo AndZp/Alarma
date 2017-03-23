@@ -12,51 +12,52 @@ import mobi.mateam.alarma.weather.model.ParameterType;
  */
 
 public enum SportTypes {
-    //TODO: move to strings all text values
-    RUNNING("Jogging", 0, 0,ParameterType.TEMPERATURE, ParameterType.RAIN, ParameterType.WIND_POWER),
-    CYCLING("Cycling", 1,1, ParameterType.TEMPERATURE, ParameterType.RAIN, ParameterType.WIND_POWER), SNOWBOARDING("Snowboarding", 2,
-      R.drawable.category_dialog_mount, ParameterType.TEMPERATURE, ParameterType.SNOW, ParameterType.WIND_POWER),
-    OTHERS("Others", 3, 3, ParameterType.TEMPERATURE, ParameterType.RAIN, ParameterType.WIND_POWER);
+  //TODO: move to strings all text values
+  SUMMER_SPORT("Summer sport", 0, R.drawable.category_dialog_air, ParameterType.TEMPERATURE, ParameterType.RAIN,
+      ParameterType.WIND_POWER), WATER_SPORT("Water sport", 1, R.drawable.category_dialog_water, ParameterType.TEMPERATURE, ParameterType.RAIN,
+      ParameterType.WIND_POWER), WINTER_SPORT("Winter sport", 2, R.drawable.category_dialog_mount, ParameterType.TEMPERATURE, ParameterType.SNOW,
+      ParameterType.WIND_POWER);
+  //OTHERS("Others", 2, 3, ParameterType.TEMPERATURE, ParameterType.RAIN,  ParameterType.WIND_POWER);
 
-    private int id;
-    private String text;
+  private int id;
+  private String text;
 
-    private List<ParameterType> defaultParams;
+  private List<ParameterType> defaultParams;
 
-    private int imageId;
+  private int imageId;
 
-    SportTypes(String text, int id, int imageId,  ParameterType... params) {
-        this.text = text;
-        this.id = id;
-        this.imageId = imageId;
-        if (params == null && params.length == 0) {
-            this.defaultParams = Arrays.asList();
-        }
-        this.defaultParams = Arrays.asList(params);
+  SportTypes(String text, int id, int imageId, ParameterType... params) {
+    this.text = text;
+    this.id = id;
+    this.imageId = imageId;
+    if (params == null && params.length == 0) {
+      this.defaultParams = Arrays.asList();
     }
+    this.defaultParams = Arrays.asList(params);
+  }
 
-    public String getText() {
-        return text;
+  public static SportTypes getById(int id) {
+    for (SportTypes type : values()) {
+      if (type.id == id) {
+        return type;
+      }
     }
+    return null;
+  }
 
-    public int getImageId() {
-        return imageId;
-    }
+  public String getText() {
+    return text;
+  }
 
-    public List<ParameterType> getDefaultParams() {
-        return defaultParams;
-    }
+  public int getImageId() {
+    return imageId;
+  }
 
-    public static SportTypes getById(int id){
-        for (SportTypes type: values()) {
-            if(type.id == id){
-                return type;
-            }
-        }
-        return null;
-    }
+  public List<ParameterType> getDefaultParams() {
+    return defaultParams;
+  }
 
-    public int getId(){
-        return this.id;
-    }
+  public int getId() {
+    return this.id;
+  }
 }

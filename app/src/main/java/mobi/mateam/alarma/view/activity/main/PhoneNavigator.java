@@ -94,7 +94,6 @@ public class PhoneNavigator implements Navigator {
           appBarLayout.setExpanded(true, true);
           ViewCompat.setNestedScrollingEnabled(nestedScrollView, true);
           toolbarImageView.setVisibility(View.VISIBLE);
-          Glide.with(activity).load(R.drawable.mount_background).into(toolbarImageView);
 
           AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
           params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
@@ -114,6 +113,7 @@ public class PhoneNavigator implements Navigator {
           params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
           params.setScrollFlags(0);
           collapsingToolbarLayout.setTitleEnabled(false);
+          setActionBarImage(0);
         }
         break;
     }
@@ -155,14 +155,6 @@ public class PhoneNavigator implements Navigator {
     }
   }
 
-  public void replaceFragmentWithAnimation(android.support.v4.app.Fragment fragment, String tag) {
-    FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-    transaction.setCustomAnimations(R.anim.enter_from_right, R.anim.exit_to_left, R.anim.enter_from_left, R.anim.exit_to_right);
-    transaction.replace(R.id.container, fragment);
-    transaction.addToBackStack(tag);
-    transaction.commit();
-  }
-
   @Override public void updateMode() {
     switch (state) {
       case MainAlarmActivity.ALARM_LIST_MODE:
@@ -171,5 +163,9 @@ public class PhoneNavigator implements Navigator {
       case MainAlarmActivity.SET_ALARM_MODE:
         showEditAlarmMode(null);
     }
+  }
+
+  @Override public void setActionBarImage(int imageId) {
+    Glide.with(activity).load(imageId).into(toolbarImageView);
   }
 }

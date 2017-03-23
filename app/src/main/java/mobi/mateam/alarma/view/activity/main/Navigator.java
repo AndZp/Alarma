@@ -13,4 +13,6 @@ public interface Navigator {
   void onBackPressed();
 
   void updateMode();
+
+  void setActionBarImage(int imageId);
 }

@@ -2,12 +2,12 @@ package mobi.mateam.alarma.view.adapter;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,7 +41,7 @@ public class SportTypeAdapter extends RecyclerView.Adapter<SportTypeAdapter.View
   @Override public void onBindViewHolder(SportTypeAdapter.ViewHolder viewHolder, int position) {
     SportTypes sport = sportTypes.get(position);
 
-    glide.load(R.drawable.category_dialog_mount).fitCenter().into(viewHolder.ivIcon);
+    glide.load(sport.getImageId()).into(viewHolder.ivIcon);
     viewHolder.tvSportName.setText(sport.getText());
     viewHolder.cardView.setOnClickListener(v -> {
       if (onItemClickListener != null) {
@@ -81,7 +81,7 @@ public class SportTypeAdapter extends RecyclerView.Adapter<SportTypeAdapter.View
 
   public static class ViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.item_sport_card) CardView cardView;
-    @BindView(R.id.iv_item_sport) ImageView ivIcon;
+    @BindView(R.id.iv_item_sport) AppCompatImageView ivIcon;
     @BindView(R.id.tv_item_sport_name) TextView tvSportName;
 
     public ViewHolder(View view) {

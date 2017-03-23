@@ -21,81 +21,106 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           android:layout_gravity="center"
-          android:layout_marginBottom="24dp"
+          android:layout_marginBottom="25dp"
           android:layout_marginTop="25dp"
           android:gravity="center"
           android:text="06:00"
-          android:textColor="@android:color/primary_text_light"
-          android:textSize="45sp"
+          android:textColor="@color/text_grey"
+          android:textSize="50sp"
           />
       <View
           android:layout_width="match_parent"
           android:layout_height="1dp"
-          android:layout_marginBottom="7dp"
-          android:background="@color/black"
+          android:layout_marginBottom="20dp"
+          android:background="@color/separator"
           />
 
-      <CheckBox
+      <android.support.v7.widget.AppCompatCheckBox
           android:id="@+id/cb_weekday"
           android:layout_width="wrap_content"
           android:layout_height="wrap_content"
-          android:layout_margin="10dp"
-          android:text="Repeat"
+          android:layout_marginBottom="6dp"
+          android:layout_marginStart="18dp"
+          android:layout_marginTop="18dp"
+          android:text="@string/set_alarm_cb_repeat_text"
+          style="@style/SetAlarmOption"
+
           />
 
       <ViewStub
           android:id="@+id/weekdays_stub"
           android:layout_width="match_parent"
           android:layout_height="?actionBarSize"
+          android:layout_marginStart="10dp"
+          android:layout_marginEnd="10dp"
           />
       <android.support.v7.widget.RecyclerView
           android:id="@+id/list"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
+          android:layout_marginStart="10dp"
+          android:layout_marginEnd="10dp"
           android:scrollbars="vertical"
           />
 
-      <TextView
-          android:id="@+id/tv_set_ringtone"
+      <LinearLayout
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginBottom="10dp"
-          android:layout_marginLeft="10dp"
-          android:layout_marginTop="15dp"
-          android:drawableLeft="@drawable/sound"
-          android:drawablePadding="10dp"
-          android:gravity="left|center_vertical"
-          android:text="Sound"
-          android:textSize="20sp"
-          />
+          android:orientation="horizontal"
+          >
+
+        <TextView
+            android:id="@+id/tv_set_ringtone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            android:drawablePadding="10dp"
+            android:drawableStart="@drawable/sound"
+            android:gravity="start|center_vertical"
+            android:text="@string/set_alarm_option_sound"
+            style="@style/SetAlarmOption"
+            />
+
+        <android.support.v7.widget.AppCompatCheckBox
+            android:id="@+id/cb_vibrate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginBottom="6dp"
+            android:layout_marginStart="18dp"
+            android:layout_marginTop="18dp"
+            android:text="@string/set_alarm_cb_vibrate"
+            style="@style/SetAlarmOption"
+
+            />
+      </LinearLayout>
 
 
       <TextView
           android:id="@+id/tv_set_location"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_marginBottom="10dp"
-          android:layout_marginLeft="10dp"
-          android:layout_marginTop="10dp"
-          android:drawableLeft="@drawable/location"
-          android:drawablePadding="10dp"
-          android:gravity="left|center_vertical"
-
-          android:text="Location"
-          android:textSize="20sp"
+          android:drawablePadding="12dp"
+          android:drawableStart="@drawable/location"
+          android:gravity="start|center_vertical"
+          android:text="@string/set_alarm_option_location"
+          style="@style/SetAlarmOption"
           />
 
 
       <EditText
-          android:drawableLeft="@drawable/label"
-          android:drawablePadding="10dp"
           android:id="@+id/et_set_lable"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:layout_gravity="center"
-          android:layout_margin="10dp"
-          android:hint="Lable"
-          android:textSize="20sp"
+          android:layout_gravity="center_vertical|start"
+          android:background="@android:color/transparent"
+          android:drawablePadding="10dp"
+          android:drawableStart="@drawable/label"
+          android:focusable="true"
+          android:focusableInTouchMode="true"
+          android:hint="@string/set_alarm_option_label_hint"
+          android:maxLines="1"
+          style="@style/SetAlarmOption"
           />
 
 
