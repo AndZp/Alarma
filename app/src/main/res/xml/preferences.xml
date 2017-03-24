@@ -12,7 +12,7 @@
         />
 
     <ListPreference
-        android:defaultValue="Celsius"
+        android:defaultValue="0"
         android:entries="@array/temperature_title_array"
         android:entryValues="@array/temperature_values_array"
         android:key="pref_key_temp_units"
@@ -25,6 +25,7 @@
         android:entryValues="@array/speed_array"
         android:key="pref_key_speed_units"
         android:title="Speed units"
+
         />
 
     <ListPreference

@@ -10,6 +10,7 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import java.util.List;
 import mobi.mateam.alarma.R;
 import mobi.mateam.alarma.alarm.AlarmProvider;
 import mobi.mateam.alarma.alarm.AlarmUtils;
@@ -20,6 +21,7 @@ import mobi.mateam.alarma.bus.EventBus;
 import mobi.mateam.alarma.model.repository.AlarmRepository;
 import mobi.mateam.alarma.view.fragment.TimePickerFragment;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
+import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 import mobi.mateam.alarma.weekdays.WeekdaysDataItem;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -58,13 +60,19 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
 
       @Override public void onNext(Object event) {
         if (event instanceof Event.SportPicked) {
-          Event.SportPicked sportPicked = (Event.SportPicked) event;
-          alarm = new Alarm(sportPicked.sportType);
-          updateView();
+          if (isNewAlarm) {
+            Event.SportPicked sportPicked = (Event.SportPicked) event;
+            alarm = new Alarm(sportPicked.sportType);
+            updateView();
+          }
+        }
+
+        if (event instanceof Event.SettingsChanged) {
+          if (alarm != null || alarm.conditions != null) getView().showWeatherParameters(alarm.conditions.getParamsList());
         }
       }
     };
-    eventBus.observeEvents(Event.SportPicked.class).subscribe(subscriber);
+    eventBus.observe().subscribe(subscriber);
   }
 
   public void setAlarm(Bundle arguments) {
@@ -191,9 +199,10 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
       alarm.activated = true;
       alarm.id = alarmRepository.getNewAlarmId();
       alarmRepository.saveAlarm(alarm).subscribe(s -> eventBus.post(new Event.SetAlarm(alarm)));
+    } else {
+      alarmRepository.updateAlarm(alarm).subscribe(s -> eventBus.post(new Event.SetAlarm(alarm)));
     }
     alarmProvider.setNextAlarm(alarm);
-    alarmRepository.updateAlarm(alarm).subscribe(s -> eventBus.post(new Event.SetAlarm(alarm)));
   }
 
   public void onWeekDayClick(WeekdaysDataItem weekdaysDataItem) {
@@ -226,6 +235,10 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
 
   public void onVibrateChange(boolean isChecked) {
     alarm.vibrate = isChecked;
+  }
+
+  public void onWeatherParamChange(List<WeatherParamRange> weatherParameters) {
+    alarm.conditions.setParamList(weatherParameters);
   }
 }
 

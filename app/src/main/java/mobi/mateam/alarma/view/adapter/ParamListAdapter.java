@@ -1,116 +1,146 @@
 package mobi.mateam.alarma.view.adapter;
 
-import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import java.util.List;
 import mobi.mateam.alarma.R;
-import mobi.mateam.alarma.view.settings.Settings;
+import mobi.mateam.alarma.view.interfaces.OnWeatherParamChangeListener;
+import mobi.mateam.alarma.view.settings.UserSettings;
+import mobi.mateam.alarma.weather.model.ParameterType;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
+import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
+import org.florescu.android.rangeseekbar.RangeSeekBar;
 
-public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.ViewHolder> {
-  public static final int NORMAL = 1;
-  public static final int FOOTER = 2;
-  private final int NOTIFY_DELAY = 100;
-  private final Context context;
+public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.BaseViewHolder> {
+
+  private UserSettings userSettings;
+
   private List<WeatherParamRange> weatherParameters;
+  private OnWeatherParamChangeListener onWeatherParamChangeListener;
 
-  public ParamListAdapter(Context context, List<WeatherParamRange> weatherParameters) {
+  public ParamListAdapter(List<WeatherParamRange> weatherParameters, UserSettings userSettings) {
     this.weatherParameters = weatherParameters;
-    this.context = context;
+
+    this.userSettings = userSettings;
+  }
+
+  public void setOnWeatherParamChangeListener(OnWeatherParamChangeListener onWeatherParamChangeListener) {
+    this.onWeatherParamChangeListener = onWeatherParamChangeListener;
   }
 
   @Override public int getItemViewType(int position) {
+    return weatherParameters.get(position).getParameterType().getId();
+  }
 
-    if (position == weatherParameters.size()) {
-      return FOOTER;
-    } else {
-      return NORMAL;
+  @Override public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    ParameterType parameterType = ParameterType.getById(viewType);
+
+    switch (parameterType) {
+      case TEMPERATURE:
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_range, parent, false);
+        return new RangeViewHolder(v);
+      case WIND_POWER:
+        break;
+      case WIND_DIRECTION:
+        break;
+      case PRESSURE:
+        break;
+      case CLOUDS:
+        break;
+      case RAIN:
+        break;
+      case SNOW:
+        break;
+      default:
     }
+    View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_range, parent, false);
+    return new RangeViewHolder(v);
   }
 
-  @Override public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-    View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_param, parent, false);
+  @Override public void onBindViewHolder(BaseViewHolder baseViewHolder, int position) {
+    ParameterType parameterType = ParameterType.getById(baseViewHolder.getItemViewType());
+    WeatherParamRange parameter = weatherParameters.get(position);
 
-    return new ViewHolder(v);
-  }
+    baseViewHolder.tvParamName.setText(parameter.getParameterType().getName());
 
-  @Override public void onBindViewHolder(ViewHolder viewHolder, int position) {
-    if (position == weatherParameters.size()) {
-      viewHolder.tvParamName.setVisibility(View.GONE);
-      viewHolder.tvUnits.setVisibility(View.GONE);
-      viewHolder.etMinValue.setVisibility(View.GONE);
-      viewHolder.etMaxValue.setVisibility(View.GONE);
+    switch (parameterType) {
+      case TEMPERATURE:
+        RangeViewHolder rangeViewHolder = (RangeViewHolder) baseViewHolder;
+        TemperatureRange temperatureRange = (TemperatureRange) parameter;
 
-      viewHolder.btnAddRemoveParam.setText("Add param");
-      viewHolder.btnAddRemoveParam.setOnClickListener(v -> {
-        //addParam(new WeatherParameterRange(), position);
-        //open selection for parameter type
-      });
-    } else {
-      WeatherParamRange parameter = weatherParameters.get(position);
-      viewHolder.tvParamName.setText(parameter.getParameterType().getName());
-      viewHolder.tvParamName.setCompoundDrawablesWithIntrinsicBounds(parameter.getIconId(), 0, 0, 0);
+        rangeViewHolder.tvUnits.setText(userSettings.getUserTempUnits().name().substring(0, 3));
 
-      viewHolder.tvUnits.setText(Settings.getUserTemperatureUnits(context).name().substring(0, 3));
+        int minSetValue = userSettings.getTemperatureInUserUnits(temperatureRange.getMinValue());
+        int maxSetValue = userSettings.getTemperatureInUserUnits(temperatureRange.getMaxValue());
 
-      viewHolder.etMinValue.setText(parameter.getMinValue().toString());
-      viewHolder.etMaxValue.setText(parameter.getMaxValue().toString());
-      viewHolder.btnAddRemoveParam.setText("-");
-      viewHolder.btnAddRemoveParam.setOnClickListener(v -> {
-        removeParam(position);
-      });
+        int minSeekBarValue = userSettings.getTemperatureInUserUnits(-30);
+        int maxSeekBarValue = userSettings.getTemperatureInUserUnits(50);
+
+        rangeViewHolder.rangeSeekBar.setRangeValues(minSeekBarValue, maxSeekBarValue);
+        rangeViewHolder.rangeSeekBar.setNotifyWhileDragging(false);
+
+        rangeViewHolder.rangeSeekBar.setSelectedMinValue(minSetValue);
+        rangeViewHolder.rangeSeekBar.setSelectedMaxValue(maxSetValue);
+
+        rangeViewHolder.rangeSeekBar.setOnRangeSeekBarChangeListener((bar, minValue, maxValue) -> {
+          temperatureRange.setMinValue(userSettings.getTemperatureInDefaultUnits(minValue));
+          temperatureRange.setMaxValue(userSettings.getTemperatureInDefaultUnits(maxValue));
+          weatherParameters.set(position, temperatureRange);
+          notifyWeatherParameterChange();
+        });
+
+        break;
+      case WIND_POWER:
+        break;
+      case WIND_DIRECTION:
+        break;
+      case PRESSURE:
+        break;
+      case CLOUDS:
+        break;
+      case RAIN:
+        break;
+      case SNOW:
+        break;
+      default:
     }
+
+    baseViewHolder.tvParamName.setText(parameter.getParameterType().getName());
+    baseViewHolder.tvParamName.setCompoundDrawablesWithIntrinsicBounds(parameter.getIconId(), 0, 0, 0);
   }
 
-  //@Override public long getItemId(int position) {
-  //  return weatherParameters.get(position).getId();
-  //}
+  private void notifyWeatherParameterChange() {
+    onWeatherParamChangeListener.onParamChange(weatherParameters);
+  }
+
+  public void setUserSettings(UserSettings userSettings) {
+    this.userSettings = userSettings;
+    notifyDataSetChanged();
+  }
 
   @Override public int getItemCount() {
-    return weatherParameters.size() + 1;
+    return weatherParameters.size();
   }
 
-  public void addParam(final WeatherParamRange parameter, final int position) {
-    weatherParameters.add(position, parameter);
-    notifyItemInserted(position);
-    notifyDataSetChanged();
-   /* // notify of the insertion with a delay, so there is a brief pause after returning
-    // from the new parameter screen; this makes the animation more noticeable
-    Handler handler = new Handler();
-    handler.postDelayed(() -> {
-      weatherParameters.add(position, parameter);
-      notifyItemInserted(position);
-    }, NOTIFY_DELAY);*/
-  }
-
-  // region List manipulation methods
-
-  public void removeParam(final int position) {
-    weatherParameters.remove(position);
-    notifyItemRemoved(position);
-    notifyItemRangeRemoved(position, position + 1);
-    // notify of the removal with a delay so there is a brief pause after returning
-    // from the book details screen; this makes the animation more noticeable
-   /* Handler handler = new Handler();
-    handler.postDelayed(() -> notifyItemRemoved(position), NOTIFY_DELAY);*/
-  }
-
-  public static class ViewHolder extends RecyclerView.ViewHolder {
+  public static class BaseViewHolder extends RecyclerView.ViewHolder {
     @BindView(R.id.tv_param_name) TextView tvParamName;
-    @BindView(R.id.tv_units) TextView tvUnits;
-    @BindView(R.id.et_min_value) EditText etMinValue;
-    @BindView(R.id.et_max_value) EditText etMaxValue;
-    @BindView(R.id.btn_item_param) Button btnAddRemoveParam;
 
-    public ViewHolder(View view) {
+    public BaseViewHolder(View view) {
+      super(view);
+      ButterKnife.bind(this, view);
+    }
+  }
+
+  public static class RangeViewHolder extends BaseViewHolder {
+    @BindView(R.id.tv_units) TextView tvUnits;
+    @BindView(R.id.item_range_seek_bar) RangeSeekBar<Integer> rangeSeekBar;
+
+    public RangeViewHolder(View view) {
       super(view);
       ButterKnife.bind(this, view);
     }

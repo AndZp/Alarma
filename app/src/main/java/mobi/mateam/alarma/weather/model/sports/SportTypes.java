@@ -13,8 +13,8 @@ import mobi.mateam.alarma.weather.model.ParameterType;
 
 public enum SportTypes {
   //TODO: move to strings all text values
-  SUMMER_SPORT("Summer sport", 0, R.drawable.category_dialog_air, ParameterType.TEMPERATURE, ParameterType.RAIN,
-      ParameterType.WIND_POWER), WATER_SPORT("Water sport", 1, R.drawable.category_dialog_water, ParameterType.TEMPERATURE, ParameterType.RAIN,
+  SUMMER_SPORT("Summer sport", 0, R.drawable.category_dialog_air, ParameterType.TEMPERATURE/*, ParameterType.RAIN,
+      ParameterType.WIND_POWER*/), WATER_SPORT("Water sport", 1, R.drawable.category_dialog_water, ParameterType.TEMPERATURE, ParameterType.RAIN,
       ParameterType.WIND_POWER), WINTER_SPORT("Winter sport", 2, R.drawable.category_dialog_mount, ParameterType.TEMPERATURE, ParameterType.SNOW,
       ParameterType.WIND_POWER);
   //OTHERS("Others", 2, 3, ParameterType.TEMPERATURE, ParameterType.RAIN,  ParameterType.WIND_POWER);

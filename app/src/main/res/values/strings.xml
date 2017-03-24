@@ -76,7 +76,7 @@
   <string name="set_fragment_place">Place: %s</string>
   <string name="title_activity_settings">Settings</string>
 
-  <!-- Strings related to Settings -->
+  <!-- Strings related to UserSettings -->
 
   <!-- Example General settings -->
   <string name="pref_header_general">General</string>

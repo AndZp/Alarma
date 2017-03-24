@@ -25,4 +25,7 @@ public class Event {
       this.sportType = sportTypes;
     }
   }
+
+  public static class SettingsChanged {
+  }
 }

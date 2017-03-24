@@ -24,6 +24,7 @@ import mobi.mateam.alarma.presenter.SetAlarmPresenter;
 import mobi.mateam.alarma.view.SportPickDialog;
 import mobi.mateam.alarma.view.adapter.ParamListAdapter;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
+import mobi.mateam.alarma.view.settings.UserSettings;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 import mobi.mateam.alarma.weekdays.WeekdaysDataItem;
 import mobi.mateam.alarma.weekdays.WeekdaysDataSource;
@@ -85,7 +86,9 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
   }
 
   @Override public void showWeatherParameters(List<WeatherParamRange> conditions) {
-    ParamListAdapter paramListAdapter = new ParamListAdapter(getActivity(), conditions);
+    UserSettings userSettings = new UserSettings(getAppContext());
+    ParamListAdapter paramListAdapter = new ParamListAdapter(conditions, userSettings);
+    paramListAdapter.setOnWeatherParamChangeListener(weatherParameters -> presenter.onWeatherParamChange(weatherParameters));
     rvParams.setLayoutManager(new LinearLayoutManager(getActivity()));
     rvParams.setAdapter(paramListAdapter);
   }
