@@ -1,7 +1,7 @@
 package mobi.mateam.alarma.weather.model.params.implementation.units;
 
 public enum TemperatureUnits {
-  CELSIUM(0), KELVIN(1), FAHRENGEIT(2);
+  CELSIUS(0), KELVIN(1), FAHRENHEITS(2);
 
   private final int id;
 
@@ -13,7 +13,7 @@ public enum TemperatureUnits {
     switch (units) {
       case KELVIN:
         return value - 273;
-      case FAHRENGEIT:
+      case FAHRENHEITS:
         return (int) (((Double.valueOf(value)) - 32) / 1.8);
     }
     return value;
@@ -23,7 +23,7 @@ public enum TemperatureUnits {
     switch (userUnits) {
       case KELVIN:
         return celsiusValue + 273;
-      case FAHRENGEIT:
+      case FAHRENHEITS:
         return 32 + (celsiusValue * 9 / 5);
     }
     return celsiusValue;

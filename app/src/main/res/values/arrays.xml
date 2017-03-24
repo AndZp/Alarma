@@ -18,7 +18,12 @@
     <item>Fahrenheit</item>
   </string-array>
 
-  <string-array name="speed_array">
+  <string-array name="speed_values_array">
+    <item>0</item>
+    <item>1</item>
+  </string-array>
+
+  <string-array name="speed_title_array">
     <item>Meters per second [m/s]</item>
     <item>Miles per hour [mph]</item>
   </string-array>

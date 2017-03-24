@@ -3,7 +3,7 @@ package mobi.mateam.alarma.weather.model.params.implementation.ranges;
 import mobi.mateam.alarma.R;
 import mobi.mateam.alarma.weather.model.ParameterType;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
-import mobi.mateam.alarma.weather.model.params.implementation.units.WindUnits;
+import mobi.mateam.alarma.weather.model.params.implementation.units.SpeedUnits;
 
 /**
  * Created by Des63rus on 3/9/2017.
@@ -11,10 +11,10 @@ import mobi.mateam.alarma.weather.model.params.implementation.units.WindUnits;
  * Wind speed range
  */
 
-public class WindSpeedRange extends WeatherParamRange<Double, WindUnits> {
+public class WindSpeedRange extends WeatherParamRange<Double, SpeedUnits> {
 
-    public WindSpeedRange(WindUnits units, Double minValue, Double maxValue) {
-      super(WindUnits.convertToDefault(units, minValue), WindUnits.convertToDefault(units, maxValue), R.drawable.label);
+    public WindSpeedRange(SpeedUnits units, Double minValue, Double maxValue) {
+        super(SpeedUnits.convertToDefault(units, minValue), SpeedUnits.convertToDefault(units, maxValue), R.drawable.label);
     }
 
     @Override public ParameterType getParameterType() {

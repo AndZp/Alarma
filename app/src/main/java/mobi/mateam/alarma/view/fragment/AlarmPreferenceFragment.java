@@ -37,8 +37,15 @@ public class AlarmPreferenceFragment extends PreferenceFragmentCompat implements
   @Override public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
     addPreferencesFromResource(R.xml.preferences);
     sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
-    ListPreference tempUnitPref = (ListPreference) findPreference(UserSettings.PREF_TEMP_UNIT);
-    tempUnitPref.setSummary(tempUnitPref.getEntry());
+    setSummaries();
+  }
+
+  private void setSummaries() {
+    ListPreference listPreference = (ListPreference) findPreference(UserSettings.PREF_TEMP_UNIT);
+    listPreference.setSummary(listPreference.getEntry());
+
+    listPreference = (ListPreference) findPreference(UserSettings.PREF_SPEED_UNIT);
+    listPreference.setSummary(listPreference.getEntry());
   }
 
   @Override public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {

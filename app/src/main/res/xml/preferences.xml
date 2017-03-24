@@ -20,9 +20,9 @@
         />
 
     <ListPreference
-        android:defaultValue="Meters per second [m/s]"
-        android:entries="@array/speed_array"
-        android:entryValues="@array/speed_array"
+        android:defaultValue="0"
+        android:entries="@array/speed_title_array"
+        android:entryValues="@array/speed_values_array"
         android:key="pref_key_speed_units"
         android:title="Speed units"
 

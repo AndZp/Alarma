@@ -8,8 +8,8 @@ import mobi.mateam.alarma.weather.model.params.ProblemParam;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindSpeedRange;
+import mobi.mateam.alarma.weather.model.params.implementation.units.SpeedUnits;
 import mobi.mateam.alarma.weather.model.params.implementation.units.TemperatureUnits;
-import mobi.mateam.alarma.weather.model.params.implementation.units.WindUnits;
 
 /**
  * Created by Des63rus on 3/9/2017.
@@ -23,8 +23,8 @@ public class AlarmWeatherConditions {
 
   public static AlarmWeatherConditions getTestConditions() {
     AlarmWeatherConditions alarmWeatherConditions = new AlarmWeatherConditions();
-    alarmWeatherConditions.addParam(new TemperatureRange(TemperatureUnits.CELSIUM, 10, 20));
-    alarmWeatherConditions.addParam(new WindSpeedRange(WindUnits.METERSEC, 10.0, 20.0));
+    alarmWeatherConditions.addParam(new TemperatureRange(TemperatureUnits.CELSIUS, 10, 20));
+    alarmWeatherConditions.addParam(new WindSpeedRange(SpeedUnits.METERSEC, 10.0, 20.0));
     return alarmWeatherConditions;
   }
 
