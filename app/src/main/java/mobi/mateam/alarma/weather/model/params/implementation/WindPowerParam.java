@@ -10,9 +10,9 @@ import mobi.mateam.alarma.weather.model.params.implementation.units.SpeedUnits;
  * Param for wind speed
  */
 
-public class WindPowerParam extends WeatherParamValue<Double, SpeedUnits> {
+public class WindPowerParam extends WeatherParamValue<Integer, SpeedUnits> {
 
-  public WindPowerParam(SpeedUnits units, Double value) {
+  public WindPowerParam(SpeedUnits units, Integer value) {
     super(SpeedUnits.convertToDefault(units, value));
     }
 

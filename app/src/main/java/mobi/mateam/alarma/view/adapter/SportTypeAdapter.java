@@ -2,6 +2,7 @@ package mobi.mateam.alarma.view.adapter;
 
 import android.content.Context;
 import android.os.Handler;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -34,12 +35,14 @@ public class SportTypeAdapter extends RecyclerView.Adapter<SportTypeAdapter.View
 
   @Override public SportTypeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
     View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_sport, parent, false);
-
+    ViewCompat.setElevation(v, 16);
     return new SportTypeAdapter.ViewHolder(v);
   }
 
   @Override public void onBindViewHolder(SportTypeAdapter.ViewHolder viewHolder, int position) {
     SportTypes sport = sportTypes.get(position);
+
+    ViewCompat.setElevation(viewHolder.ivIcon, 25);
 
     glide.load(sport.getImageId()).into(viewHolder.ivIcon);
     viewHolder.tvSportName.setText(sport.getText());

@@ -9,11 +9,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import java.util.List;
 import mobi.mateam.alarma.R;
-import mobi.mateam.alarma.view.interfaces.OnWeatherParamChangeListener;
+import mobi.mateam.alarma.view.interfaces.OnWeatherParamListener;
 import mobi.mateam.alarma.view.settings.UserSettings;
 import mobi.mateam.alarma.weather.model.ParameterType;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
+import mobi.mateam.alarma.weather.model.params.WindDirectionType;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
+import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindDirectionRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindSpeedRange;
 import org.florescu.android.rangeseekbar.RangeSeekBar;
 
@@ -22,7 +24,7 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.Base
   private UserSettings userSettings;
 
   private List<WeatherParamRange> weatherParameters;
-  private OnWeatherParamChangeListener onWeatherParamChangeListener;
+  private OnWeatherParamListener onWeatherParamListener;
 
   public ParamListAdapter(List<WeatherParamRange> weatherParameters, UserSettings userSettings) {
     this.weatherParameters = weatherParameters;
@@ -30,8 +32,8 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.Base
     this.userSettings = userSettings;
   }
 
-  public void setOnWeatherParamChangeListener(OnWeatherParamChangeListener onWeatherParamChangeListener) {
-    this.onWeatherParamChangeListener = onWeatherParamChangeListener;
+  public void setOnWeatherParamListener(OnWeatherParamListener onWeatherParamListener) {
+    this.onWeatherParamListener = onWeatherParamListener;
   }
 
   @Override public int getItemViewType(int position) {
@@ -45,8 +47,8 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.Base
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_range, parent, false);
         return new RangeIntViewHolder(v);
       case WIND_POWER:
-        v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_range, parent, false);
-        return new RangeDoubleViewHolder(v);
+        v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_wind, parent, false);
+        return new WindViewHolder(v);
       case WIND_DIRECTION:
         break;
       case PRESSURE:
@@ -73,7 +75,7 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.Base
         onBindTemperatureParameter((RangeIntViewHolder) baseViewHolder, position, (TemperatureRange) paramRange);
         break;
       case WIND_POWER:
-        onBindSpeedParameter((RangeDoubleViewHolder) baseViewHolder, position, (WindSpeedRange) paramRange);
+        onBindWindParameter((WindViewHolder) baseViewHolder, position, (WindSpeedRange) paramRange);
         break;
       case WIND_DIRECTION:
         break;
@@ -94,27 +96,33 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.Base
   }
 
   //region OnBind XXX Parameter methods
-  private void onBindSpeedParameter(RangeDoubleViewHolder rangeIntViewHolder, int position, WindSpeedRange parameter) {
-    rangeIntViewHolder.tvUnits.setText(userSettings.getUserSpeedUnits().name().substring(0, 3));
+  private void onBindWindParameter(WindViewHolder windViewHolder, int position, WindSpeedRange windSpeedRange) {
+    windViewHolder.itemView.setOnClickListener(v -> {
+      WindDirectionRange windDirectionRange = new WindDirectionRange(WindDirectionType.N, WindDirectionType.S);
+      onWeatherParamListener.onWindParamClick(windSpeedRange, windDirectionRange);
+    });
 
-    double minSetValue = userSettings.getSpeedInUserUnits(parameter.getMinValue());
-    double maxSetValue = userSettings.getSpeedInUserUnits(parameter.getMaxValue());
+
+   /* windViewHolder.tvUnits.setText(userSettings.getUserSpeedUnits().name().substring(0, 3));
+
+    double minSetValue = userSettings.getSpeedInUserUnits(windSpeedRange.getMinValue());
+    double maxSetValue = userSettings.getSpeedInUserUnits(windSpeedRange.getMaxValue());
 
     double minSeekBarValue = userSettings.getSpeedInUserUnits(0.0);
     double maxSeekBarValue = userSettings.getSpeedInUserUnits(50.0);
 
-    rangeIntViewHolder.rangeSeekBar.setRangeValues(minSeekBarValue, maxSeekBarValue);
-    rangeIntViewHolder.rangeSeekBar.setNotifyWhileDragging(false);
+    windViewHolder.rangeSeekBar.setRangeValues(minSeekBarValue, maxSeekBarValue);
+    windViewHolder.rangeSeekBar.setNotifyWhileDragging(false);
 
-    rangeIntViewHolder.rangeSeekBar.setSelectedMinValue(minSetValue);
-    rangeIntViewHolder.rangeSeekBar.setSelectedMaxValue(maxSetValue);
+    windViewHolder.rangeSeekBar.setSelectedMinValue(minSetValue);
+    windViewHolder.rangeSeekBar.setSelectedMaxValue(maxSetValue);
 
-    rangeIntViewHolder.rangeSeekBar.setOnRangeSeekBarChangeListener((bar, minValue, maxValue) -> {
-      parameter.setMinValue(userSettings.getSpeedInDefaultUnits(minValue));
-      parameter.setMaxValue(userSettings.getSpeedInDefaultUnits(maxValue));
-      weatherParameters.set(position, parameter);
+    windViewHolder.rangeSeekBar.setOnRangeSeekBarChangeListener((bar, minValue, maxValue) -> {
+      windSpeedRange.setMinValue(userSettings.getSpeedInDefaultUnits(minValue));
+      windSpeedRange.setMaxValue(userSettings.getSpeedInDefaultUnits(maxValue));
+      weatherParameters.set(position, windSpeedRange);
       notifyWeatherParameterChange();
-    });
+    });*/
   }
 
   private void onBindTemperatureParameter(RangeIntViewHolder rangeIntViewHolder, int position, TemperatureRange parameter) {
@@ -142,7 +150,7 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.Base
   //endregion
 
   private void notifyWeatherParameterChange() {
-    onWeatherParamChangeListener.onParamChange(weatherParameters);
+    onWeatherParamListener.onParamChange(weatherParameters);
   }
 
   public void setUserSettings(UserSettings userSettings) {
@@ -169,6 +177,17 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.Base
     @BindView(R.id.item_range_seek_bar) RangeSeekBar<Integer> rangeSeekBar;
 
     public RangeIntViewHolder(View view) {
+      super(view);
+      ButterKnife.bind(this, view);
+    }
+  }
+
+  public static class WindViewHolder extends BaseViewHolder {
+    @BindView(R.id.item_tv_speed_unit) TextView tvSpeedUnits;
+    @BindView(R.id.item_tv_speed_value) TextView tvSpeedVal;
+    @BindView(R.id.item_tv_dir_value) TextView tvDirVal;
+
+    public WindViewHolder(View view) {
       super(view);
       ButterKnife.bind(this, view);
     }

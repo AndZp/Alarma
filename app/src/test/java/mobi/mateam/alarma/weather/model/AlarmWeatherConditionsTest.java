@@ -26,19 +26,19 @@ public class AlarmWeatherConditionsTest {
     @Before
     public void setup(){
       conditionsCelsiumMeterSec.addParam(new TemperatureRange(TemperatureUnits.CELSIUS, 10, 20));
-      conditionsCelsiumMeterSec.addParam(new WindSpeedRange(SpeedUnits.METERSEC, 10.0, 20.0));
+      conditionsCelsiumMeterSec.addParam(new WindSpeedRange(SpeedUnits.METERSEC, 10, 20));
         conditionsKelvinMilesHour.addParam(new TemperatureRange(TemperatureUnits.KELVIN, 283,293));
-      conditionsKelvinMilesHour.addParam(new WindSpeedRange(SpeedUnits.MILESHOUR, 22.3, 44.7));
+      conditionsKelvinMilesHour.addParam(new WindSpeedRange(SpeedUnits.MILESHOUR, 22, 44));
     }
 
     @Test
     public void checkWeather() throws Exception {
         CurrentWeatherState sutableState = new CurrentWeatherState();
       sutableState.addParam(new TemperatureParam(TemperatureUnits.CELSIUS, 15));
-      sutableState.addParam(new WindPowerParam(SpeedUnits.METERSEC, 15.0));
+      sutableState.addParam(new WindPowerParam(SpeedUnits.METERSEC, 15));
         CurrentWeatherState notSutable = new CurrentWeatherState();
       notSutable.addParam(new TemperatureParam(TemperatureUnits.CELSIUS, 25));
-      notSutable.addParam(new WindPowerParam(SpeedUnits.METERSEC, 15.0));
+      notSutable.addParam(new WindPowerParam(SpeedUnits.METERSEC, 15));
         assertTrue(conditionsCelsiumMeterSec.checkWeather(sutableState) == null);
         assertTrue(conditionsKelvinMilesHour.checkWeather(sutableState) == null);
         Map<ParameterType, ProblemParam> parameterTypeProblemParamMap = conditionsCelsiumMeterSec.checkWeather(notSutable);

@@ -24,7 +24,7 @@ public class AlarmWeatherConditions {
   public static AlarmWeatherConditions getTestConditions() {
     AlarmWeatherConditions alarmWeatherConditions = new AlarmWeatherConditions();
     alarmWeatherConditions.addParam(new TemperatureRange(TemperatureUnits.CELSIUS, 10, 20));
-    alarmWeatherConditions.addParam(new WindSpeedRange(SpeedUnits.METERSEC, 10.0, 20.0));
+    alarmWeatherConditions.addParam(new WindSpeedRange(SpeedUnits.METERSEC, 10, 20));
     return alarmWeatherConditions;
   }
 

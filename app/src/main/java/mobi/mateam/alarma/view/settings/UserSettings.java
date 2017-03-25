@@ -42,12 +42,12 @@ public class UserSettings {
   //endregion
 
   //region Speed static methods
-  public static double getSpeedInUserUnits(double defaultUnitValue, Context context) {
+  public static int getSpeedInUserUnits(int defaultUnitValue, Context context) {
     SpeedUnits units = getUserSpeedUnits(context);
     return SpeedUnits.convertToUserUnit(units, defaultUnitValue);
   }
 
-  public static double getSpeedInUserUnits(double defaultUnitValue, SpeedUnits units) {
+  public static int getSpeedInUserUnits(int defaultUnitValue, SpeedUnits units) {
     return SpeedUnits.convertToUserUnit(units, defaultUnitValue);
   }
 
@@ -77,11 +77,11 @@ public class UserSettings {
     return userSpeedUnits;
   }
 
-  public double getSpeedInUserUnits(Double value) {
+  public int getSpeedInUserUnits(int value) {
     return getSpeedInUserUnits(value, userSpeedUnits);
   }
 
-  public double getSpeedInDefaultUnits(Double value) {
+  public int getSpeedInDefaultUnits(Integer value) {
     return SpeedUnits.convertToDefault(userSpeedUnits, value);
   }
   //endregion

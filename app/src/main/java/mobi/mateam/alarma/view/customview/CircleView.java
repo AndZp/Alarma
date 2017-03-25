@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package mobi.mateam.alarma.view;
+package mobi.mateam.alarma.view.customview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

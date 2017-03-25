@@ -146,5 +146,13 @@
   <string name="pref_title_vibrate">Vibrate</string>
   <string name="auto_silence_title">Silence after</string>
   <string name="snooze_duration_title">Snooze length</string>
+  <string name="wind_speed_title">Wind speed</string>
+  <string name="speed_title">speed</string>
+  <string name="direction_title">direction</string>
+  <string name="wind_title">Wind</string>
+  <string name="north_n">N</string>
+  <string name="south_s">S</string>
+  <string name="west_w">W</string>
+  <string name="east_e">E</string>
 
 </resources>

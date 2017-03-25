@@ -1,4 +1,4 @@
-package mobi.mateam.alarma.view;
+package mobi.mateam.alarma.view.customview;
 
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;

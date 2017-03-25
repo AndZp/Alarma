@@ -21,11 +21,15 @@ import java.util.ArrayList;
 import java.util.List;
 import mobi.mateam.alarma.R;
 import mobi.mateam.alarma.presenter.SetAlarmPresenter;
-import mobi.mateam.alarma.view.SportPickDialog;
 import mobi.mateam.alarma.view.adapter.ParamListAdapter;
+import mobi.mateam.alarma.view.customview.SportPickDialog;
+import mobi.mateam.alarma.view.customview.WindPickerDialog;
+import mobi.mateam.alarma.view.interfaces.OnWeatherParamListener;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
 import mobi.mateam.alarma.view.settings.UserSettings;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
+import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindDirectionRange;
+import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindSpeedRange;
 import mobi.mateam.alarma.weekdays.WeekdaysDataItem;
 import mobi.mateam.alarma.weekdays.WeekdaysDataSource;
 
@@ -88,7 +92,18 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
   @Override public void showWeatherParameters(List<WeatherParamRange> conditions) {
     UserSettings userSettings = new UserSettings(getAppContext());
     ParamListAdapter paramListAdapter = new ParamListAdapter(conditions, userSettings);
-    paramListAdapter.setOnWeatherParamChangeListener(weatherParameters -> presenter.onWeatherParamChange(weatherParameters));
+    paramListAdapter.setOnWeatherParamListener(new OnWeatherParamListener() {
+      @Override public void onParamChange(List<WeatherParamRange> weatherParameters) {
+        presenter.onWeatherParamChange(weatherParameters);
+      }
+
+      @Override public void onWindParamClick(WindSpeedRange windSpeedRange, WindDirectionRange windDirectionRange) {
+        WindPickerDialog windPickerDialog = WindPickerDialog.newInstance(windSpeedRange, windDirectionRange);
+        windPickerDialog.show(getFragmentManager(), "SportPickDialog");
+        //
+
+      }
+    });
     rvParams.setLayoutManager(new LinearLayoutManager(getActivity()));
     rvParams.setAdapter(paramListAdapter);
   }

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:showIn="@layout/fragment_wind_direction_pick"
+    >
+
+  <!--<TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/north_n"
+      android:textSize="20sp"
+      android:textColor="@color/text_grey"
+      android:layout_above="@+id/rsb_wind_dir_picker"
+      android:layout_centerHorizontal="true"
+      />
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/south_s"
+      android:textSize="20sp"
+      android:textColor="@color/text_grey"
+      android:layout_below="@+id/rsb_wind_dir_picker"
+      android:layout_centerHorizontal="true"
+      />
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/west_w"
+      android:textSize="20sp"
+      android:textColor="@color/text_grey"
+      android:layout_alignLeft="@+id/rsb_wind_dir_picker"
+      android:layout_centerVertical="true"
+      />
+
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:text="@string/east_e"
+      android:textSize="20sp"
+      android:textColor="@color/text_grey"
+      android:layout_alignRight="@+id/rsb_wind_dir_picker"
+      android:layout_centerVertical="true"
+      />-->
+  <mobi.mateam.alarma.view.customview.CircularSliderRange
+      android:id="@+id/rsb_wind_dir_picker"
+      android:layout_gravity="center"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_margin="20dp"
+      android:layout_centerInParent="true"
+      android:padding="30dp"
+      app:arc_color="@color/colorAccent"
+      app:arc_dash_size="20dp"
+      app:border_color="@color/text_grey"
+      app:border_thickness="17dp"
+      app:end_angle="90"
+      app:end_thumb_color="@color/colorPrimaryDark"
+      app:start_angle="0"
+      app:start_thumb_color="@color/colorPrimaryDark"
+      app:thumb_size="35dp"
+      android:rotation="-90"
+      />
+
+</RelativeLayout>

@@ -45,7 +45,7 @@ public class WeatherManager {
         return new TemperatureRange(TemperatureUnits.CELSIUS, 15, 25);
       }
       case WIND_POWER: {
-        return new WindSpeedRange(SpeedUnits.METERSEC, 18.0, 30.0);
+        return new WindSpeedRange(SpeedUnits.METERSEC, 18, 30);
       }
       case SNOW: {
         return new SnowRange(SnowType.NO_SNOW, SnowType.LIGHT_SNOW);

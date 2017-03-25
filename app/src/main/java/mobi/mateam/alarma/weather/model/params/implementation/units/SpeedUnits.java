@@ -15,16 +15,18 @@ public enum SpeedUnits {
     this.id = id;
   }
 
-  public static Double convertToDefault(SpeedUnits units, Double value) {
+  public static Integer convertToDefault(SpeedUnits units, Integer value) {
     if (SpeedUnits.MILESHOUR.equals(units)) {
-      return value * 0.44704074119232;
+      Double res = value * 0.44704074119232;
+      return res.intValue();
     }
     return value;
   }
 
-  public static Double convertToUserUnit(SpeedUnits userUnits, Double metersecValue) {
+  public static Integer convertToUserUnit(SpeedUnits userUnits, Integer metersecValue) {
     if (SpeedUnits.MILESHOUR.equals(userUnits)) {
-      return metersecValue * 2.23694;
+      Double res = metersecValue * 2.23694;
+      return res.intValue();
     }
     return metersecValue;
   }
