@@ -22,9 +22,10 @@
       <android.support.v7.widget.AppCompatImageView
           android:id="@+id/iv_item_sport"
           android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:scaleType="fitXY"
+          android:layout_height="130dp"
           android:adjustViewBounds="false"
+          android:scaleType="fitXY"
+
           android:src="@drawable/category_dialog_mount"
           android:layout_gravity="center"
           />
