@@ -147,12 +147,15 @@
   <string name="auto_silence_title">Silence after</string>
   <string name="snooze_duration_title">Snooze length</string>
   <string name="wind_speed_title">Wind speed</string>
-  <string name="speed_title">speed</string>
-  <string name="direction_title">direction</string>
+  <string name="speed_title">Speed</string>
+  <string name="direction_title">Direction</string>
   <string name="wind_title">Wind</string>
   <string name="north_n">N</string>
   <string name="south_s">S</string>
   <string name="west_w">W</string>
   <string name="east_e">E</string>
+  <string name="btn_ok_text">OK</string>
+  <string name="meter_sec_short">m/sec</string>
+  <string name="miles_hour_short">mi/h</string>
 
 </resources>

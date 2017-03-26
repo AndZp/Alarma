@@ -2,7 +2,6 @@ package mobi.mateam.alarma.di.module;
 
 import android.content.Context;
 import android.net.Uri;
-
 import com.google.android.gms.location.places.Place;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
@@ -15,13 +14,10 @@ import com.google.gson.JsonParseException;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-
-import java.lang.reflect.Type;
-
-import javax.inject.Singleton;
-
 import dagger.Module;
 import dagger.Provides;
+import java.lang.reflect.Type;
+import javax.inject.Singleton;
 import mobi.mateam.alarma.network.WeatherAPI;
 import mobi.mateam.alarma.network.WeatherService;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
@@ -56,7 +52,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
       Request original = chain.request();
       HttpUrl originalHttpUrl = original.url();
 
-      HttpUrl url = originalHttpUrl.newBuilder().addQueryParameter(WeatherAPI.APPID_QUERY_PARAM_NAME, WeatherAPI.WEATHER_API_ID).build();
+      HttpUrl url = originalHttpUrl.newBuilder()
+          .addQueryParameter(WeatherAPI.QUERY_PARAM_APPID, WeatherAPI.WEATHER_API_ID)
+          .addQueryParameter(WeatherAPI.QUERY_PARAM_UNITS, WeatherAPI.METRIC_UNITS)
+          .build();
 
       // Request customization: add request headers
       Request.Builder requestBuilder = original.newBuilder().url(url);

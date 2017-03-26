@@ -42,7 +42,7 @@
   </LinearLayout>
 
 
-  <org.florescu.android.rangeseekbar.RangeSeekBar
+  <mobi.mateam.alarma.view.customview.RangeSeekBar
       android:id="@+id/item_range_seek_bar"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"

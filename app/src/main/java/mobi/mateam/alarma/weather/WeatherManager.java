@@ -10,9 +10,11 @@ import mobi.mateam.alarma.weather.model.params.ProblemParam;
 import mobi.mateam.alarma.weather.model.params.RainType;
 import mobi.mateam.alarma.weather.model.params.SnowType;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
+import mobi.mateam.alarma.weather.model.params.WindDirectionType;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.RainRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.SnowRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
+import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindDirectionRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindSpeedRange;
 import mobi.mateam.alarma.weather.model.params.implementation.units.SpeedUnits;
 import mobi.mateam.alarma.weather.model.params.implementation.units.TemperatureUnits;
@@ -42,11 +44,13 @@ public class WeatherManager {
         return new RainRange(RainType.NO_RAIN, RainType.NO_RAIN);
       }
       case TEMPERATURE: {
-        return new TemperatureRange(TemperatureUnits.CELSIUS, 15, 25);
+        return new TemperatureRange(TemperatureUnits.CELSIUS, 5, 25);
       }
-      case WIND_POWER: {
-        return new WindSpeedRange(SpeedUnits.METERSEC, 18, 30);
+      case WIND_SPEED: {
+        return new WindSpeedRange(SpeedUnits.METERSEC, 0, 25);
       }
+      case WIND_DIRECTION:
+        return new WindDirectionRange(WindDirectionType.N, WindDirectionType.NNW);
       case SNOW: {
         return new SnowRange(SnowType.NO_SNOW, SnowType.LIGHT_SNOW);
       }

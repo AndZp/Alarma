@@ -70,6 +70,16 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
         if (event instanceof Event.SettingsChanged) {
           if (alarm != null || alarm.conditions != null) getView().showWeatherParameters(alarm.conditions.getParamsList());
         }
+
+        if (event instanceof Event.WindParamChanged) {
+          Event.WindParamChanged paramChanged = (Event.WindParamChanged) event;
+          if (alarm != null) {
+            alarm.conditions.addParam(paramChanged.windDirectionRange);
+            alarm.conditions.addParam(paramChanged.windSpeedRange);
+            onWeatherParamChange(alarm.conditions.getParamsList());
+            getView().showWeatherParameters(alarm.conditions.getParamsList());
+          }
+        }
       }
     };
     eventBus.observe().subscribe(subscriber);

@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 /**
  * Created by Des63rus on 3/9/2017.
@@ -45,6 +46,13 @@ public class AlarmWeatherConditionsTest {
         assertTrue(parameterTypeProblemParamMap != null && parameterTypeProblemParamMap.size()==1);
         Map<ParameterType, ProblemParam> parameterTypeProblemParamMapKelv = conditionsKelvinMilesHour.checkWeather(notSutable);
         assertTrue(parameterTypeProblemParamMapKelv != null && parameterTypeProblemParamMapKelv.size()==1);
+    }
+
+  @Test public void addParamTest() {
+    assertEquals(conditionsCelsiumMeterSec.getParamsList().size(), 2);
+    TemperatureRange newRangeValue = new TemperatureRange(TemperatureUnits.CELSIUS, -20, 10);
+    conditionsCelsiumMeterSec.addParam(newRangeValue);
+    assertEquals(conditionsCelsiumMeterSec.getParamsList().size(), 2);
 
     }
 

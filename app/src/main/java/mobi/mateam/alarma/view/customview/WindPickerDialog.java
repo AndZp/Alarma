@@ -8,16 +8,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import mobi.mateam.alarma.App;
 import mobi.mateam.alarma.R;
+import mobi.mateam.alarma.bus.Event;
 import mobi.mateam.alarma.bus.EventBus;
 import mobi.mateam.alarma.di.component.AppComponent;
 import mobi.mateam.alarma.view.settings.UserSettings;
 import mobi.mateam.alarma.weather.model.params.WindDirectionType;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindDirectionRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindSpeedRange;
-import org.florescu.android.rangeseekbar.RangeSeekBar;
+
 
 public class WindPickerDialog extends DialogFragment {
   public static final int LAYOUT = R.layout.fragment_wind_direction_pick;
@@ -27,6 +29,7 @@ public class WindPickerDialog extends DialogFragment {
   @BindView(R.id.speed_range_seek_bar) RangeSeekBar<Integer> sbWindSpeed;
   @BindView(R.id.tv_param_name) TextView tvParamName;
   @BindView(R.id.tv_units) TextView tvUnits;
+
   private EventBus eventBus;
   private Unbinder unbinder;
   private UserSettings userSettings;
@@ -44,7 +47,7 @@ public class WindPickerDialog extends DialogFragment {
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     eventBus = getAppComponent().getEventBus();
-    getDialog().setTitle("Set wind parameters");
+    getDialog().setTitle("Wind parameters");
     if (getArguments() != null) {
       windSpeedRange = getArguments().getParcelable(KEY_WIND_SPEED);
       windDirectionRange = getArguments().getParcelable(KEY_WIND_DIRECTION);
@@ -55,14 +58,6 @@ public class WindPickerDialog extends DialogFragment {
     updateWindSpeedView();
     updateWindDirectionView();
     return v;
-  }
-
-  public void setData(WindSpeedRange windSpeedRange, WindDirectionRange windDirectionRange) {
-
-    this.windSpeedRange = windSpeedRange;
-    this.windDirectionRange = windDirectionRange;
-    updateWindSpeedView();
-    updateWindDirectionView();
   }
 
   private void updateWindDirectionView() {
@@ -92,7 +87,7 @@ public class WindPickerDialog extends DialogFragment {
   }
 
   private void updateWindSpeedView() {
-    tvUnits.setText(userSettings.getUserSpeedUnits().name().substring(0, 3));
+    tvUnits.setText(userSettings.getUserSpeedUnits().getUnitStringResId());
 
     int minSetValue = userSettings.getSpeedInUserUnits(windSpeedRange.getMinValue());
     int maxSetValue = userSettings.getSpeedInUserUnits(windSpeedRange.getMaxValue());
@@ -110,6 +105,11 @@ public class WindPickerDialog extends DialogFragment {
       windSpeedRange.setMinValue(userSettings.getSpeedInDefaultUnits(minValue));
       windSpeedRange.setMaxValue(userSettings.getSpeedInDefaultUnits(maxValue));
     });
+  }
+
+  @OnClick(R.id.btn_dialog_ok) public void onSaveClick() {
+    eventBus.post(new Event.WindParamChanged(windSpeedRange, windDirectionRange));
+    dismiss();
   }
 
   @Override public void onDetach() {

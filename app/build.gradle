@@ -61,8 +61,8 @@ buildscript {
 }
 
 ext {
-  supportLibraryVersion = '25.2.0'
-  playServicesVersion = '10.2.0'
+  supportLibraryVersion = '25.3.0'
+  playServicesVersion = '10.2.1'
 }
 
 
@@ -111,7 +111,6 @@ dependencies {
   provided 'org.glassfish:javax.annotation:10.0-b28'
   provided 'javax.annotation:jsr250-api:1.0'
   releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-  compile 'org.florescu.android.rangeseekbar:rangeseekbar-library:0.3.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

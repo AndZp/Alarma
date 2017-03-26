@@ -29,7 +29,7 @@ public class WindDirectionRange extends WeatherParamRange<WindDirectionType, NoU
   }
 
   @Override public ParameterType getParameterType() {
-    return ParameterType.WIND_POWER;
+    return ParameterType.WIND_DIRECTION;
   }
 
   @Override public int describeContents() {
