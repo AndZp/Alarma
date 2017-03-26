@@ -1,30 +1,30 @@
 package mobi.mateam.alarma.weather.model.params.implementation.units;
 
+import android.support.annotation.StringRes;
+import mobi.mateam.alarma.R;
+
 public enum TemperatureUnits {
-  CELSIUS(0), KELVIN(1), FAHRENHEITS(2);
+  CELSIUS(0, R.string.celsius_symbol), FAHRENHEITS(1, R.string.fahrenheit_symbol);
 
   private final int id;
 
-  TemperatureUnits(int id) {
+  @StringRes private final int symbolStringRes;
+
+  TemperatureUnits(int id, @StringRes int symbolStringRes) {
     this.id = id;
+    this.symbolStringRes = symbolStringRes;
   }
 
   public static Integer convertToDefault(TemperatureUnits units, Integer value) {
-    switch (units) {
-      case KELVIN:
-        return value - 273;
-      case FAHRENHEITS:
-        return (int) (((Double.valueOf(value)) - 32) / 1.8);
+    if (units == TemperatureUnits.FAHRENHEITS) {
+      return (int) (((Double.valueOf(value)) - 32) / 1.8);
     }
     return value;
   }
 
   public static Integer convertToUserUnit(TemperatureUnits userUnits, Integer celsiusValue) {
-    switch (userUnits) {
-      case KELVIN:
-        return celsiusValue + 273;
-      case FAHRENHEITS:
-        return 32 + (celsiusValue * 9 / 5);
+    if (userUnits == TemperatureUnits.FAHRENHEITS) {
+      return 32 + (celsiusValue * 9 / 5);
     }
     return celsiusValue;
   }
@@ -34,5 +34,9 @@ public enum TemperatureUnits {
       if (units.id == id) return units;
     }
     return null;
+  }
+
+  public int getSymbolStringRes() {
+    return symbolStringRes;
   }
 }

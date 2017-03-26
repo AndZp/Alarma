@@ -42,6 +42,8 @@
 
   <style name="DialogTitleText" parent="@style/Theme.AppCompat.Light.Dialog">
     <item name="android:windowTitleStyle">@style/DialogTitleStyle</item>
+    <item name="android:layout_gravity">center</item>
+    <item name="android:layout_centerInParent">true</item>
   </style>
 
   <style name="DialogTitleStyle" parent="@style/DialogTitleText">
@@ -49,6 +51,10 @@
     <item name="android:textSize">20sp</item>
     <item name="android:gravity">center</item>
     <item name="android:layout_gravity">center</item>
+    <item name="android:layout_centerInParent">true</item>
+    <item name="android:maxLines">1</item>
+    <item name="android:scrollHorizontally">true</item>
+    <item name="android:textAppearance">@android:style/TextAppearance.DialogWindowTitle</item>
 
   </style>
 

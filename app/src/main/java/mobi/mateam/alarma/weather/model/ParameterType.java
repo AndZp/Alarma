@@ -13,7 +13,7 @@ public enum ParameterType {
 
   //TODO: Globalize or move to strings names
 
-  TEMPERATURE(0, "Temperature"), WIND_SPEED(1, "Wind speed"), WIND_DIRECTION(2, "Wind direction"), PRESSURE(3, "Pressure"), CLOUDS(4, "Clouds"), RAIN(
+  TEMPERATURE(0, "Temperature"), WIND_SPEED(1, "Wind"), WIND_DIRECTION(2, "Wind direction"), PRESSURE(3, "Pressure"), CLOUDS(4, "Clouds"), RAIN(
       5, "Rain"), SNOW(6, "Snow");
 
   public final int id;

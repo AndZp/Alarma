@@ -13,7 +13,7 @@ import mobi.mateam.alarma.weather.model.params.implementation.units.NoUnits;
 public class SnowRange extends WeatherParamRange<SnowType, NoUnits> {
 
     public SnowRange(SnowType minValue, SnowType maxValue) {
-      super(SnowType.NO_SNOW, maxValue, R.drawable.location);
+      super(SnowType.NO_SNOW, maxValue, R.drawable.ic_snow);
     }
 
     @Override public ParameterType getParameterType() {

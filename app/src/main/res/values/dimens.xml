@@ -3,4 +3,5 @@
   <dimen name="ic_clear_margin">16dp</dimen>
   <dimen name="toolbar_height">60dp</dimen>
   <dimen name="compas_text_size">20sp</dimen>
+  <dimen name="sport_pick_dialog_min_width">100dp</dimen>
 </resources>

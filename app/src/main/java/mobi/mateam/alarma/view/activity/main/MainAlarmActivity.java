@@ -19,6 +19,7 @@ import mobi.mateam.alarma.presenter.MainAlarmPresenter;
 import mobi.mateam.alarma.presenter.SetAlarmPresenter;
 import mobi.mateam.alarma.view.activity.BaseActivity;
 import mobi.mateam.alarma.view.activity.SettingsActivity;
+import mobi.mateam.alarma.view.customview.SportPickDialog;
 import mobi.mateam.alarma.view.fragment.SetAlarmFragment;
 import mobi.mateam.alarma.view.interfaces.OnEditAlarmListener;
 import mobi.mateam.alarma.view.interfaces.SuperAlarmView;
@@ -130,7 +131,7 @@ public class MainAlarmActivity extends BaseActivity implements SuperAlarmView, O
   public void onFABClick(int mode) {
     switch (mode) {
       case ALARM_LIST_MODE:
-        navigator.showEditAlarmMode(null);
+        new SportPickDialog().show(getSupportFragmentManager(), "SportPickDialog");
         break;
       case SET_ALARM_MODE:
         if (SetAlarmFragment.presenter != null) {

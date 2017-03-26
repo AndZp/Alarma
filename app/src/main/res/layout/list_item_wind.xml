@@ -31,7 +31,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
+        android:layout_marginStart="45dp"
         android:layout_weight="1"
         android:gravity="center_vertical|start"
         android:text="@string/speed_title"
@@ -44,7 +44,6 @@
         android:id="@+id/item_tv_speed_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
         android:layout_weight="1"
         android:gravity="center_vertical|start"
         android:text="5 - 18"
@@ -62,6 +61,7 @@
         android:text="m/s"
         android:textColor="@color/text_grey"
         android:textSize="16sp"
+        android:visibility="gone"
         />
   </LinearLayout>
 
@@ -75,7 +75,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
+        android:layout_marginStart="45dp"
         android:layout_weight="1"
         android:gravity="center_vertical|start"
         android:text="@string/direction_title"
@@ -88,7 +88,6 @@
         android:id="@+id/item_tv_dir_value"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
         android:layout_weight="1"
         android:gravity="center_vertical|start"
         android:text="E - W"

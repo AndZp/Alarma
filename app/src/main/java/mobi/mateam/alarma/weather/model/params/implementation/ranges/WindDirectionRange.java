@@ -21,7 +21,7 @@ public class WindDirectionRange extends WeatherParamRange<WindDirectionType, NoU
   };
 
   public WindDirectionRange(WindDirectionType minValue, WindDirectionType maxValue) {
-    super(minValue, maxValue, R.drawable.label);
+    super(minValue, maxValue, R.drawable.ic_wind);
   }
 
   protected WindDirectionRange(Parcel in) {

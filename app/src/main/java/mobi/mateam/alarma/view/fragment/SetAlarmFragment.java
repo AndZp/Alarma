@@ -30,12 +30,14 @@ import mobi.mateam.alarma.view.settings.UserSettings;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindDirectionRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindSpeedRange;
+import mobi.mateam.alarma.weather.model.sports.SportTypes;
 import mobi.mateam.alarma.weekdays.WeekdaysDataItem;
 import mobi.mateam.alarma.weekdays.WeekdaysDataSource;
 
 public class SetAlarmFragment extends BaseFragment implements SetAlarmView, WeekdaysDataSource.Callback {
   public static final int LAYOUT = R.layout.fragment_set_alarm;
   public static SetAlarmPresenter presenter;
+  public static SportTypes sportType;
 
   @BindView(R.id.tv_set_time) TextView tvTime;
   @BindView(R.id.tv_set_location) TextView tvLocation;
@@ -100,8 +102,6 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
       @Override public void onWindParamClick(WindSpeedRange windSpeedRange, WindDirectionRange windDirectionRange) {
         WindPickerDialog windPickerDialog = WindPickerDialog.newInstance(windSpeedRange, windDirectionRange);
         windPickerDialog.show(getFragmentManager(), "WindPickerDialog");
-
-
       }
     });
     rvParams.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -115,6 +115,10 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
     } else {
       cbWeekDays.setChecked(false);
     }
+  }
+
+  @Override public SportTypes getSportType() {
+    return sportType;
   }
 
   @Override public void uncheckRepeat() {

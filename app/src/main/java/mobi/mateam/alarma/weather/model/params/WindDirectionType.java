@@ -71,4 +71,12 @@ public enum WindDirectionType {
   public double getEndDegree() {
     return endDegree;
   }
+
+  public double getAverageDegree() {
+    if (this == N) {
+      return 0.0;
+    }
+    return (getStartDegree() + getEndDegree()) / 2;
+  }
+
 }

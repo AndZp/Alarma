@@ -50,10 +50,7 @@ public class PhoneNavigator implements Navigator {
         bundle.putString(SetAlarmView.ALARM_ID_KEY, alarmID);
         setAlarmFragment.setArguments(bundle);
       }
-      //activity.getSupportFragmentManager().beginTransaction().replace(R.id.container, setAlarmFragment).addToBackStack(null).commit();
-
       FragmentTransaction transaction = activity.getSupportFragmentManager().beginTransaction();
-      // transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
       transaction.replace(R.id.container, setAlarmFragment);
       transaction.commit();
     }
@@ -91,12 +88,21 @@ public class PhoneNavigator implements Navigator {
         if (supportActionBar != null) {
           supportActionBar.setDisplayShowTitleEnabled(false);
           supportActionBar.setDisplayHomeAsUpEnabled(true);
-          appBarLayout.setExpanded(true, true);
-          ViewCompat.setNestedScrollingEnabled(nestedScrollView, true);
-          toolbarImageView.setVisibility(View.VISIBLE);
 
-          AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
-          params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+          //unlock collapsing state
+          if (activity.getResources().getBoolean(R.bool.isLand)) {
+            appBarLayout.setExpanded(false, true);
+          } else {
+            appBarLayout.setExpanded(true, true);
+            ViewCompat.setNestedScrollingEnabled(nestedScrollView, true);
+            toolbarImageView.setVisibility(View.VISIBLE);
+            AppBarLayout.LayoutParams params = (AppBarLayout.LayoutParams) collapsingToolbarLayout.getLayoutParams();
+            params.setScrollFlags(AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);
+
+            if (SetAlarmFragment.sportType != null) {
+              setActionBarImage(SetAlarmFragment.sportType.getImageId());
+            }
+          }
         }
         break;
       case MainAlarmActivity.ALARM_LIST_MODE:

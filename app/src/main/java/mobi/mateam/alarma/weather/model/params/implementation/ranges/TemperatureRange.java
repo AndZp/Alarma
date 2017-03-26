@@ -12,7 +12,7 @@ import mobi.mateam.alarma.weather.model.params.implementation.units.TemperatureU
 public class TemperatureRange extends WeatherParamRange<Integer, TemperatureUnits> {
 
     public TemperatureRange(TemperatureUnits units, Integer minValue, Integer maxValue) {
-      super(TemperatureUnits.convertToDefault(units, minValue), TemperatureUnits.convertToDefault(units, maxValue), R.drawable.location);
+        super(TemperatureUnits.convertToDefault(units, minValue), TemperatureUnits.convertToDefault(units, maxValue), R.drawable.ic_temperature);
     }
 
     @Override public ParameterType getParameterType() {

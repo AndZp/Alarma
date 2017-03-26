@@ -61,8 +61,8 @@ public class WindPickerDialog extends DialogFragment {
   }
 
   private void updateWindDirectionView() {
-    sliderRangeDirection.setStartAngle(windDirectionRange.getMinValue().getStartDegree());
-    sliderRangeDirection.setEndAngle(windDirectionRange.getMaxValue().getEndDegree());
+    sliderRangeDirection.setStartAngle(windDirectionRange.getMinValue().getAverageDegree());
+    sliderRangeDirection.setEndAngle(windDirectionRange.getMaxValue().getAverageDegree());
     sliderRangeDirection.setOnSliderRangeMovedListener(new CircularSliderRange.OnSliderRangeMovedListener() {
       @Override public void onStartSliderMoved(double pos) {
         Double position = pos;

@@ -5,7 +5,7 @@ import java.util.Map;
 import mobi.mateam.alarma.weather.model.params.WeatherParamValue;
 import mobi.mateam.alarma.weather.model.params.implementation.RainParam;
 import mobi.mateam.alarma.weather.model.params.implementation.TemperatureParam;
-import mobi.mateam.alarma.weather.model.params.implementation.WindPowerParam;
+import mobi.mateam.alarma.weather.model.params.implementation.WindSpeedParam;
 import mobi.mateam.alarma.weather.model.params.implementation.units.SpeedUnits;
 import mobi.mateam.alarma.weather.model.params.implementation.units.TemperatureUnits;
 
@@ -26,8 +26,8 @@ public class CurrentWeatherState {
 
     public CurrentWeatherState(WeatherData data){
         weatherParameterMap = new HashMap<>();
-        weatherParameterMap.put(ParameterType.TEMPERATURE, new TemperatureParam(TemperatureUnits.KELVIN, data.getMain().getTemp().intValue()));
-      weatherParameterMap.put(ParameterType.WIND_SPEED, new WindPowerParam(SpeedUnits.MILESHOUR, data.getWind().getSpeed().intValue()));
+      weatherParameterMap.put(ParameterType.TEMPERATURE, new TemperatureParam(TemperatureUnits.CELSIUS, data.getMain().getTemp().intValue()));
+      weatherParameterMap.put(ParameterType.WIND_SPEED, new WindSpeedParam(SpeedUnits.MILESHOUR, data.getWind().getSpeed().intValue()));
         weatherParameterMap.put(ParameterType.RAIN, new RainParam(data.getRain() == null ? null : data.getRain().get3h()));
         weatherParameterMap.put(ParameterType.SNOW, new RainParam(data.getSnow() == null ? null : data.getSnow().get3h()));
     }

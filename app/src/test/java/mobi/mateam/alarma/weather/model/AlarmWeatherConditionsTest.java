@@ -3,7 +3,7 @@ package mobi.mateam.alarma.weather.model;
 import java.util.Map;
 import mobi.mateam.alarma.weather.model.params.ProblemParam;
 import mobi.mateam.alarma.weather.model.params.implementation.TemperatureParam;
-import mobi.mateam.alarma.weather.model.params.implementation.WindPowerParam;
+import mobi.mateam.alarma.weather.model.params.implementation.WindSpeedParam;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindSpeedRange;
 import mobi.mateam.alarma.weather.model.params.implementation.units.SpeedUnits;
@@ -28,7 +28,6 @@ public class AlarmWeatherConditionsTest {
     public void setup(){
       conditionsCelsiumMeterSec.addParam(new TemperatureRange(TemperatureUnits.CELSIUS, 10, 20));
       conditionsCelsiumMeterSec.addParam(new WindSpeedRange(SpeedUnits.METERSEC, 10, 20));
-        conditionsKelvinMilesHour.addParam(new TemperatureRange(TemperatureUnits.KELVIN, 283,293));
       conditionsKelvinMilesHour.addParam(new WindSpeedRange(SpeedUnits.MILESHOUR, 22, 44));
     }
 
@@ -36,10 +35,10 @@ public class AlarmWeatherConditionsTest {
     public void checkWeather() throws Exception {
         CurrentWeatherState sutableState = new CurrentWeatherState();
       sutableState.addParam(new TemperatureParam(TemperatureUnits.CELSIUS, 15));
-      sutableState.addParam(new WindPowerParam(SpeedUnits.METERSEC, 15));
+      sutableState.addParam(new WindSpeedParam(SpeedUnits.METERSEC, 15));
         CurrentWeatherState notSutable = new CurrentWeatherState();
       notSutable.addParam(new TemperatureParam(TemperatureUnits.CELSIUS, 25));
-      notSutable.addParam(new WindPowerParam(SpeedUnits.METERSEC, 15));
+      notSutable.addParam(new WindSpeedParam(SpeedUnits.METERSEC, 15));
         assertTrue(conditionsCelsiumMeterSec.checkWeather(sutableState) == null);
         assertTrue(conditionsKelvinMilesHour.checkWeather(sutableState) == null);
         Map<ParameterType, ProblemParam> parameterTypeProblemParamMap = conditionsCelsiumMeterSec.checkWeather(notSutable);

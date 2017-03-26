@@ -2,6 +2,7 @@ package mobi.mateam.alarma.view.interfaces;
 
 import java.util.List;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
+import mobi.mateam.alarma.weather.model.sports.SportTypes;
 
 public interface SetAlarmView extends MvpView {
   String ALARM_ID_KEY = "alarm_id_key";
@@ -23,4 +24,6 @@ public interface SetAlarmView extends MvpView {
   void showSportPickDialog();
 
   void setVibrateCheck(boolean vibrate);
+
+  SportTypes getSportType();
 }

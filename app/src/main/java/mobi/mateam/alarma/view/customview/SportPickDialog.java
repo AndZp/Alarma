@@ -1,7 +1,9 @@
 package mobi.mateam.alarma.view.customview;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +22,15 @@ public class SportPickDialog extends DialogFragment {
   public static final int LAYOUT = R.layout.fragment_sport_pick;
   private EventBus eventBus;
 
+  public void onResume() {
+    super.onResume();
+    Dialog dialog = getDialog();
+    if (dialog != null && dialog.getWindow() != null) {
+      int width = ViewGroup.LayoutParams.MATCH_PARENT;
+      int height = ViewGroup.LayoutParams.MATCH_PARENT;
+      dialog.getWindow().setLayout(width, height);
+    }
+  }
 
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     eventBus = getAppComponent().getEventBus();
@@ -28,7 +39,12 @@ public class SportPickDialog extends DialogFragment {
     View v = inflater.inflate(LAYOUT, container, false);
 
     RecyclerView mRecyclerView = (RecyclerView) v.findViewById(R.id.rv_sport_pick);
-    mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
+    if (getResources().getBoolean(R.bool.isLand)) {
+      mRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+    } else {
+      mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+    }
 
     SportTypeAdapter adapter = new SportTypeAdapter(getActivity(), Arrays.asList(SportTypes.values()));
     adapter.setOnItemClickListener(sportTypes -> {
