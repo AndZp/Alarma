@@ -59,14 +59,14 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
       }
 
       @Override public void onNext(Object event) {
-        if (event instanceof Event.SportPicked) {
+        /*if (event instanceof Event.SportPicked) {
           if (isNewAlarm) {
             Event.SportPicked sportPicked = (Event.SportPicked) event;
             alarm = new Alarm(sportPicked.sportType);
             updateView();
           }
         }
-
+*/
         if (event instanceof Event.SettingsChanged) {
           if (alarm != null || alarm.conditions != null) getView().showWeatherParameters(alarm.conditions.getParamsList());
         }
@@ -104,9 +104,9 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
       }
       // New Alarm creation
     } else {
-      alarm = new Alarm();
+      alarm = new Alarm(getView().getSportType());
       isNewAlarm = true;
-      getView().showSportPickDialog();
+      updateView();
     }
   }
 

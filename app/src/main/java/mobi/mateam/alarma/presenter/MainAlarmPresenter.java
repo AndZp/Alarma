@@ -9,6 +9,7 @@ import mobi.mateam.alarma.utils.DateUtils;
 import mobi.mateam.alarma.view.activity.main.Navigator;
 import mobi.mateam.alarma.view.activity.main.PhoneNavigator;
 import mobi.mateam.alarma.view.activity.main.TabletNavigator;
+import mobi.mateam.alarma.view.fragment.SetAlarmFragment;
 import mobi.mateam.alarma.view.interfaces.SuperAlarmView;
 import rx.Subscriber;
 import timber.log.Timber;
@@ -60,6 +61,8 @@ public class MainAlarmPresenter extends BasePresenter<SuperAlarmView> {
         } else if (event instanceof Event.SportPicked) {
           Event.SportPicked sportPicked = (Event.SportPicked) event;
           getView().setActionBarImage(sportPicked.sportType.getImageId());
+          SetAlarmFragment.sportType = sportPicked.sportType;
+          getView().showEditAlarmMode(null);
         }
       }
     };

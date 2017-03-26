@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <bool name="isTablet">false</bool>
+  <bool name="isLand">false</bool>
   <declare-styleable name="CircularSlider">
     <attr format="float" name="start_angle"/>
     <attr format="float" name="end_angle"/>

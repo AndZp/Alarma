@@ -16,7 +16,7 @@ import mobi.mateam.alarma.weather.model.params.implementation.units.SpeedUnits;
 public class WindSpeedRange extends WeatherParamRange<Integer, SpeedUnits> implements Parcelable {
 
   public WindSpeedRange(SpeedUnits units, Integer minValue, Integer maxValue) {
-        super(SpeedUnits.convertToDefault(units, minValue), SpeedUnits.convertToDefault(units, maxValue), R.drawable.label);
+    super(SpeedUnits.convertToDefault(units, minValue), SpeedUnits.convertToDefault(units, maxValue), R.drawable.ic_wind);
     }
 
   protected WindSpeedRange(Parcel in) {

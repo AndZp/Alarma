@@ -5,6 +5,13 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class WindDirectionTypeTest {
+  @Test public void getAverageDegree_N() throws Exception {
+    assertEquals(WindDirectionType.N.getAverageDegree(), 0.0, 0);
+  }
+
+  @Test public void getAverageDegree_S() throws Exception {
+    assertEquals(WindDirectionType.S.getAverageDegree(), 180, 1);
+  }
 
   @Test public void getDir_North() throws Exception {
     WindDirectionType windDirectionType = WindDirectionType.getDirection(0);

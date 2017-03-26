@@ -13,7 +13,7 @@ import mobi.mateam.alarma.weather.model.params.implementation.units.NoUnits;
 public class RainRange extends WeatherParamRange<RainType, NoUnits> {
 
     public RainRange(RainType minValue, RainType maxValue) {
-      super(RainType.NO_RAIN, maxValue, R.drawable.location);
+      super(RainType.NO_RAIN, maxValue, R.drawable.ic_rain);
     }
 
     @Override public ParameterType getParameterType() {

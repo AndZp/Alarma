@@ -9,12 +9,11 @@
   <string-array name="temperature_values_array">
     <item>0</item>
     <item>1</item>
-    <item>2</item>
+
   </string-array>
 
   <string-array name="temperature_title_array">
     <item>Celsius</item>
-    <item>Kelvin</item>
     <item>Fahrenheit</item>
   </string-array>
 

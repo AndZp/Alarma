@@ -117,8 +117,10 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.Base
       isDefaultWindDirection = true;
     }
 
-    windViewHolder.tvSpeedVal.setText(windSpeedRange.getMinValue() + " - " + windSpeedRange.getMaxValue());
-    windViewHolder.tvSpeedUnits.setText(userSettings.getUserSpeedUnits().getUnitStringResId());
+    String units = windViewHolder.tvDirVal.getContext().getString(userSettings.getUserSpeedUnits().getUnitStringResId());
+
+    windViewHolder.tvSpeedVal.setText(windSpeedRange.getMinValue() + " - " + windSpeedRange.getMaxValue() + " " + units);
+    // windViewHolder.tvSpeedUnits.setText(unitStringResId);
     String windDirectionText = "All directions";
     if (!isDefaultWindDirection) {
       windDirectionText = windDirectionRange.getMinValue().name() + " - " + windDirectionRange.getMaxValue().name();
@@ -130,7 +132,7 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.Base
   }
 
   private void onBindTemperatureParameter(RangeIntViewHolder rangeIntViewHolder, int position, TemperatureRange parameter) {
-    rangeIntViewHolder.tvUnits.setText(userSettings.getUserTempUnits().name().substring(0, 3));
+    rangeIntViewHolder.tvUnits.setText(userSettings.getUserTempUnits().getSymbolStringRes());
 
     int minSetValue = userSettings.getTemperatureInUserUnits(parameter.getMinValue());
     int maxSetValue = userSettings.getTemperatureInUserUnits(parameter.getMaxValue());

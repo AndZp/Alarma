@@ -157,5 +157,8 @@
   <string name="btn_ok_text">OK</string>
   <string name="meter_sec_short">m/sec</string>
   <string name="miles_hour_short">mi/h</string>
+  <string name="celsius_symbol">\u2103</string>
+  <string name="fahrenheit_symbol">\u2109</string>
+  <string name="kelvin_symbol">K</string>
 
 </resources>
