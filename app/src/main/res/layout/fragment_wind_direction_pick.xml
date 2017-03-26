@@ -1,37 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
     android:layout_margin="10dp"
+    android:minWidth="290dp"
     android:orientation="vertical"
     >
-  <include layout="@layout/view_wind_direction_picker"/>
+  <TextView
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="start|top"
+      android:layout_marginBottom="-30dp"
+      android:layout_marginStart="20dp"
+      android:layout_marginTop="10dp"
+      android:gravity="center_vertical|start"
+      android:text="@string/direction_title"
+      android:textColor="@android:color/primary_text_light_nodisable"
+      android:textSize="17sp"
+      />
+
+  <mobi.mateam.alarma.view.customview.CircularSliderRange
+      android:id="@+id/rsb_wind_dir_picker"
+      android:layout_width="match_parent"
+      android:layout_height="270dp"
+      android:layout_gravity="center"
+      android:layout_margin="20dp"
+      android:padding="30dp"
+      android:rotation="-90"
+      app:arc_color="@color/colorAccent"
+      app:arc_dash_size="20dp"
+      app:border_color="@color/text_grey"
+      app:border_thickness="17dp"
+      app:end_angle="90"
+      app:end_thumb_color="@color/colorPrimaryDark"
+      app:start_angle="0"
+      app:start_thumb_color="@color/colorPrimaryDark"
+      app:thumb_size="35dp"
+      />
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:layout_marginBottom="10dp"
+      android:layout_marginTop="-10dp"
+      android:background="@color/separator"
+      />
+
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
       android:orientation="horizontal"
+      android:layout_marginStart="20dp"
+      android:layout_marginEnd="20dp"
+
       >
 
     <TextView
         android:id="@+id/tv_param_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
+        android:layout_gravity="center"
         android:layout_weight="1"
-        android:drawablePadding="10dp"
-        android:drawableStart="@drawable/location"
         android:gravity="center_vertical|start"
-        android:text="@string/wind_speed_title"
-        android:textColor="@color/text_grey"
-        android:textSize="16sp"
+        android:text="@string/speed_title"
+        android:textColor="@android:color/primary_text_light_nodisable"
+        android:textSize="17sp"
         />
 
     <TextView
         android:id="@+id/tv_units"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="7dp"
+        android:layout_gravity="center"
         android:layout_weight="1"
         android:gravity="center_vertical|end"
         android:text="Cel"
@@ -40,31 +83,31 @@
         />
   </LinearLayout>
 
-  <org.florescu.android.rangeseekbar.RangeSeekBar
+  <mobi.mateam.alarma.view.customview.RangeSeekBar
       android:id="@+id/speed_range_seek_bar"
       android:layout_width="match_parent"
       android:layout_height="wrap_content"
-      android:layout_marginEnd="10dp"
-      android:layout_marginStart="17dp"
+      android:layout_marginEnd="23dp"
+      android:layout_marginStart="22dp"
+      android:layout_marginTop="-10dp"
       app:activeColor="@color/colorPrimary"
       app:defaultColor="@color/text_grey"
       app:textAboveThumbsColor="@color/text_grey"
-      app:thumbDisabled="@drawable/seek_disabled"
-      app:thumbNormal="@drawable/seek_normal"
-      app:thumbPressed="@drawable/seek_pressed"
-      app:thumbShadowColor="@color/colorPrimary"
-      app:barHeight="3dp"
+      app:barHeight="2dp"
       />
 
-  <TextView
-      android:id="@+id/tv_dialog_ok"
+  <android.support.v7.widget.AppCompatButton
+      android:id="@+id/btn_dialog_ok"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"
-      android:text="OK"
       android:layout_gravity="end"
-      android:layout_margin="30dp"
+      android:layout_marginTop="20dp"
+      android:text="@string/btn_ok_text"
+      android:background="@null"
+      android:gravity="end"
       android:textColor="@color/colorPrimary"
-      android:textSize="20sp"
-      />
+      android:layout_marginEnd="23dp"
 
+      />
 </LinearLayout>
+

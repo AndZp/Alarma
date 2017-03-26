@@ -17,7 +17,7 @@ public class WindPowerParam extends WeatherParamValue<Integer, SpeedUnits> {
     }
 
     @Override public ParameterType getParameterType() {
-        return ParameterType.WIND_POWER;
+      return ParameterType.WIND_SPEED;
     }
 
 }

@@ -34,7 +34,7 @@ public class WindSpeedRange extends WeatherParamRange<Integer, SpeedUnits> imple
   };
 
   @Override public ParameterType getParameterType() {
-        return ParameterType.WIND_POWER;
+    return ParameterType.WIND_SPEED;
     }
 
   @Override public int describeContents() {

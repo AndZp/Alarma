@@ -1,4 +1,4 @@
-package mobi.mateam.alarma.view;
+package mobi.mateam.alarma.view.tools;
 
 import android.content.res.Resources;
 import android.util.DisplayMetrics;

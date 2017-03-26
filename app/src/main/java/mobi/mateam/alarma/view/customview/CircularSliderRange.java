@@ -234,12 +234,17 @@ public class CircularSliderRange extends View {
     mTextPaint.setTextAlign(Paint.Align.CENTER);
     mTextPaint.setTextSize(getContext().getResources().getDimension(R.dimen.compas_text_size));
 
+    float textWidthCorrector = mTextPaint.measureText(getContext().getString(R.string.north_n)) / 2;
+
     canvas.save();
     canvas.rotate(90, mCircleCenterX, mCircleCenterY);
     canvas.drawText(getContext().getString(R.string.north_n), mCircleCenterX, mCircleCenterY - mCircleRadius - mArcDashSize, mTextPaint);
-    canvas.drawText(getContext().getString(R.string.east_e), mCircleCenterX + mCircleRadius + mArcDashSize, mCircleCenterY, mTextPaint);
-    canvas.drawText(getContext().getString(R.string.south_s), mCircleCenterX, mCircleCenterY + mCircleRadius + mArcDashSize, mTextPaint);
-    canvas.drawText(getContext().getString(R.string.west_w), mCircleCenterX - mCircleRadius - mArcDashSize, mCircleCenterY, mTextPaint);
+    canvas.drawText(getContext().getString(R.string.east_e), mCircleCenterX + textWidthCorrector + mCircleRadius + mArcDashSize, mCircleCenterY,
+        mTextPaint);
+    canvas.drawText(getContext().getString(R.string.south_s), mCircleCenterX, mCircleCenterY + mCircleRadius + mArcDashSize + textWidthCorrector * 2,
+        mTextPaint);
+    canvas.drawText(getContext().getString(R.string.west_w), mCircleCenterX - textWidthCorrector - mCircleRadius - mArcDashSize, mCircleCenterY,
+        mTextPaint);
 
     canvas.restore();
 

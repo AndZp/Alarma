@@ -1,5 +1,8 @@
 package mobi.mateam.alarma.weather.model.params.implementation.units;
 
+import android.support.annotation.StringRes;
+import mobi.mateam.alarma.R;
+
 /**
  * Created by andreik on 19/03/2017.
  *
@@ -7,12 +10,15 @@ package mobi.mateam.alarma.weather.model.params.implementation.units;
  */
 
 public enum SpeedUnits {
-  METERSEC(0), MILESHOUR(1);
+  METERSEC(0, R.string.meter_sec_short), MILESHOUR(1, R.string.miles_hour_short);
 
   private final int id;
 
-  SpeedUnits(int id) {
+  @StringRes private final int unitStringResId;
+
+  SpeedUnits(int id, @StringRes int shortUnitStringRes) {
     this.id = id;
+    this.unitStringResId = shortUnitStringRes;
   }
 
   public static Integer convertToDefault(SpeedUnits units, Integer value) {
@@ -36,5 +42,9 @@ public enum SpeedUnits {
       if (units.id == id) return units;
     }
     return null;
+  }
+
+  @StringRes public int getUnitStringResId() {
+    return unitStringResId;
   }
 }

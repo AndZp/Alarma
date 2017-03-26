@@ -7,8 +7,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import java.util.ArrayList;
 import java.util.List;
 import mobi.mateam.alarma.R;
+import mobi.mateam.alarma.view.customview.RangeSeekBar;
 import mobi.mateam.alarma.view.interfaces.OnWeatherParamListener;
 import mobi.mateam.alarma.view.settings.UserSettings;
 import mobi.mateam.alarma.weather.model.ParameterType;
@@ -17,19 +19,34 @@ import mobi.mateam.alarma.weather.model.params.WindDirectionType;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindDirectionRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindSpeedRange;
-import org.florescu.android.rangeseekbar.RangeSeekBar;
 
 public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.BaseViewHolder> {
 
+  private WeatherParamRange windDirectionParamRange;
   private UserSettings userSettings;
 
   private List<WeatherParamRange> weatherParameters;
   private OnWeatherParamListener onWeatherParamListener;
 
   public ParamListAdapter(List<WeatherParamRange> weatherParameters, UserSettings userSettings) {
+    checkAndExtractWindDirection(weatherParameters);
+
     this.weatherParameters = weatherParameters;
 
     this.userSettings = userSettings;
+  }
+
+  /*
+    Because WindSpeed and WindDirection have to be shown in one ItemView
+   */
+  @SuppressWarnings("Convert2streamapi") private void checkAndExtractWindDirection(final List<WeatherParamRange> weatherParameters) {
+    for (WeatherParamRange paramRange : new ArrayList<WeatherParamRange>(weatherParameters) {
+    }) {
+      if (paramRange.getParameterType() == ParameterType.WIND_DIRECTION) {
+        windDirectionParamRange = paramRange;
+        weatherParameters.remove(paramRange);
+      }
+    }
   }
 
   public void setOnWeatherParamListener(OnWeatherParamListener onWeatherParamListener) {
@@ -46,11 +63,9 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.Base
       case TEMPERATURE:
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_range, parent, false);
         return new RangeIntViewHolder(v);
-      case WIND_POWER:
+      case WIND_SPEED:
         v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_wind, parent, false);
         return new WindViewHolder(v);
-      case WIND_DIRECTION:
-        break;
       case PRESSURE:
         break;
       case CLOUDS:
@@ -74,10 +89,8 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.Base
       case TEMPERATURE:
         onBindTemperatureParameter((RangeIntViewHolder) baseViewHolder, position, (TemperatureRange) paramRange);
         break;
-      case WIND_POWER:
+      case WIND_SPEED:
         onBindWindParameter((WindViewHolder) baseViewHolder, position, (WindSpeedRange) paramRange);
-        break;
-      case WIND_DIRECTION:
         break;
       case PRESSURE:
         break;
@@ -97,32 +110,23 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.Base
 
   //region OnBind XXX Parameter methods
   private void onBindWindParameter(WindViewHolder windViewHolder, int position, WindSpeedRange windSpeedRange) {
-    windViewHolder.itemView.setOnClickListener(v -> {
-      WindDirectionRange windDirectionRange = new WindDirectionRange(WindDirectionType.N, WindDirectionType.S);
-      onWeatherParamListener.onWindParamClick(windSpeedRange, windDirectionRange);
-    });
+    WindDirectionRange windDirectionRange = (WindDirectionRange) windDirectionParamRange;
+    boolean isDefaultWindDirection = false;
+    if (windDirectionRange == null) {
+      windDirectionRange = new WindDirectionRange(WindDirectionType.N, WindDirectionType.NNW);
+      isDefaultWindDirection = true;
+    }
 
+    windViewHolder.tvSpeedVal.setText(windSpeedRange.getMinValue() + " - " + windSpeedRange.getMaxValue());
+    windViewHolder.tvSpeedUnits.setText(userSettings.getUserSpeedUnits().getUnitStringResId());
+    String windDirectionText = "All directions";
+    if (!isDefaultWindDirection) {
+      windDirectionText = windDirectionRange.getMinValue().name() + " - " + windDirectionRange.getMaxValue().name();
+    }
+    windViewHolder.tvDirVal.setText(windDirectionText);
 
-   /* windViewHolder.tvUnits.setText(userSettings.getUserSpeedUnits().name().substring(0, 3));
-
-    double minSetValue = userSettings.getSpeedInUserUnits(windSpeedRange.getMinValue());
-    double maxSetValue = userSettings.getSpeedInUserUnits(windSpeedRange.getMaxValue());
-
-    double minSeekBarValue = userSettings.getSpeedInUserUnits(0.0);
-    double maxSeekBarValue = userSettings.getSpeedInUserUnits(50.0);
-
-    windViewHolder.rangeSeekBar.setRangeValues(minSeekBarValue, maxSeekBarValue);
-    windViewHolder.rangeSeekBar.setNotifyWhileDragging(false);
-
-    windViewHolder.rangeSeekBar.setSelectedMinValue(minSetValue);
-    windViewHolder.rangeSeekBar.setSelectedMaxValue(maxSetValue);
-
-    windViewHolder.rangeSeekBar.setOnRangeSeekBarChangeListener((bar, minValue, maxValue) -> {
-      windSpeedRange.setMinValue(userSettings.getSpeedInDefaultUnits(minValue));
-      windSpeedRange.setMaxValue(userSettings.getSpeedInDefaultUnits(maxValue));
-      weatherParameters.set(position, windSpeedRange);
-      notifyWeatherParameterChange();
-    });*/
+    WindDirectionRange finalWindDirectionRange = windDirectionRange;
+    windViewHolder.itemView.setOnClickListener(v -> onWeatherParamListener.onWindParamClick(windSpeedRange, finalWindDirectionRange));
   }
 
   private void onBindTemperatureParameter(RangeIntViewHolder rangeIntViewHolder, int position, TemperatureRange parameter) {

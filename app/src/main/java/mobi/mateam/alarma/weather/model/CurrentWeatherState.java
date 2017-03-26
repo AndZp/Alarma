@@ -27,7 +27,7 @@ public class CurrentWeatherState {
     public CurrentWeatherState(WeatherData data){
         weatherParameterMap = new HashMap<>();
         weatherParameterMap.put(ParameterType.TEMPERATURE, new TemperatureParam(TemperatureUnits.KELVIN, data.getMain().getTemp().intValue()));
-      weatherParameterMap.put(ParameterType.WIND_POWER, new WindPowerParam(SpeedUnits.MILESHOUR, data.getWind().getSpeed().intValue()));
+      weatherParameterMap.put(ParameterType.WIND_SPEED, new WindPowerParam(SpeedUnits.MILESHOUR, data.getWind().getSpeed().intValue()));
         weatherParameterMap.put(ParameterType.RAIN, new RainParam(data.getRain() == null ? null : data.getRain().get3h()));
         weatherParameterMap.put(ParameterType.SNOW, new RainParam(data.getSnow() == null ? null : data.getSnow().get3h()));
     }

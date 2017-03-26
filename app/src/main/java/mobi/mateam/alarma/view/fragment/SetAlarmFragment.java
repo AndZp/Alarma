@@ -99,8 +99,8 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
 
       @Override public void onWindParamClick(WindSpeedRange windSpeedRange, WindDirectionRange windDirectionRange) {
         WindPickerDialog windPickerDialog = WindPickerDialog.newInstance(windSpeedRange, windDirectionRange);
-        windPickerDialog.show(getFragmentManager(), "SportPickDialog");
-        //
+        windPickerDialog.show(getFragmentManager(), "WindPickerDialog");
+
 
       }
     });
