@@ -1,5 +1,6 @@
 package mobi.mateam.alarma.view.customview;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
@@ -12,14 +13,13 @@ import butterknife.OnClick;
 import butterknife.Unbinder;
 import mobi.mateam.alarma.App;
 import mobi.mateam.alarma.R;
-import mobi.mateam.alarma.bus.Event;
 import mobi.mateam.alarma.bus.EventBus;
+import mobi.mateam.alarma.bus.WindParamChangedEvent;
 import mobi.mateam.alarma.di.component.AppComponent;
 import mobi.mateam.alarma.view.settings.UserSettings;
 import mobi.mateam.alarma.weather.model.params.WindDirectionType;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindDirectionRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindSpeedRange;
-
 
 public class WindPickerDialog extends DialogFragment {
   public static final int LAYOUT = R.layout.fragment_wind_direction_pick;
@@ -38,6 +38,7 @@ public class WindPickerDialog extends DialogFragment {
 
   public static WindPickerDialog newInstance(WindSpeedRange windSpeedRange, WindDirectionRange windDirectionRange) {
     WindPickerDialog fragment = new WindPickerDialog();
+
     Bundle args = new Bundle();
     args.putParcelable(KEY_WIND_SPEED, windSpeedRange);
     args.putParcelable(KEY_WIND_DIRECTION, windDirectionRange);
@@ -45,9 +46,18 @@ public class WindPickerDialog extends DialogFragment {
     return fragment;
   }
 
+  public void onResume() {
+    super.onResume();
+    Dialog dialog = getDialog();
+    if (dialog != null && dialog.getWindow() != null) {
+      int width = ViewGroup.LayoutParams.MATCH_PARENT;
+      int height = ViewGroup.LayoutParams.MATCH_PARENT;
+      dialog.getWindow().setLayout(width, height);
+    }
+  }
+
   @Override public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     eventBus = getAppComponent().getEventBus();
-    getDialog().setTitle("Wind parameters");
     if (getArguments() != null) {
       windSpeedRange = getArguments().getParcelable(KEY_WIND_SPEED);
       windDirectionRange = getArguments().getParcelable(KEY_WIND_DIRECTION);
@@ -108,7 +118,11 @@ public class WindPickerDialog extends DialogFragment {
   }
 
   @OnClick(R.id.btn_dialog_ok) public void onSaveClick() {
-    eventBus.post(new Event.WindParamChanged(windSpeedRange, windDirectionRange));
+    eventBus.post(new WindParamChangedEvent(windSpeedRange, windDirectionRange));
+    dismiss();
+  }
+
+  @OnClick(R.id.btn_dialog_cancel) public void onCancel() {
     dismiss();
   }
 

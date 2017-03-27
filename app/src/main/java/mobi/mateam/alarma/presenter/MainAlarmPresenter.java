@@ -5,6 +5,8 @@ import mobi.mateam.alarma.R;
 import mobi.mateam.alarma.alarm.AlarmUtils;
 import mobi.mateam.alarma.bus.Event;
 import mobi.mateam.alarma.bus.EventBus;
+import mobi.mateam.alarma.bus.SetAlarmEvent;
+import mobi.mateam.alarma.bus.SportPickedEvent;
 import mobi.mateam.alarma.utils.DateUtils;
 import mobi.mateam.alarma.view.activity.main.Navigator;
 import mobi.mateam.alarma.view.activity.main.PhoneNavigator;
@@ -42,7 +44,7 @@ public class MainAlarmPresenter extends BasePresenter<SuperAlarmView> {
   }
 
   private void subscribeToEventBas() {
-    subscriber = new Subscriber() {
+    subscriber = new Subscriber<Event>() {
       @Override public void onCompleted() {
 
       }
@@ -51,22 +53,32 @@ public class MainAlarmPresenter extends BasePresenter<SuperAlarmView> {
         Timber.e(e);
       }
 
-      @Override public void onNext(Object event) {
-        if (event instanceof Event.SetAlarm) {
-          Event.SetAlarm setAlarm = (Event.SetAlarm) event;
-          Calendar nextAlarmTime = AlarmUtils.getNextAlarmTime(setAlarm.alarm, Calendar.getInstance());
-          String message = DateUtils.formatElapsedTimeUntilAlarm(getView().getActivityContext(), nextAlarmTime.getTimeInMillis());
-          getView().showAlarmsListMode();
-          getView().showNotification(message);
-        } else if (event instanceof Event.SportPicked) {
-          Event.SportPicked sportPicked = (Event.SportPicked) event;
-          getView().setActionBarImage(sportPicked.sportType.getImageId());
-          SetAlarmFragment.sportType = sportPicked.sportType;
-          getView().showEditAlarmMode(null);
+      @Override public void onNext(Event event) {
+        switch (event.id) {
+          case Event.SET_ALARM:
+            onSetAlarmEvent((SetAlarmEvent) event);
+            break;
+          case Event.SPORT_PICKED:
+            onSportPickedEvent((SportPickedEvent) event);
+            break;
         }
       }
     };
-    eventBus.observe().subscribe(subscriber);
+    eventBus.observeEvents(Event.class).subscribe(subscriber);
+  }
+
+  private void onSportPickedEvent(SportPickedEvent event) {
+    SportPickedEvent sportPicked = event;
+    getView().setActionBarImage(sportPicked.sportType.getImageId());
+    SetAlarmFragment.sportType = sportPicked.sportType;
+    getView().showEditAlarmMode(null);
+  }
+
+  private void onSetAlarmEvent(SetAlarmEvent event) {
+    Calendar nextAlarmTime = AlarmUtils.getNextAlarmTime(event.alarm, Calendar.getInstance());
+    String message = DateUtils.formatElapsedTimeUntilAlarm(getView().getActivityContext(), nextAlarmTime.getTimeInMillis());
+    getView().showAlarmsListMode();
+    getView().showNotification(message);
   }
 
   public void onEditAlarmClick(String alarmId) {

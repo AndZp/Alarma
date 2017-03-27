@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_margin="10dp"
+    android:orientation="vertical"
+    >
+
+  <TextView
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:textSize="21sp"
+      android:textColor="@android:color/primary_text_light"
+      android:gravity="center"
+      android:layout_marginTop="13dp"
+      android:layout_marginBottom="3dp"
+      android:text="@string/dialog_wind_parameters_title"
+      />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:orientation="horizontal"
+      android:background="@drawable/bg_border_bottom"
+      >
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/direction_title"
+        android:textColor="@android:color/primary_text_light_nodisable"
+        android:textSize="17sp"
+        />
+    <TextView
+        android:id="@+id/tv_param_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="8dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:text="@string/speed_title"
+        android:textColor="@android:color/primary_text_light_nodisable"
+        android:textSize="17sp"
+        />
+  </LinearLayout>
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:orientation="horizontal"
+      >
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@drawable/bg_border_right"
+        >
+      <mobi.mateam.alarma.view.customview.CircularSliderRange
+          android:id="@+id/rsb_wind_dir_picker"
+          android:layout_width="match_parent"
+          android:layout_height="205dp"
+          android:layout_gravity="center"
+          android:layout_margin="20dp"
+          android:padding="30dp"
+          android:rotation="-90"
+          app:arc_color="@color/colorAccent"
+          app:arc_dash_size="20dp"
+          app:border_color="@color/text_grey"
+          app:border_thickness="17dp"
+          app:end_angle="90"
+          app:end_thumb_color="@color/colorPrimaryDark"
+          app:start_angle="0"
+          app:start_thumb_color="@color/colorPrimaryDark"
+          app:thumb_size="35dp"
+          />
+
+    </FrameLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+
+
+      <TextView
+          android:id="@+id/tv_units"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_alignParentEnd="true"
+          android:gravity="end"
+          android:text="Cel"
+          android:layout_marginTop="15dp"
+          android:layout_marginEnd="15dp"
+          android:textColor="@color/text_grey"
+          android:textSize="16sp"
+          android:layout_alignParentTop="true"
+          android:layout_alignParentStart="true"
+          />
+
+
+      <mobi.mateam.alarma.view.customview.RangeSeekBar
+          android:id="@+id/speed_range_seek_bar"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          app:activeColor="@color/colorPrimary"
+          android:layout_margin="8dp"
+          app:barHeight="2dp"
+          app:defaultColor="@color/text_grey"
+          app:textAboveThumbsColor="@color/text_grey"
+          android:layout_centerInParent="true"
+          />
+
+      <android.support.v7.widget.AppCompatButton
+          android:id="@+id/btn_dialog_cancel"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="end"
+          android:background="@null"
+          android:gravity="end|center_vertical"
+          android:text="cancel"
+          android:textColor="@color/colorPrimary"
+
+          android:layout_alignParentBottom="true"
+          android:layout_toStartOf="@+id/btn_dialog_ok"
+          />
+
+      <android.support.v7.widget.AppCompatButton
+          android:id="@+id/btn_dialog_ok"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_gravity="end"
+          android:background="@null"
+          android:gravity="center|center_vertical"
+          android:text="@string/btn_ok_text"
+          android:textColor="@color/colorPrimary"
+
+          android:layout_alignParentBottom="true"
+          android:layout_alignParentEnd="true"
+          />
+    </RelativeLayout>
+
+  </LinearLayout>
+
+</LinearLayout>
+

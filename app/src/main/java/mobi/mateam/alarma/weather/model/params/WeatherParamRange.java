@@ -20,8 +20,6 @@ public abstract class WeatherParamRange<T extends Comparable<T>, S extends Enum>
    */
   private T maxValue;
 
-  private String name;
-
   public WeatherParamRange(T minValue, T maxValue, @DrawableRes int iconId) {
     this.setMaxValue(maxValue);
     this.setMinValue(minValue);

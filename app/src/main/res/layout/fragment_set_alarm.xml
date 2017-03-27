@@ -127,9 +127,21 @@
           android:layout_width="match_parent"
           android:layout_height="1dp"
           android:layout_marginTop="10dp"
-          android:layout_marginBottom="10dp"
           android:background="@color/separator"
           />
+
+      <android.support.v7.widget.AppCompatButton
+          android:id="@+id/btn_edit_param_list"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:gravity="center"
+          android:layout_gravity="end"
+          android:text="Edit"
+          android:background="@null"
+          android:textColor="@color/text_grey"
+          android:textSize="16sp"
+          />
+
       <android.support.v7.widget.RecyclerView
           android:id="@+id/rv_weather_params"
           android:layout_width="match_parent"

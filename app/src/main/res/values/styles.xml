@@ -6,7 +6,6 @@
     <item name="colorPrimary">@color/colorPrimary</item>
     <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     <item name="colorAccent">@color/colorAccent</item>
-    <item name="android:dialogTheme">@style/TitleDialog</item>
     <item name="preferenceTheme">@style/prefTheme</item>
 
   </style>
@@ -36,14 +35,13 @@
   <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
 
   <style name="TitleDialog" parent="@style/Theme.AppCompat.Light.Dialog">
-    <item name="android:windowNoTitle">false</item>
+    <item name="android:windowNoTitle">true</item>
     <item name="android:windowTitleStyle">@style/DialogTitleStyle</item>
   </style>
 
   <style name="DialogTitleText" parent="@style/Theme.AppCompat.Light.Dialog">
     <item name="android:windowTitleStyle">@style/DialogTitleStyle</item>
-    <item name="android:layout_gravity">center</item>
-    <item name="android:layout_centerInParent">true</item>
+    <item name="android:layout_gravity">center_horizontal</item>
   </style>
 
   <style name="DialogTitleStyle" parent="@style/DialogTitleText">
@@ -58,7 +56,7 @@
 
   </style>
 
-  <style name="SetAlarmOption">
+  <style name="SetAlarmOption" parent="AppTheme">
     <item name="android:layout_marginTop">18dp</item>
     <item name="android:layout_marginStart">26dp</item>
     <item name="android:layout_marginBottom">8dp</item>

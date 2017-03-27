@@ -6,14 +6,25 @@
     android:layout_margin="20dp"
     >
   <!--  android:minWidth="290dp"-->
+  <TextView
+      android:id="@+id/tv_dialog_title"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:textSize="21sp"
+      android:textColor="@android:color/primary_text_light"
+      android:gravity="center"
+      android:layout_margin="15dp"
+      android:text="@string/sport_pick_dialog_title"
+      />
 
   <android.support.v7.widget.RecyclerView
       android:id="@+id/rv_sport_pick"
       android:layout_width="match_parent"
       android:layout_height="match_parent"
       android:layout_gravity="center"
-      android:layout_margin="10dp"
       android:foregroundGravity="center"
-      android:layout_centerInParent="true"
+      android:layout_marginLeft="10dp"
+      android:layout_marginRight="10dp"
+      android:layout_below="@+id/tv_dialog_title"
       />
 </RelativeLayout>
