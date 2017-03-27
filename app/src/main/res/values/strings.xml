@@ -160,5 +160,7 @@
   <string name="celsius_symbol">\u2103</string>
   <string name="fahrenheit_symbol">\u2109</string>
   <string name="kelvin_symbol">K</string>
+  <string name="dialog_wind_parameters_title">Wind parameters</string>
+  <string name="edit_weather_param_title">Edit parameters</string>
 
 </resources>

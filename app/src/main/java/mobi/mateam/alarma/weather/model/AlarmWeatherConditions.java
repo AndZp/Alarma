@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import mobi.mateam.alarma.weather.WeatherManager;
 import mobi.mateam.alarma.weather.model.params.ProblemParam;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
@@ -77,5 +78,31 @@ public class AlarmWeatherConditions {
     for (WeatherParamRange weatherParameter : weatherParameters) {
       addParam(weatherParameter);
     }
+  }
+
+  public ArrayList<ParameterType> getParameterTypesList() {
+    if (weatherConditionsMap != null) {
+      return new ArrayList<>(weatherConditionsMap.keySet());
+    }
+    return null;
+  }
+
+  /**
+   * The method is correct weather condition map depend on user choice
+   * if parameter was set before  - it will exist in new map
+   * if if is new parameter  - weather parameters will be set with default values
+   */
+  public void correctParamList(ArrayList<ParameterType> checkedParameters) {
+    Map<ParameterType, WeatherParamRange> updatedWeatherConditionMap = new LinkedHashMap<>();
+    for (ParameterType checkedParameter : checkedParameters) {
+      WeatherParamRange weatherParamRange;
+      if (weatherConditionsMap.containsKey(checkedParameter)) {
+        weatherParamRange = weatherConditionsMap.get(checkedParameter);
+      } else {
+        weatherParamRange = WeatherManager.getDefaultValueForParam(checkedParameter);
+      }
+      updatedWeatherConditionMap.put(checkedParameter, weatherParamRange);
+    }
+    this.weatherConditionsMap = updatedWeatherConditionMap;
   }
 }

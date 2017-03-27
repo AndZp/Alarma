@@ -1,6 +1,8 @@
 package mobi.mateam.alarma.view.interfaces;
 
+import java.util.ArrayList;
 import java.util.List;
+import mobi.mateam.alarma.weather.model.ParameterType;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 import mobi.mateam.alarma.weather.model.sports.SportTypes;
 
@@ -21,9 +23,9 @@ public interface SetAlarmView extends MvpView {
 
   void uncheckRepeat();
 
-  void showSportPickDialog();
-
   void setVibrateCheck(boolean vibrate);
 
   SportTypes getSportType();
+
+  void showEditParamListDialog(ArrayList<ParameterType> values);
 }

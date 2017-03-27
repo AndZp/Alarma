@@ -10,6 +10,7 @@ import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlacePicker;
+import java.util.ArrayList;
 import java.util.List;
 import mobi.mateam.alarma.R;
 import mobi.mateam.alarma.alarm.AlarmProvider;
@@ -18,9 +19,14 @@ import mobi.mateam.alarma.alarm.model.Alarm;
 import mobi.mateam.alarma.alarm.model.PlaceData;
 import mobi.mateam.alarma.bus.Event;
 import mobi.mateam.alarma.bus.EventBus;
+import mobi.mateam.alarma.bus.ParamListChangedEvent;
+import mobi.mateam.alarma.bus.SetAlarmEvent;
+import mobi.mateam.alarma.bus.SportPickedEvent;
+import mobi.mateam.alarma.bus.WindParamChangedEvent;
 import mobi.mateam.alarma.model.repository.AlarmRepository;
 import mobi.mateam.alarma.view.fragment.TimePickerFragment;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
+import mobi.mateam.alarma.weather.model.ParameterType;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 import mobi.mateam.alarma.weekdays.WeekdaysDataItem;
 import rx.Subscriber;
@@ -35,7 +41,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   private AlarmProvider alarmProvider;
   private AlarmRepository alarmRepository;
   private boolean isNewAlarm;
-  private Subscriber subscriber;
+  private Subscriber<Event> subscriber;
 
   public SetAlarmPresenter(AlarmProvider alarmProvider, AlarmRepository alarmRepository, EventBus eventBus) {
     this.alarmProvider = alarmProvider;
@@ -49,7 +55,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
   }
 
   private void subscribeToEventBas() {
-    subscriber = new Subscriber() {
+    subscriber = new Subscriber<Event>() {
       @Override public void onCompleted() {
 
       }
@@ -58,31 +64,38 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
         Timber.e(e);
       }
 
-      @Override public void onNext(Object event) {
-        /*if (event instanceof Event.SportPicked) {
-          if (isNewAlarm) {
-            Event.SportPicked sportPicked = (Event.SportPicked) event;
-            alarm = new Alarm(sportPicked.sportType);
-            updateView();
-          }
-        }
-*/
-        if (event instanceof Event.SettingsChanged) {
-          if (alarm != null || alarm.conditions != null) getView().showWeatherParameters(alarm.conditions.getParamsList());
-        }
-
-        if (event instanceof Event.WindParamChanged) {
-          Event.WindParamChanged paramChanged = (Event.WindParamChanged) event;
-          if (alarm != null) {
-            alarm.conditions.addParam(paramChanged.windDirectionRange);
-            alarm.conditions.addParam(paramChanged.windSpeedRange);
-            onWeatherParamChange(alarm.conditions.getParamsList());
-            getView().showWeatherParameters(alarm.conditions.getParamsList());
-          }
+      @Override public void onNext(Event event) {
+        switch (event.id) {
+          case Event.SETTINGS_CHANGED:
+            onSettingsChanged();
+            break;
+          case Event.WIND_PARAM_CHANGED:
+            onWindParamChanged((WindParamChangedEvent) event);
+            break;
+          case Event.PARAM_LIST_CHANGED:
+            onParamListChangedEvent((ParamListChangedEvent) event);
         }
       }
     };
-    eventBus.observe().subscribe(subscriber);
+    eventBus.observeEvents(Event.class).subscribe(subscriber);
+  }
+
+  private void onParamListChangedEvent(ParamListChangedEvent event) {
+    alarm.conditions.correctParamList(event.checkedParameters);
+    getView().showWeatherParameters(alarm.conditions.getParamsList());
+  }
+
+  private void onWindParamChanged(WindParamChangedEvent paramChanged) {
+    if (alarm != null) {
+      alarm.conditions.addParam(paramChanged.windDirectionRange);
+      alarm.conditions.addParam(paramChanged.windSpeedRange);
+      onWeatherParamChange(alarm.conditions.getParamsList());
+      getView().showWeatherParameters(alarm.conditions.getParamsList());
+    }
+  }
+
+  private void onSettingsChanged() {
+    if (alarm != null || alarm.conditions != null) getView().showWeatherParameters(alarm.conditions.getParamsList());
   }
 
   public void setAlarm(Bundle arguments) {
@@ -98,7 +111,7 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
         isNewAlarm = false;
         alarmRepository.getAlarmById(alarmId).subscribeOn(AndroidSchedulers.mainThread()).subscribe(alarm1 -> {
           alarm = alarm1;
-          eventBus.post(new Event.SportPicked(alarm.sportType));
+          eventBus.post(new SportPickedEvent(alarm.sportType));
           updateView();
         });
       }
@@ -208,9 +221,9 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
     if (isNewAlarm) {
       alarm.activated = true;
       alarm.id = alarmRepository.getNewAlarmId();
-      alarmRepository.saveAlarm(alarm).subscribe(s -> eventBus.post(new Event.SetAlarm(alarm)));
+      alarmRepository.saveAlarm(alarm).subscribe(s -> eventBus.post(new SetAlarmEvent(alarm)));
     } else {
-      alarmRepository.updateAlarm(alarm).subscribe(s -> eventBus.post(new Event.SetAlarm(alarm)));
+      alarmRepository.updateAlarm(alarm).subscribe(s -> eventBus.post(new SetAlarmEvent(alarm)));
     }
     alarmProvider.setNextAlarm(alarm);
   }
@@ -249,6 +262,11 @@ public class SetAlarmPresenter extends BasePresenter<SetAlarmView> {
 
   public void onWeatherParamChange(List<WeatherParamRange> weatherParameters) {
     alarm.conditions.setParamList(weatherParameters);
+  }
+
+  public void onEditParamListClick() {
+    ArrayList<ParameterType> parameterTypes = alarm.conditions.getParameterTypesList();
+    getView().showEditParamListDialog(parameterTypes);
   }
 }
 

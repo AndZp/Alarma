@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:layout_margin="30dp"
+    >
+  <!--  android:minWidth="290dp"-->
+  <TextView
+      android:id="@+id/tv_dialog_title"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:textSize="21sp"
+      android:textColor="@android:color/primary_text_light"
+      android:gravity="center"
+      android:layout_margin="15dp"
+      android:text="@string/edit_weather_param_title"
+      />
+
+  <android.support.v7.widget.RecyclerView
+      android:id="@+id/rv_weather_params"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_gravity="center"
+      android:foregroundGravity="center"
+      android:layout_marginLeft="10dp"
+      android:layout_marginRight="10dp"
+      android:layout_below="@+id/tv_dialog_title"
+      android:layout_above="@+id/btn_dialog_cancel"
+      />
+
+  <android.support.v7.widget.AppCompatButton
+      android:id="@+id/btn_dialog_cancel"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="end"
+      android:background="@null"
+      android:gravity="end|center_vertical"
+      android:text="cancel"
+      android:textColor="@color/colorPrimary"
+
+      android:layout_alignParentBottom="true"
+      android:layout_toStartOf="@+id/btn_dialog_ok"
+      />
+
+  <android.support.v7.widget.AppCompatButton
+      android:id="@+id/btn_dialog_ok"
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      android:layout_gravity="end"
+      android:background="@null"
+      android:gravity="center|center_vertical"
+      android:text="@string/btn_ok_text"
+      android:textColor="@color/colorPrimary"
+      android:layout_alignParentBottom="true"
+      android:layout_alignParentEnd="true"
+      />
+</RelativeLayout>

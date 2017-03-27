@@ -8,8 +8,8 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.preference.PreferenceManager;
 import mobi.mateam.alarma.App;
 import mobi.mateam.alarma.R;
-import mobi.mateam.alarma.bus.Event;
 import mobi.mateam.alarma.bus.EventBus;
+import mobi.mateam.alarma.bus.SettingsChangedEvent;
 import mobi.mateam.alarma.di.component.AppComponent;
 import mobi.mateam.alarma.view.settings.UserSettings;
 
@@ -55,7 +55,7 @@ public class AlarmPreferenceFragment extends PreferenceFragmentCompat implements
       listPreference.setSummary(listPreference.getEntry());
     }
 
-    eventBus.post(new Event.SettingsChanged());
+    eventBus.post(new SettingsChangedEvent());
   }
 
   public AppComponent getAppComponent() {

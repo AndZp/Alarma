@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -15,7 +16,6 @@ import mobi.mateam.alarma.view.interfaces.OnWeatherParamListener;
 import mobi.mateam.alarma.view.settings.UserSettings;
 import mobi.mateam.alarma.weather.model.ParameterType;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
-import mobi.mateam.alarma.weather.model.params.WindDirectionType;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindDirectionRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindSpeedRange;
@@ -83,7 +83,6 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.Base
     ParameterType parameterType = ParameterType.getById(baseViewHolder.getItemViewType());
     WeatherParamRange paramRange = weatherParameters.get(position);
 
-    baseViewHolder.tvParamName.setText(paramRange.getParameterType().getName());
 
     switch (parameterType) {
       case TEMPERATURE:
@@ -104,31 +103,31 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.Base
     }
 
     //Set paramRange name and icon - relevant for all parameters
-    baseViewHolder.tvParamName.setText(paramRange.getParameterType().getName());
+
+    // To cobain two wind parameters into one item
+    if (parameterType != ParameterType.WIND_SPEED) {
+      baseViewHolder.tvParamName.setText(paramRange.getParameterType().getName());
+    } else {
+      baseViewHolder.tvParamName.setText(R.string.wind_title);
+    }
     baseViewHolder.tvParamName.setCompoundDrawablesWithIntrinsicBounds(paramRange.getIconId(), 0, 0, 0);
   }
 
   //region OnBind XXX Parameter methods
   private void onBindWindParameter(WindViewHolder windViewHolder, int position, WindSpeedRange windSpeedRange) {
-    WindDirectionRange windDirectionRange = (WindDirectionRange) windDirectionParamRange;
-    boolean isDefaultWindDirection = false;
-    if (windDirectionRange == null) {
-      windDirectionRange = new WindDirectionRange(WindDirectionType.N, WindDirectionType.NNW);
-      isDefaultWindDirection = true;
-    }
 
     String units = windViewHolder.tvDirVal.getContext().getString(userSettings.getUserSpeedUnits().getUnitStringResId());
 
     windViewHolder.tvSpeedVal.setText(windSpeedRange.getMinValue() + " - " + windSpeedRange.getMaxValue() + " " + units);
-    // windViewHolder.tvSpeedUnits.setText(unitStringResId);
-    String windDirectionText = "All directions";
-    if (!isDefaultWindDirection) {
-      windDirectionText = windDirectionRange.getMinValue().name() + " - " + windDirectionRange.getMaxValue().name();
-    }
-    windViewHolder.tvDirVal.setText(windDirectionText);
 
-    WindDirectionRange finalWindDirectionRange = windDirectionRange;
-    windViewHolder.itemView.setOnClickListener(v -> onWeatherParamListener.onWindParamClick(windSpeedRange, finalWindDirectionRange));
+    WindDirectionRange windDirectionRange = (WindDirectionRange) windDirectionParamRange;
+    if (windDirectionParamRange == null) {
+      windViewHolder.llWindDir.setVisibility(View.GONE);
+    } else {
+      String windDirectionText = windDirectionRange.getMinValue().name() + " - " + windDirectionRange.getMaxValue().name();
+      windViewHolder.tvDirVal.setText(windDirectionText);
+    }
+    windViewHolder.itemView.setOnClickListener(v -> onWeatherParamListener.onWindParamClick(windSpeedRange, windDirectionRange));
   }
 
   private void onBindTemperatureParameter(RangeIntViewHolder rangeIntViewHolder, int position, TemperatureRange parameter) {
@@ -192,6 +191,7 @@ public class ParamListAdapter extends RecyclerView.Adapter<ParamListAdapter.Base
     @BindView(R.id.item_tv_speed_unit) TextView tvSpeedUnits;
     @BindView(R.id.item_tv_speed_value) TextView tvSpeedVal;
     @BindView(R.id.item_tv_dir_value) TextView tvDirVal;
+    @BindView(R.id.ll_wind_dir) LinearLayout llWindDir;
 
     public WindViewHolder(View view) {
       super(view);

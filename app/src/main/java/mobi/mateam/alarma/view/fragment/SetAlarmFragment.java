@@ -22,11 +22,12 @@ import java.util.List;
 import mobi.mateam.alarma.R;
 import mobi.mateam.alarma.presenter.SetAlarmPresenter;
 import mobi.mateam.alarma.view.adapter.ParamListAdapter;
-import mobi.mateam.alarma.view.customview.SportPickDialog;
+import mobi.mateam.alarma.view.customview.WeatherParamDialog;
 import mobi.mateam.alarma.view.customview.WindPickerDialog;
 import mobi.mateam.alarma.view.interfaces.OnWeatherParamListener;
 import mobi.mateam.alarma.view.interfaces.SetAlarmView;
 import mobi.mateam.alarma.view.settings.UserSettings;
+import mobi.mateam.alarma.weather.model.ParameterType;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindDirectionRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindSpeedRange;
@@ -121,12 +122,12 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
     return sportType;
   }
 
-  @Override public void uncheckRepeat() {
-    cbWeekDays.setChecked(false);
+  @Override public void showEditParamListDialog(ArrayList<ParameterType> values) {
+    WeatherParamDialog.newInstance(values).show(getFragmentManager(), "WeatherParamDialog");
   }
 
-  @Override public void showSportPickDialog() {
-    new SportPickDialog().show(getFragmentManager(), "SportPickDialog");
+  @Override public void uncheckRepeat() {
+    cbWeekDays.setChecked(false);
   }
 
   @Override public void setVibrateCheck(boolean vibrate) {
@@ -160,6 +161,11 @@ public class SetAlarmFragment extends BaseFragment implements SetAlarmView, Week
 
   @OnClick(R.id.tv_set_ringtone) public void onRingtoneClick() {
     presenter.startRingtoneDialog();
+  }
+
+  @OnClick(R.id.btn_edit_param_list) public void onEditParamListClick() {
+
+    presenter.onEditParamListClick();
   }
 
   @Override public void onDestroyView() {
