@@ -1,6 +1,7 @@
 package mobi.mateam.alarma.weather.model;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +69,18 @@ public class AlarmWeatherConditions {
    */
   public List<WeatherParamRange> getParamsList() {
     if (weatherConditionsMap != null) {
-      return new ArrayList<>(weatherConditionsMap.values());
+      ArrayList<WeatherParamRange> weatherParamRanges = new ArrayList<>(weatherConditionsMap.values());
+
+      weatherParamRanges.sort((first, second) -> {
+        int dif = first.getParameterType().getId() - second.getParameterType().getId();
+        if (dif > 0) {
+          return 1;
+        } else if (dif < 0) {
+          return -1;
+        }
+        return 0;
+      });
+      return weatherParamRanges;
     }
     return null;
   }

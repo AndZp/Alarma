@@ -2,9 +2,12 @@ package mobi.mateam.alarma.weather.model;
 
 import java.util.Map;
 import mobi.mateam.alarma.weather.model.params.ProblemParam;
+import mobi.mateam.alarma.weather.model.params.WindDirectionType;
 import mobi.mateam.alarma.weather.model.params.implementation.TemperatureParam;
+import mobi.mateam.alarma.weather.model.params.implementation.WindDirectionParam;
 import mobi.mateam.alarma.weather.model.params.implementation.WindSpeedParam;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
+import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindDirectionRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindSpeedRange;
 import mobi.mateam.alarma.weather.model.params.implementation.units.SpeedUnits;
 import mobi.mateam.alarma.weather.model.params.implementation.units.TemperatureUnits;
@@ -52,7 +55,20 @@ public class AlarmWeatherConditionsTest {
     TemperatureRange newRangeValue = new TemperatureRange(TemperatureUnits.CELSIUS, -20, 10);
     conditionsCelsiumMeterSec.addParam(newRangeValue);
     assertEquals(conditionsCelsiumMeterSec.getParamsList().size(), 2);
+  }
 
+    @Test public void windDirectionTest() {
+        AlarmWeatherConditions windConditions = new AlarmWeatherConditions();
+        WindDirectionRange windDirectionRange = new WindDirectionRange(WindDirectionType.W, WindDirectionType.E);
+        windConditions.addParam(windDirectionRange);
+        CurrentWeatherState suitable = new CurrentWeatherState();
+        suitable.addParam(new WindDirectionParam(WindDirectionType.N));
+        CurrentWeatherState notSuitable = new CurrentWeatherState();
+        suitable.addParam(new WindDirectionParam(WindDirectionType.SSE));
+        Map<ParameterType, ProblemParam> suitableProblems = windConditions.checkWeather(suitable);
+        Map<ParameterType, ProblemParam> notSuitableProblems = windConditions.checkWeather(suitable);
+        assertEquals(suitableProblems.values().size(), 0);
+        assertEquals(notSuitableProblems.values().size(), 1);
     }
 
 }
