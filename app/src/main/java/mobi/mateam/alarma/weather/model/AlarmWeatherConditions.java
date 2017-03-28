@@ -8,10 +8,12 @@ import java.util.Map;
 import mobi.mateam.alarma.weather.WeatherManager;
 import mobi.mateam.alarma.weather.model.params.ProblemParam;
 import mobi.mateam.alarma.weather.model.params.WeatherParamRange;
+import mobi.mateam.alarma.weather.model.params.WeatherParamValue;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.TemperatureRange;
 import mobi.mateam.alarma.weather.model.params.implementation.ranges.WindSpeedRange;
 import mobi.mateam.alarma.weather.model.params.implementation.units.SpeedUnits;
 import mobi.mateam.alarma.weather.model.params.implementation.units.TemperatureUnits;
+import timber.log.Timber;
 
 /**
  * Created by Des63rus on 3/9/2017.
@@ -49,12 +51,17 @@ public class AlarmWeatherConditions {
     for (Map.Entry<ParameterType, WeatherParamRange> entry : weatherConditionsMap.entrySet()) {
       ParameterType key = entry.getKey();
       // type of param(Temperature, rain, etc)
-      Comparable currentValue = weatherState.getWeatherParam(key).getValue();
-      // current value for specified param
-      WeatherParamRange weatherParamRange = weatherConditionsMap.get(key);
-      // range specified by User
-      if (!weatherParamRange.checkIfInRange(currentValue)) {
-        result.put(key, new ProblemParam(weatherState.getWeatherParam(key), weatherParamRange));
+      WeatherParamValue currentWeatherParam = weatherState.getWeatherParam(key);
+      if(currentWeatherParam != null) {
+        Comparable currentValue = currentWeatherParam.getValue();
+        // current value for specified param
+        WeatherParamRange weatherParamRange = weatherConditionsMap.get(key);
+        // range specified by User
+        if (!weatherParamRange.checkIfInRange(currentValue)) {
+          result.put(key, new ProblemParam(currentWeatherParam, weatherParamRange));
+        }
+      } else {
+        Timber.i("Param {} is not receved from weather service",  key);
       }
     }
     if (result.size() == 0) {

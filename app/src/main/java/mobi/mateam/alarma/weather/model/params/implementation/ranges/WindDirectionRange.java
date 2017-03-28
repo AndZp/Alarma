@@ -41,4 +41,11 @@ public class WindDirectionRange extends WeatherParamRange<WindDirectionType, NoU
     dest.writeSerializable(getMaxValue());
     dest.writeInt(getIconId());
   }
+
+  @Override public boolean checkIfInRange(WindDirectionType currentValue) {
+    if(getMinValue().compareTo(getMaxValue()) > 0){
+      return currentValue.compareTo(getMinValue())>=0 || currentValue.compareTo(getMaxValue())<0;
+    }
+    return currentValue.compareTo(getMinValue()) > 0 && currentValue.compareTo(getMaxValue()) < 0;
+  }
 }

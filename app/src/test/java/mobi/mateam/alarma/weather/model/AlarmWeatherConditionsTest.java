@@ -25,13 +25,14 @@ import static org.junit.Assert.assertEquals;
 public class AlarmWeatherConditionsTest {
 
     private AlarmWeatherConditions conditionsCelsiumMeterSec = new AlarmWeatherConditions();
-    private AlarmWeatherConditions conditionsKelvinMilesHour = new AlarmWeatherConditions();
+    private AlarmWeatherConditions conditionsFahrengeitMilesHour = new AlarmWeatherConditions();
 
     @Before
     public void setup(){
-      conditionsCelsiumMeterSec.addParam(new TemperatureRange(TemperatureUnits.CELSIUS, 10, 20));
-      conditionsCelsiumMeterSec.addParam(new WindSpeedRange(SpeedUnits.METERSEC, 10, 20));
-      conditionsKelvinMilesHour.addParam(new WindSpeedRange(SpeedUnits.MILESHOUR, 22, 44));
+        conditionsCelsiumMeterSec.addParam(new TemperatureRange(TemperatureUnits.CELSIUS, 10, 20));
+        conditionsCelsiumMeterSec.addParam(new WindSpeedRange(SpeedUnits.METERSEC, 10, 20));
+        conditionsFahrengeitMilesHour.addParam(new WindSpeedRange(SpeedUnits.MILESHOUR, 22, 44));
+        conditionsFahrengeitMilesHour.addParam(new TemperatureRange(TemperatureUnits.FAHRENHEITS, 50, 68));
     }
 
     @Test
@@ -43,11 +44,11 @@ public class AlarmWeatherConditionsTest {
       notSutable.addParam(new TemperatureParam(TemperatureUnits.CELSIUS, 25));
       notSutable.addParam(new WindSpeedParam(SpeedUnits.METERSEC, 15));
         assertTrue(conditionsCelsiumMeterSec.checkWeather(sutableState) == null);
-        assertTrue(conditionsKelvinMilesHour.checkWeather(sutableState) == null);
+        assertTrue(conditionsFahrengeitMilesHour.checkWeather(sutableState) == null);
         Map<ParameterType, ProblemParam> parameterTypeProblemParamMap = conditionsCelsiumMeterSec.checkWeather(notSutable);
-        assertTrue(parameterTypeProblemParamMap != null && parameterTypeProblemParamMap.size()==1);
-        Map<ParameterType, ProblemParam> parameterTypeProblemParamMapKelv = conditionsKelvinMilesHour.checkWeather(notSutable);
-        assertTrue(parameterTypeProblemParamMapKelv != null && parameterTypeProblemParamMapKelv.size()==1);
+        assertTrue(parameterTypeProblemParamMap != null && parameterTypeProblemParamMap.size() == 1);
+        Map<ParameterType, ProblemParam> parameterTypeProblemParamMapKelv = conditionsFahrengeitMilesHour.checkWeather(notSutable);
+        assertTrue(parameterTypeProblemParamMapKelv != null && parameterTypeProblemParamMapKelv.size() == 1);
     }
 
   @Test public void addParamTest() {
@@ -64,10 +65,10 @@ public class AlarmWeatherConditionsTest {
         CurrentWeatherState suitable = new CurrentWeatherState();
         suitable.addParam(new WindDirectionParam(WindDirectionType.N));
         CurrentWeatherState notSuitable = new CurrentWeatherState();
-        suitable.addParam(new WindDirectionParam(WindDirectionType.SSE));
+        notSuitable.addParam(new WindDirectionParam(WindDirectionType.SSE));
         Map<ParameterType, ProblemParam> suitableProblems = windConditions.checkWeather(suitable);
-        Map<ParameterType, ProblemParam> notSuitableProblems = windConditions.checkWeather(suitable);
-        assertEquals(suitableProblems.values().size(), 0);
+        Map<ParameterType, ProblemParam> notSuitableProblems = windConditions.checkWeather(notSuitable);
+        assertEquals(suitableProblems, null);
         assertEquals(notSuitableProblems.values().size(), 1);
     }
 
